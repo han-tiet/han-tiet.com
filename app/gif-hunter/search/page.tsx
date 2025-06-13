@@ -11,8 +11,12 @@ export default async function resultsPage({searchParams,}: {searchParams: Promis
   
   return(
   <body className="bg-gray-800 text-white">
-    <Search />
-    {respJSON.data[0].title}
+    <div className="container flex align-items-center">
+      <Search />
+      {respJSON.data[0].title}
+    </div>
+    
+    
     
   </body>
 )
