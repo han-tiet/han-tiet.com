@@ -1,20 +1,37 @@
-import { Masonry } from '@mui/lab';
-import { Box, Label } from "@mui/material"
+"use client"
+import React from 'react';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Masonry from '@mui/lab/Masonry';
+import { styled } from '@mui/material/styles';
 
-interface Results {
-  
+interface Props {
+  gifs: any
 }
 
-<body>
-      <Box sx={{ width: 500, minHeight: 829 }}>
+const Label = styled(Paper)(({ theme }) => ({
+  backgroundColor: '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(0.5),
+  textAlign: 'center',
+  color: (theme.vars || theme).palette.text.secondary,
+  borderBottomLeftRadius: 0,
+  borderBottomRightRadius: 0,
+  ...theme.applyStyles('dark', {
+    backgroundColor: '#1A2027',
+  }),
+}));
+
+const Results: React.FC<Props> = (props) => {
+  return (
+    <Box sx={{ width: 500, minHeight: 829 }}>
       <Masonry columns={3} spacing={2}>
-        {itemData.map((item, index) => (
+        {props.gifs.map((gif: any, index: number) => (
           <div key={index}>
             <Label>{index + 1}</Label>
             <img
-              srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
-              src={`${item.img}?w=162&auto=format`}
-              alt={item.title}
+              src={`https://i.giphy.com/${gif.id}.webp`}
+              alt={gif.title}
               loading="lazy"
               style={{
                 borderBottomLeftRadius: 4,
@@ -27,4 +44,7 @@ interface Results {
         ))}
       </Masonry>
     </Box>
-</body>
+  );
+}
+
+export default Results

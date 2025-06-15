@@ -1,9 +1,11 @@
 import React from "react"
+import Link from "@mui/material/Link"
 import Search from "../components/Search"
 
 export default async function GifHunter({
-  searchParams,
-}: {
+  // searchParams : A promise that resolves to an object containing the search parameters of the current URL. 
+  searchParams, 
+  }: {
   searchParams: Promise<{ p: string }>
 ,}) {
   const { p } = await searchParams
@@ -16,8 +18,9 @@ export default async function GifHunter({
 	const respJSON = await resp.json()
 
   return(
-  <body className="bg-gray-800 text-white">
-    <Search />    
-  </body>
+  <div className="container mx-auto">
+    <Search /> 
+  </div>
+     
 )
 }
