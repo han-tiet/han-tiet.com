@@ -7,16 +7,21 @@ import Form from "next/form"
 
 export default function Search() {
   return(
-    <Form action="/gif-hunter/search">
-      <Box sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}/>
-      <TextField
-        id="outlined-basic" 
-        label="Search for a GIF here"
-        variant="outlined" 
-        name="p"
-      />
-    <Button type="submit">Search</Button>
-    </Form>
-    
+    <Box sx={{width: "30rem", my: 5, mx: "auto"}}>
+      <Form action="/gif-hunter/search">
+        <Box sx={{width: "auto"}} display="flex" alignItems="center" >
+          <TextField
+            id="outlined-basic"
+            label="Search for a GIF here"
+            variant="outlined"
+            name="p"
+            fullWidth
+          />
+          <Box padding={2}>
+            <Button variant="contained" type="submit" size="large">Search</Button>
+          </Box>
+        </Box>
+      </Form>
+    </Box>   
   )
 }
