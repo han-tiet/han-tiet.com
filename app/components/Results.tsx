@@ -12,7 +12,7 @@ interface Props {
 
 const Results: React.FC<Props> = (props) => {
   return (
-    <Box sx={{ width: 500, minHeight: 829, m:"auto"}}>
+    <Box sx={{ width: 900, minHeight: 829, m:"auto"}}>
       <Masonry columns={3} spacing={2}>
         {props.source_1.map((gif: any, index: number) => (
           <div key={index}>
