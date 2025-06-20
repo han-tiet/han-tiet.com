@@ -10,19 +10,6 @@ interface Props {
   source_2: any
 }
 
-// const Label = styled(Paper)(({ theme }) => ({
-//   backgroundColor: '#fff',
-//   ...theme.typography.body2,
-//   padding: theme.spacing(0.5),
-//   textAlign: 'center',
-//   color: (theme.vars || theme).palette.text.secondary,
-//   borderBottomLeftRadius: 0,
-//   borderBottomRightRadius: 0,
-//   ...theme.applyStyles('dark', {
-//     backgroundColor: '#1A2027',
-//   }),
-// }));
-
 const Results: React.FC<Props> = (props) => {
   return (
     <Box sx={{ width: 500, minHeight: 829, m:"auto"}}>
