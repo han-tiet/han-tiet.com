@@ -10,17 +10,20 @@ export default async function GifHunter({
 ,}) {
   const { p } = await searchParams
 
-	new Promise((resolve) => {
-		setTimeout(resolve, 0)
-	})
-		
-	const resp = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.API_KEY}&q=${p}&limit=3&offset=0&rating=r&lang=en&bundle=messaging_non_clips`)
-	const respJSON = await resp.json()
+	const giphyResp = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${process.env.API_KEY_1}&q=${p}&limit=10&offset=0&rating=r&lang=en&bundle=messaging_non_clips`)
+  const tenorResp = await fetch (`https://tenor.googleapis.com/v2/search?key=${process.env.API_KEY_2}&q=${p}&client_key=gifhunter&country=GB&locale=en_GB&limit=10`)
 
-  return(
-  <div className="container mx-auto">
-    <Search /> 
-  </div>
-     
-)
+  const respJson = await Promise.all([
+    giphyResp.json(),
+    tenorResp.json(),
+  ])
+
+  return (
+    <div className="mx-auto">
+      <div className="text-center text-6xl font-bold my-5 ">
+        <a href="/gif-hunter">GIFHunter</a>
+      </div>
+      <Search />    
+    </div>     
+  )
 }
