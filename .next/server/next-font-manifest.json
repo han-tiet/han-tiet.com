@@ -1,0 +1,10 @@
+{
+  "app": {
+    "[project]/app/gif-hunter/page": [],
+    "[project]/app/gif-hunter/search/page": [],
+    "[project]/app/page": []
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}
