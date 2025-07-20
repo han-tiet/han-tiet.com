@@ -1,6 +1,6 @@
 import React from "react"
-import Search from "@/app/components/Search"
-import Results from "@/app/components/Results"
+import Search from "@features/Search"
+import Results from "@features/Results"
 
 export default async function resultsPage({searchParams, }: {searchParams: Promise<{ p: string }>,}) {
   const { p } = await searchParams

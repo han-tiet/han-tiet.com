@@ -1,6 +1,6 @@
 {
-  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/gif-hunter/page": "app/gif-hunter/page.js",
   "/gif-hunter/search/page": "app/gif-hunter/search/page.js",
-  "/page": "app/page.js"
+  "/page": "app/page.js",
+  "/user-dashboard/page": "app/user-dashboard/page.js"
 }

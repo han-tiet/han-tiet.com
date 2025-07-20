@@ -1,6 +1,6 @@
 import React from "react"
 import Link from "@mui/material/Link"
-import Search from "../components/Search"
+import Search from "@features/Search"
 
 export default async function GifHunter() {
   return (

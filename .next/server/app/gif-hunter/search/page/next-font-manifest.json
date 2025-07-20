@@ -1,7 +1,7 @@
 {
   "pages": {},
   "app": {
-    "[project]/app/gif-hunter/search/page": []
+    "[project]/src/app/gif-hunter/search/page": []
   },
   "appUsingSizeAdjust": true,
   "pagesUsingSizeAdjust": false
