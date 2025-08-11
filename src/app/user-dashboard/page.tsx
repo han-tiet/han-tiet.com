@@ -1,32 +1,24 @@
 'use client'
 
-import {useState, useEffect} from "react"
 import Sidebar from "@features/Sidebar"
+import { UserProvider } from "@app/user-dashboard/UserContext"
+import Profile from "@features/Profile"
+import ProfileDetails from "@features/ProfileDetails"
+import UserDetails from "@features/UserDetails"
+
+// Still need to add components to main page, context won't make them magically appear >:(
 
 export default function UserDashboard () {
-  const [user, setUser]: any = useState({})
-
-  useEffect (() => {
-    const fetchData = async () => {
-      try {
-        const resp = await fetch ("https://jsonplaceholder.typicode.com/users/1")
-        const data = await resp.json()
-        setUser(data)
-      } catch (error) {
-        console.error("Error fetching users:", error)
-      }
-    }
-
-    fetchData() // Call fetchData
-  }, []) // Empty dependency array means function only runs once on mount
-
   return (
-    <div>
-      <Sidebar 
-      username={user.username}
-      email={user.email}
-      city={user.address.city}
-      />
-    </div>
+    <UserProvider>
+      <Sidebar>
+        <Profile>
+          <ProfileDetails>
+            <UserDetails />
+          </ProfileDetails>
+        </Profile>
+      </Sidebar> 
+    </UserProvider>
+    
   )
 }

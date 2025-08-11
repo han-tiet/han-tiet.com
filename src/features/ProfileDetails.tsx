@@ -1,11 +1,10 @@
 import UserDetails from "@features/UserDetails"
+import { useUser } from "@app/user-dashboard/UserContext"
 
-export default function ProfileDetails ({username, email, city}: any) {
+export default function ProfileDetails ({ children }: any) {
   return (
-    <UserDetails 
-      username={username}
-      email={email}
-      city={city}
-    />
+    <UserDetails>
+      {children}
+    </UserDetails>
   )
 }

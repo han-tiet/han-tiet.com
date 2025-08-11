@@ -1,11 +1,11 @@
 import ProfileDetails from "@features/ProfileDetails"
+import { useUser } from "@app/user-dashboard/UserContext"
+import { UserProvider } from "@app/user-dashboard/UserProvider"
 
-export default function Profile ({username, email, city}: any) {
+export default function Profile ({ children }: any) {
   return (
-    <ProfileDetails 
-      username={username}
-      email={email}
-      city={city}
-    />
+    <ProfileDetails>
+      {children}
+    </ProfileDetails>
   )
 }

@@ -7,10 +7,9 @@ import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
-import Profile from "@features/Profile"
 
 
-export default function Sidebar({username, email, city}: any) {
+export default function Sidebar({ children }: any) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -21,11 +20,7 @@ export default function Sidebar({username, email, city}: any) {
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
           <ListItem disablePadding>
-            <Profile
-              username={username}
-              email={email}
-              city={city}
-            />
+            {children}
           </ListItem>
       </List>
       <Divider />
