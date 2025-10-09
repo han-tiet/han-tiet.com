@@ -8,6 +8,7 @@ import UserDetails from "@features/UserDetails"
 
 // Still need to add components to main page, context won't make them magically appear >:(
 
+// Wrap user dashboard with UserProvider to use context. 
 export default function UserDashboard () {
   return (
     <UserProvider>
