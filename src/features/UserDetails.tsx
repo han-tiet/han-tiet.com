@@ -1,7 +1,7 @@
 import { useUser } from "@app/user-dashboard/UserContext"
 
 export default function UserDetails () {
-  const user = useUser() // Used to pass props directly to deeply nested component
+  const user = useUser() // Exported from UserContext to pass props directly to deeply nested component
 
   return (
     <div>
