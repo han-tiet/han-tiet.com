@@ -9,7 +9,7 @@ export default function Search() {
   return(
     <Box sx={{width: "30rem", my: 5, mx: "auto"}}>
       <Form action="/gif-hunter/search">
-        <Box sx={{width: "auto"}} display="flex" alignItems="center" >
+        <Box sx={{ display: "flex", alignItems:"center", justifyContent: "center" }} >
           <TextField
             id="outlined-basic"
             label="Search for a GIF here"
@@ -17,9 +17,6 @@ export default function Search() {
             name="p"
             fullWidth
           />
-          <Box padding={2}>
-            <Button variant="contained" type="submit" size="large">Search</Button>
-          </Box>
         </Box>
       </Form>
     </Box>   
