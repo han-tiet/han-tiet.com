@@ -1,12 +1,11 @@
+'use client'
+
 import * as React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import NavigationBar from '@features/NavigationBar';
 import { ThemeProvider } from '@mui/material'
 import theme from '@app/Theme'
-
-
-
 
 export default function Index() {
   return(
