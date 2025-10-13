@@ -16,16 +16,22 @@ export default async function resultsPage({searchParams, }: {searchParams: Promi
   ])
   
   return (
-    <div className="mx-auto">
+    <Box>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Typography variant= "h3">GIFHunter</Typography>
+        <Typography
+          variant= "h3"
+          component="a"
+          href="/gif-hunter"
+          sx={{ textDecoration: 'none', color: 'black' }}
+        >
+          GIFHunter
+        </Typography>
       </Box>
       <Search />
-  
       <Results
         source_1={respJson[0].data}
         source_2={respJson[1].results}
       />
-    </div>
+    </Box>
   )
 }

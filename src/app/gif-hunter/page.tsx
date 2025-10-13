@@ -9,7 +9,14 @@ export default async function GifHunter() {
   return (
     <div>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Typography variant= "h3" align= "center" >GIFHunter</Typography>
+        <Typography
+          variant= "h3"
+          component="a"
+          href="/gif-hunter"
+          sx={{ textDecoration: 'none', color: 'black' }}
+        >
+          GIFHunter
+        </Typography>
       </Box>
       <Search />
     </div>
