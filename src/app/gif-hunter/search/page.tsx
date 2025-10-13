@@ -1,6 +1,7 @@
 import React from "react"
 import Search from "@features/Search"
 import Results from "@features/Results"
+import { Box, Typography } from "@mui/material"
 
 export default async function resultsPage({searchParams, }: {searchParams: Promise<{ p: string }>,}) {
   const { p } = await searchParams
@@ -16,9 +17,9 @@ export default async function resultsPage({searchParams, }: {searchParams: Promi
   
   return (
     <div className="mx-auto">
-      <div className="text-center text-6xl font-bold my-5 ">
-        <a href="/gif-hunter">GIFHunter</a>
-      </div>
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <Typography variant= "h3">GIFHunter</Typography>
+      </Box>
       <Search />
   
       <Results
