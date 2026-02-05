@@ -11,14 +11,13 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   {
-    ignores: [
-      ".next/*",
-      "node_modules/*",
-      "next-env.d.ts"
-    ]
+    ignores: [".next/*", "node_modules/*", "next-env.d.ts"],
   },
-  ...compat.extends("eslint-config-next/core-web-vitals", "eslint-config-prettier/prettier", "eslint-config-next/typescript")
+  ...compat.extends(
+    "eslint-config-next/core-web-vitals",
+    "eslint-config-next/typescript",
+    "eslint-config-prettier/prettier",
+  ),
 ];
-
 
 export default eslintConfig;
