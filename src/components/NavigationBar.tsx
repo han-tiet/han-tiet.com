@@ -1,7 +1,7 @@
-import {Box, AppBar, Toolbar, Typography } from '@mui/material'
+import { Box, AppBar, Toolbar, Typography } from "@mui/material";
 
 export default function NavigationBar() {
-  return(
+  return (
     <Box>
       <AppBar position="fixed">
         <Toolbar>
@@ -12,6 +12,5 @@ export default function NavigationBar() {
       </AppBar>
       <Toolbar />
     </Box>
-  )
+  );
 }
-
