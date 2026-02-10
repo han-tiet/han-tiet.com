@@ -27,7 +27,7 @@ export default function RootLayout({
         <meta httpEquiv="X-UA-Compatible" content="ie=edge"></meta>
         <title>Han Tiet&apos;s Portfolio</title>
       </head>
-      <body className="h-screen w-screen">{children}
+      <body className="h-screen w-screen">{children}</body>
     </html>
-  )
+  );
 }

@@ -1,27 +1,17 @@
-'use client'
+"use client";
 
-import * as React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import NavigationBar from '@features/NavigationBar';
-import { ThemeProvider } from '@mui/material'
-import theme from '@app/Theme'
+import styles from "@/app/page.module.css";
 
 export default function Index() {
-  return(
-      <>
-        <ThemeProvider theme={theme}>
-          <NavigationBar />
-          <div className="container mx-auto my-auto">
-            <div className="text-center text-2xl">
-              <Link href="/gif-hunter">GIF Hunter</Link>
-            </div>
-            <div className="text-center text-2xl">
-              <Link href="/user-dashboard">User Dashboard</Link>
-            </div>
-          </div>
-        </ThemeProvider>
-      </>
-    
-  )
+  return (
+    <div className={styles.videoWrapper}>
+      <video autoPlay muted loop playsInline className={styles.videobg}>
+        <source src="/videos/index-bg.mp4" type="video/mp4" />
+      </video>
+
+      <div className="flex justify-center items-center h-full w-full bg-black/40">
+        <div className="text-[256px] font-semibold text-gray-200">Han Tiet</div>
+      </div>
+    </div>
+  );
 }
