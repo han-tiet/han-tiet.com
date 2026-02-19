@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 
 export default function SocialMediaLinks() {
-  return(
+  return (
     <div className="flex flex-row mx-[50px] my-[260px] gap-[68px]">
       <Link href="https://www.linkedin.com/in/han-tiet98/">
         <Image src="/linkedin.svg" width={48} height={48} alt="linkedin" />
@@ -16,5 +16,5 @@ export default function SocialMediaLinks() {
         <Image src="/envelope-alt.svg" width={48} height={48} alt="email" />
       </Link>
     </div>
-  )
+  );
 }

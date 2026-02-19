@@ -1,0 +1,24 @@
+"use client";
+
+import Image from "next/image";
+import NavigationBar from "@/components/NavigationBar";
+import SocialMediaLinks from "@/components/SocialMediaLinks";
+
+export default function About() {
+  return (
+    <div>
+      <NavigationBar />
+      <div className="flex flex-row items-center">
+        <div className="text-[32px]/[64px] h-[192px] w-[896px] ml-[50px] mr-auto my-20">
+          I’m passionate about building products that are both creative and
+          useful, with a focus on clean and functional design that meets user
+          needs.
+        </div>
+        <div className="w-[888px] h-[188px]">
+          <Image src="/race-car.png" width={888} height={188} alt="race-car" />
+        </div>
+      </div>
+      <SocialMediaLinks />
+    </div>
+  );
+}
