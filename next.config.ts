@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
 };
 
 module.exports = {
-  allowedDevOrigins: ["192.168.50.227", "*192.168.50.227"],
+  allowedDevOrigins: ["192.168.50.88", "*192.168.50.88"],
   images: {
     remotePatterns: [new URL("https://i.giphy.com/**")],
   },
