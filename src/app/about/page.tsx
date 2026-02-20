@@ -8,8 +8,8 @@ export default function About() {
   return (
     <div>
       <NavigationBar />
-      <div className="flex flex-row items-center">
-        <div className="text-[32px]/[64px] h-[192px] w-[896px] ml-[50px] mr-auto my-20">
+      <div className="flex flex-row items-center my-[160px]">
+        <div className="text-[32px]/[64px] h-[192px] w-[896px] ml-[50px] mr-auto">
           I’m passionate about building products that are both creative and
           useful, with a focus on clean and functional design that meets user
           needs.
