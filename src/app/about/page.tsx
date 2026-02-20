@@ -8,7 +8,7 @@ export default function About() {
   return (
     <div>
       <NavigationBar />
-      <div className="flex flex-row items-center my-[160px]">
+      <div className="flex flex-row items-center mt-[160px]">
         <div className="text-[32px]/[64px] h-[192px] w-[896px] ml-[50px] mr-auto">
           I’m passionate about building products that are both creative and
           useful, with a focus on clean and functional design that meets user
@@ -18,7 +18,9 @@ export default function About() {
           <Image src="/race-car.png" width={888} height={188} alt="race-car" />
         </div>
       </div>
-      <SocialMediaLinks />
+      <div className="mx-[50px] mt-[260px]">
+        <SocialMediaLinks />
+      </div>
     </div>
   );
 }
