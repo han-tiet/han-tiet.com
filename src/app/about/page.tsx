@@ -14,7 +14,7 @@ export default function About() {
           useful, with a focus on clean and functional design that meets user
           needs.
         </div>
-        <div className="w-[888px] h-[188px]">
+        <div className="w-[888px] h-[188px] mr-[50px]">
           <Image src="/race-car.png" width={888} height={188} alt="race-car" />
         </div>
       </div>
