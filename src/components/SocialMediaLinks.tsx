@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function SocialMediaLinks() {
   return (
-    <div className="flex flex-row mx-[50px] my-[260px] gap-[68px]">
+    <div className="flex flex-row gap-[68px]">
       <Link href="https://www.linkedin.com/in/han-tiet98/">
         <Image src="/linkedin.svg" width={48} height={48} alt="linkedin" />
       </Link>
