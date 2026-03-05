@@ -11,7 +11,7 @@ export default function NavButton({ href, children }: string) {
   return (
     <Link href={href}>
       <Button
-        className={`${isActive ? "bg-primary" : "bg-background"} text-[18px] h-[52px] px-[16px]`}
+        className={`${isActive ? "bg-primary" : "bg-background"} text-[18px] h-[52px] px-[16px] py-[12px]`}
       >
         {children}
       </Button>
