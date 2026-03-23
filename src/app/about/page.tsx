@@ -15,7 +15,12 @@ export default function About() {
           needs.
         </div>
         <div className="w-[888px] h-[188px] mr-[50px]">
-          <Image src="/race-car.png" width={888} height={188} alt="race-car" />
+          <Image
+            src="/photos/race-car.png"
+            width={888}
+            height={188}
+            alt="race-car"
+          />
         </div>
       </div>
       <div className="mx-[50px] mt-[260px]">
