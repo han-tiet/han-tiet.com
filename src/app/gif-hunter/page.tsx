@@ -1,7 +1,7 @@
 "use server";
 
 import * as React from "react";
-import Search from "@features/gif-hunter/components/Search";
+import Search from "@/features/gif-hunter/components/Search";
 import { Box, Typography } from "@mui/material";
 
 export default async function GifHunter() {
