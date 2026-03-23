@@ -1,0 +1,110 @@
+/* CSS for Projects Page*/
+
+:root {
+  --cover-size: 15rem;
+}
+
+/* Keyframes to make center cover top when halfway through view timeline. */
+/* Also enables project link when cover is centered */
+
+@keyframes adjust-z-index {
+  0% {
+    z-index: 1;
+  }
+  49% {
+    z-index: 1;
+    pointer-events: none;
+  }
+  50% {
+    z-index: 5;
+    pointer-events: auto;
+  }
+  51% {
+    z-index: 1;
+    pointer-events: none;
+  }
+  100% {
+    z-index: 1;
+  }
+}
+
+/* Keyframes to rotate and translate cover */
+@keyframes rotate-cover {
+  0% {
+    transform: translateX(-50%) rotateY(-30deg);
+  }
+  35% {
+    transform: translateX(0) rotateY(-30deg);
+  }
+  50% {
+    transform: rotateY(0deg) translateZ(1em) scale(1.5);
+  }
+  65% {
+    transform: translateX(0) rotateY(30deg);
+  }
+  100% {
+    transform: translateX(50%) rotateY(30deg);
+  }
+}
+
+.container {
+  display: flex;
+  justify-self: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: coral;
+  border-width: 2px;
+  height: calc(var(--cover-size) * 2.5);
+  width: calc(var(--cover-size) * 6);
+}
+
+.cards::-webkit-scrollbar {
+  display: none;
+}
+
+/* Albums made to be on one line and container made scrollable */
+.cards {
+  align-content: center;
+  padding-inline: calc(var(--cover-size) * 2); /* padding on both sides */
+  list-style: none;
+  white-space: nowrap;
+  overflow-x: scroll;
+}
+
+.cards li {
+  display: inline-block;
+  position: relative;
+  width: calc(var(--cover-size) * 2);
+  aspect-ratio: 2;
+}
+
+/* To always have one album cover centered, CSS Scroll Snapping is used */
+.cards {
+  scroll-snap-type: x mandatory;
+}
+
+.cards li {
+  scroll-snap-align: center;
+}
+
+.cards li {
+  /* Track this element as it intersects the scrollport */
+  view-timeline-name: --li-in-and-out-of-view;
+  view-timeline-axis: inline;
+}
+
+.cards li {
+  /* Link an animation to the astablished view-timeline and have it run during the contain phase */
+  animation: adjust-z-index linear both;
+  animation-timeline: --li-in-and-out-of-view;
+
+  /* Make the 3D stuff work */
+  perspective: 40em;
+}
+
+.cards li > img {
+  /* Link an animation to the established view-timeline (of the parent li) and have it run during the contain phase */
+  animation: rotate-cover linear both;
+  animation-timeline: --li-in-and-out-of-view;
+}
