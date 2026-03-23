@@ -30,7 +30,7 @@ const Results: React.FC<Props> = (props) => {
         {props.source_2.map((Gif: React.ReactNode, index: number) => (
           <div key={index + 10}>
             <img
-              src={Gif.media_formats.gif.url}
+              src={Gif.file.hd.gif.url}
               alt={Gif.title}
               loading="lazy"
               style={{
