@@ -47,30 +47,29 @@
   }
 }
 
+/* Albums made to be on one line and container made scrollable */
+
 .container {
   display: flex;
   justify-self: center;
-  justify-content: center;
+  align-items: center;
+  padding-inline: calc(var(--cover-size) * 2); /* padding on both sides */
+  list-style: none;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: calc(var(--cover-size) * 2.5);
+  width: calc(var(--cover-size) * 6);
   box-sizing: border-box;
   border-style: solid;
   border-color: coral;
   border-width: 2px;
-  height: calc(var(--cover-size) * 2.5);
-  width: calc(var(--cover-size) * 6);
+  scroll-behavior: smooth;
 }
 
-.cards::-webkit-scrollbar {
+/* .cards::-webkit-scrollbar {
   display: none;
-}
-
-/* Albums made to be on one line and container made scrollable */
-.cards {
-  align-content: center;
-  padding-inline: calc(var(--cover-size) * 2); /* padding on both sides */
-  list-style: none;
-  white-space: nowrap;
-  overflow-x: scroll;
-}
+} */
 
 .cards li {
   display: inline-block;
