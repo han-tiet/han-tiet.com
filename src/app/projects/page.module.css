@@ -51,14 +51,15 @@
 
 .container {
   display: flex;
+  flex-direction: row;
   justify-self: center;
   align-items: center;
   padding-inline: calc(var(--cover-size) * 2); /* padding on both sides */
   list-style: none;
   white-space: nowrap;
-  overflow-x: auto;
+  overflow-x: scroll;
   overflow-y: hidden;
-  height: calc(var(--cover-size) * 2.5);
+  height: calc(var(--cover-size) * 3.5);
   width: calc(var(--cover-size) * 6);
   box-sizing: border-box;
   border-style: solid;
@@ -67,7 +68,7 @@
   scroll-behavior: smooth;
 }
 
-/* .cards::-webkit-scrollbar {
+/* .container::-webkit-scrollbar {
   display: none;
 } */
 
@@ -106,4 +107,27 @@
   /* Link an animation to the established view-timeline (of the parent li) and have it run during the contain phase */
   animation: rotate-cover linear both;
   animation-timeline: --li-in-and-out-of-view;
+}
+
+.cards li > div {
+  /* Link an animation to the established view-timeline (of the parent li) and have it run during the contain phase */
+  animation: rotate-cover linear both;
+  animation-timeline: --li-in-and-out-of-view;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  justify-self: center;
+  justify-content: space-between;
+  width: 100%; 
+  padding: 12px 0;
+}
+
+.techUsed {
+  display: flex;
+  flex-direction: column;
+  justify-self: center; 
+  width: 100%; 
+  padding: 8px 0;
 }
