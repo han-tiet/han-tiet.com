@@ -1,17 +1,45 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import styles from "@/app/projects/page.module.css";
 import { useRef, useEffect, useState } from "react";
+import { Project, ProjectProps } from "@/components/Project";
 
 export default function CoverFlow() {
-  const [isVisible, setIsVisible] = useState(false);
+  const projects = [
+    {
+      name: "GIFHunter",
+      description: "A GIF Search Engine",
+      href: "/gif-hunter",
+      src: "/images/gifhunter-screen.png",
+      techsUsed: ["NextJS", "Typescript", "Fetch API"],
+    },
+    {
+      name: "Spotify Artist Collage",
+      description: "Your Top 50 Artists",
+      href: "/",
+      src: "/images/spotify-artist-collage-screen.png",
+      techsUsed: ["CSS Animations", "OAuth", "Server Actions"],
+    },
+  ];
+
+  const [currentInfo, setCurrentInfo] = useState(projects[0]);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+
+    const updateCenteredCover = () => {
+      const cover = el.querySelector("img");
+      const coverWidth = cover?.width;
+      const containerCenter = el.scrollLeft + coverWidth / 2;
+      const centeredIndex = Math.round(containerCenter / coverWidth - 0.5);
+      const clampedIndex = Math.max(
+        0,
+        Math.min(centeredIndex, projects.length - 1),
+      );
+      setCurrentInfo(projects[clampedIndex]);
+    };
 
     const onWheel = (e: WheelEvent) => {
       if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
@@ -19,79 +47,57 @@ export default function CoverFlow() {
       if (el.scrollWidth > el.clientWidth) {
         e.preventDefault();
 
-        const cardWidth = 2000;
-        el.scrollLeft += e.deltaY > 0 ? cardWidth : -cardWidth;
+        const cover = el.querySelector("img");
+        const coverWidth = cover?.width;
+        el.scrollLeft += e.deltaY > 0 ? coverWidth : -coverWidth;
+        console.log(`scrollLeft: ${el.scrollLeft} coverwidth: ${coverWidth}`);
+
+        // Read scrollLeft after the scroll has been applied
+        setTimeout(updateCenteredCover, 0);
       }
     };
 
     el.addEventListener("wheel", onWheel, { passive: false });
+    el.addEventListener("scrollend", updateCenteredCover);
 
     return () => {
       el.removeEventListener("wheel", onWheel);
+      el.removeEventListener("scrollend", updateCenteredCover);
     };
-  }, []);
+  });
 
   return (
-    <div ref={ref} className={styles.container}>
-      <ul className={styles.cards}>
-        <Link href="/gif-hunter">
-          <li>
-            <div>
-              <div id="title" className={styles.title}>
-                <div className="text-xl">GIFHunter - A GIF Search Engine</div>
-                <Image
-                  src="/github.svg"
-                  width={24}
-                  height={24}
-                  alt="github-link"
-                />
-              </div>
-              <Image
-                src="/images/gifhunter-screen.png"
-                width={2000}
-                height={1000}
-                alt="gifhunter"
+    <>
+      <div ref={ref} className={styles.container}>
+        <ul className={styles.covers}>
+          {projects.map((project: ProjectProps) => (
+            <li key={project.name}>
+              <Project
+                name={project.name}
+                description={project.description}
+                href={project.href}
+                src={project.src}
               />
-              <div id="tech-used" className={styles.techUsed}>
-                <div className="text-md py-2">Technologies Used</div>
-                <div className="text-sm">NextJS</div>
-                <div className="text-sm">Typescript</div>
-                <div className="text-sm">Fetch API</div>
-              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="flex flex-col items-center">
+        <div id="title" className="flex flex-row text-lg font-semibold pt-2">
+          {currentInfo.name}
+        </div>
+        <div
+          id="tech-used"
+          className="flex flex-col items-center width-full py-2"
+        >
+          <div className="text-md">Technologies Used</div>
+          {currentInfo.techsUsed.map((tech, i) => (
+            <div key={`tech-${i + 1}`} className="text-sm">
+              {tech}
             </div>
-          </li>
-        </Link>
-        <Link href="/">
-          <li>
-            <div>
-              <div id="title" className={styles.title}>
-                <div className="text-xl">
-                  Spotify Artist Collage - Your Top 50 Artists
-                </div>
-                <Image
-                  src="/github.svg"
-                  width={24}
-                  height={24}
-                  alt="github-link"
-                />
-              </div>
-              <Image
-                src="/images/spotify-artist-collage-screen.png"
-                width={2000}
-                height={1000}
-                alt="spotify-artist-collage"
-              />
-              <div id="tech-used" className={styles.techUsed}>
-                <div className="text-md py-2">Technologies Used</div>
-                <div className="text-sm">CSS Animations</div>
-                <div className="text-sm">OAuth</div>
-                <div className="text-sm">Server Actions</div>
-                <div className="text-sm">PostgresDB</div>
-              </div>
-            </div>
-          </li>
-        </Link>
-      </ul>
-    </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
