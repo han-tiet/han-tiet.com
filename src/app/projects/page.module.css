@@ -64,9 +64,6 @@
   height: calc(var(--cover-size) * 2);
   width: calc(var(--cover-size) * 6);
   box-sizing: border-box;
-  border-style: solid;
-  border-color: white;
-  border-width: 2px;
   scroll-behavior: smooth;
 }
 
