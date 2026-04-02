@@ -1,7 +1,7 @@
 /* CSS for Projects Page*/
 
 :root {
-  --cover-size: 15rem;
+  --cover-size: 18rem;
 }
 
 /* Keyframes to make center cover top when halfway through view timeline. */
@@ -10,21 +10,23 @@
 @keyframes adjust-z-index {
   0% {
     z-index: 1;
+    pointer-events: none;
   }
   49% {
-    z-index: 1;
+    z-index: 99;
     pointer-events: none;
   }
   50% {
-    z-index: 5;
+    z-index: 100;
     pointer-events: auto;
   }
   51% {
-    z-index: 1;
+    z-index: 99;
     pointer-events: none;
   }
   100% {
     z-index: 1;
+    pointer-events: none;
   }
 }
 
@@ -59,20 +61,21 @@
   white-space: nowrap;
   overflow-x: scroll;
   overflow-y: hidden;
-  height: calc(var(--cover-size) * 3.5);
+  height: calc(var(--cover-size) * 2);
   width: calc(var(--cover-size) * 6);
   box-sizing: border-box;
   border-style: solid;
-  border-color: coral;
+  border-color: white;
   border-width: 2px;
   scroll-behavior: smooth;
 }
 
-/* .container::-webkit-scrollbar {
+/* Removes scrollbar*/
+.container::-webkit-scrollbar {
   display: none;
-} */
+}
 
-.cards li {
+.covers li {
   display: inline-block;
   position: relative;
   width: calc(var(--cover-size) * 2);
@@ -80,21 +83,21 @@
 }
 
 /* To always have one album cover centered, CSS Scroll Snapping is used */
-.cards {
+.covers {
   scroll-snap-type: x mandatory;
 }
 
-.cards li {
+.covers li {
   scroll-snap-align: center;
 }
 
-.cards li {
+.covers li {
   /* Track this element as it intersects the scrollport */
   view-timeline-name: --li-in-and-out-of-view;
   view-timeline-axis: inline;
 }
 
-.cards li {
+.covers li {
   /* Link an animation to the astablished view-timeline and have it run during the contain phase */
   animation: adjust-z-index linear both;
   animation-timeline: --li-in-and-out-of-view;
@@ -103,31 +106,14 @@
   perspective: 40em;
 }
 
-.cards li > img {
+.covers li > img {
   /* Link an animation to the established view-timeline (of the parent li) and have it run during the contain phase */
   animation: rotate-cover linear both;
   animation-timeline: --li-in-and-out-of-view;
 }
 
-.cards li > div {
+.covers li > div {
   /* Link an animation to the established view-timeline (of the parent li) and have it run during the contain phase */
   animation: rotate-cover linear both;
   animation-timeline: --li-in-and-out-of-view;
-}
-
-.title {
-  display: flex;
-  flex-direction: row;
-  justify-self: center;
-  justify-content: space-between;
-  width: 100%; 
-  padding: 12px 0;
-}
-
-.techUsed {
-  display: flex;
-  flex-direction: column;
-  justify-self: center; 
-  width: 100%; 
-  padding: 8px 0;
 }
