@@ -9,15 +9,15 @@ export default function CoverFlow() {
     {
       name: "GIFHunter",
       description: "A GIF Search Engine",
-      href: "/gif-hunter",
-      src: "/images/gifhunter-screen.png",
+      href: "/projects/gif-hunter",
+      src: "/han-tiet.com/images/gifhunter-screen.png",
       techsUsed: ["NextJS", "Typescript", "Fetch API"],
     },
     {
       name: "Spotify Artist Collage",
       description: "Your Top 50 Artists",
-      href: "/",
-      src: "/images/spotify-artist-collage-screen.png",
+      href: "/projects/spotify-artist-collage",
+      src: "/han-tiet.com/images/spotify-artist-collage-screen.png",
       techsUsed: ["CSS Animations", "OAuth", "Server Actions"],
     },
   ];
