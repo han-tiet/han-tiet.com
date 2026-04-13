@@ -7,7 +7,7 @@ export default function LogInButton() {
   const LogIn = async () => {
     await authClient.signIn.social({
       provider: "spotify",
-      callbackURL:"/projects/spotify-artist-collage"
+      callbackURL: "/projects/spotify-artist-collage",
     });
   };
 

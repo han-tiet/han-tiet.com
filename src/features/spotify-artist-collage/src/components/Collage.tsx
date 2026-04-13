@@ -1,6 +1,9 @@
 "use client";
 
-import { ArtistImage, ArtistImageProps } from "@/features/spotify-artist-collage/src/components/ArtistImage";
+import {
+  ArtistImage,
+  ArtistImageProps,
+} from "@/features/spotify-artist-collage/src/components/ArtistImage";
 
 type CollageProps = {
   data: [];
