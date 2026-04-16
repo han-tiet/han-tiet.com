@@ -12,7 +12,7 @@ export default function LogInButton() {
   };
 
   return (
-    <Button className="w-auto" onClick={LogIn}>
+    <Button variant="secondary" className="w-auto" onClick={LogIn}>
       Log In With Spotify
     </Button>
   );
