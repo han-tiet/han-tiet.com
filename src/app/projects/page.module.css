@@ -77,6 +77,7 @@
   position: relative;
   width: calc(var(--cover-size) * 2);
   aspect-ratio: 2;
+  filter: drop-shadow(0 4px 4px silver);
 }
 
 /* To always have one album cover centered, CSS Scroll Snapping is used */
