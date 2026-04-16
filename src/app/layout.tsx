@@ -29,13 +29,9 @@ export default function RootLayout({
         <title>Han Tiet&apos;s Portfolio</title>
       </head>
       <body className="h-screen w-screen">
-        <ThemeProvider 
-          forcedTheme="light"
-          disableTransitionOnChange
-        >
+        <ThemeProvider forcedTheme="light" disableTransitionOnChange>
           {children}
         </ThemeProvider>
-           
       </body>
     </html>
   );
