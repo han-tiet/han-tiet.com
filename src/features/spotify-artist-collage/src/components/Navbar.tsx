@@ -27,7 +27,6 @@ export function Navbar({ user }: NavbarProps) {
         </NavigationMenuList>
       </NavigationMenu>
       <div className="flex flex-row justify-self-end gap-4">
-        <ModeToggle />
         <LogOutButton />
       </div>
     </div>
