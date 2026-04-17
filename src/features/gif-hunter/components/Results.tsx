@@ -8,8 +8,6 @@ interface Props {
   source_2: React.ReactNode;
 }
 
-
-
 const Results: React.FC<Props> = (props) => {
   return (
     <Box sx={{ width: 900, minHeight: 829, m: "auto" }}>
