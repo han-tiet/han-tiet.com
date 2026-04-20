@@ -9,10 +9,7 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
 
-  trustedOrigins: [
-    "https://192.168.50.121:3000",
-    "https://spotify-artist-collage-git-collage-013-han-tiets-projects.vercel.app",
-  ], // Added index to trusted origins to remove NextJS warning
+  trustedOrigins: process.env.TRUSTED_ORIGINS?.split(",")??[], // Added index to trusted origins to remove NextJS warning
 
   socialProviders: {
     // Add provider for Spotify OAuth login page
