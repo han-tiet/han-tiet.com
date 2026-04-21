@@ -12,19 +12,18 @@ export default async function resultsPage({
   const { p } = await searchParams;
   // console.log(p)
 
-    const giphyResp = await fetch(
-      `https://api.giphy.com/v1/gifs/search?api_key=${process.env.GH_API_KEY_1}&q=${p}&limit=10&offset=0&rating=r&lang=en&bundle=messaging_non_clips`,
-    );
-    const tenorResp = await fetch(
-      `https://api.klipy.com/api/v1/${process.env.GH_API_KEY_2}/gifs/search?page=1&per_page=24&q=${p}&customer_id=guest&locale=uk&content_filter=off`,
-    );
+  const giphyResp = await fetch(
+    `https://api.giphy.com/v1/gifs/search?api_key=${process.env.GH_API_KEY_1}&q=${p}&limit=10&offset=0&rating=r&lang=en&bundle=messaging_non_clips`,
+  );
+  const tenorResp = await fetch(
+    `https://api.klipy.com/api/v1/${process.env.GH_API_KEY_2}/gifs/search?page=1&per_page=24&q=${p}&customer_id=guest&locale=uk&content_filter=off`,
+  );
 
-    if (!giphyResp.ok || !tenorResp.ok) {
-      return notFound()
-    }
+  if (!giphyResp.ok || !tenorResp.ok) {
+    return notFound();
+  }
 
-    const respJson = await Promise.all([giphyResp.json(), tenorResp.json()]);
-  
+  const respJson = await Promise.all([giphyResp.json(), tenorResp.json()]);
 
   return (
     <Box>
