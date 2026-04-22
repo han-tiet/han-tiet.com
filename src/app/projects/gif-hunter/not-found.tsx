@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/features/gif-hunter/components/ui/button";
 
 export default function notFound() {
   return (
