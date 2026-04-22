@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { ModeToggle } from "@/features/spotify-artist-collage/src/components/ModeToggle";
 import {
   NavigationMenu,
   NavigationMenuItem,
