@@ -12,18 +12,18 @@ export default async function resultsPage({
   const { p } = await searchParams;
   // console.log(p)
 
-  const giphyResp = await fetch(
+  const resp1 = await fetch(
     `https://api.giphy.com/v1/gifs/search?api_key=${process.env.GH_API_KEY_1}&q=${p}&limit=10&offset=0&rating=r&lang=en&bundle=messaging_non_clips`,
   );
-  const tenorResp = await fetch(
+  const resp2 = await fetch(
     `https://api.klipy.com/api/v1/${process.env.GH_API_KEY_2}/gifs/search?page=1&per_page=24&q=${p}&customer_id=guest&locale=uk&content_filter=off`,
   );
 
-  if (!giphyResp.ok || !tenorResp.ok) {
+  if (!resp1.ok || !resp2.ok) {
     return notFound();
   }
 
-  const respJson = await Promise.all([giphyResp.json(), tenorResp.json()]);
+  const respJson = await Promise.all([resp1.json(), resp2.json()]);
 
   return (
     <Box>
