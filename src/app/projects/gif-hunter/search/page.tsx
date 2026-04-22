@@ -2,7 +2,7 @@ import React from "react";
 import Search from "@/features/gif-hunter/components/Search";
 import Results from "@/features/gif-hunter/components/Results";
 import { Box, Typography } from "@mui/material";
-import notFound from "@/app/not-found";
+import notFound from "@/app/projects/gif-hunter/not-found";
 
 export default async function resultsPage({
   searchParams,
