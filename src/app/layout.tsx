@@ -28,10 +28,8 @@ export default function RootLayout({
         <meta httpEquiv="X-UA-Compatible" content="ie=edge"></meta>
         <title>Han Tiet&apos;s Portfolio</title>
       </head>
-      <body className="h-screen w-screen">
-        <ThemeProvider forcedTheme="light" disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
+      <body className="h-screen w-screen overflow-x-hidden">
+        {children}
       </body>
     </html>
   );
