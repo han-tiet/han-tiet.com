@@ -4,9 +4,8 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "@/app/page.module.css";
 import Image from "next/image";
-import NavigationBar from "@/components/NavigationBar";
+import IndexNavigationBar from "@/components/IndexNavigationBar";
 import SocialMediaLinks from "@/components/SocialMediaLinks";
-import { title } from "process";
 
 export default function Index() {
   const containerRef = useRef(null);
@@ -16,32 +15,46 @@ export default function Index() {
     offset: ["start start", "end start"],
   });
 
-  const initialFontSize = 400;
-
   const titleFontSize = useTransform(
     scrollYProgress,
     [0, 0.5],
-    [`${initialFontSize}px`, "48px"],
+    ["25rem", "3rem"],
   );
 
-  const heroTitleOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const aboutTitleOpacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
+  const titleX = useTransform(scrollYProgress, [0, 0.5], ["3vw", "3vw"])
+  const titleY = useTransform(scrollYProgress, [0, 0.5], ["4vh", "4vh"])
+  const titleColor = useTransform(scrollYProgress, [0.40, 0.5], ["#FFFFFF", "#000000"]);
+  
+  const navBarOpacity = useTransform(scrollYProgress, [0.99, 1], [0, 1])
+  const titlePointerEvents = useTransform(scrollYProgress, [0.99, 1], ["none", "auto"]);
 
   return (
-    <div ref={containerRef} className="h-[200vh]">
-      <motion.span
+    <div ref={containerRef}>
+      <motion.div 
+        style={{
+          position: "sticky",
+          top: 0,
+          left: 0,
+          opacity: navBarOpacity
+        }}
+      >
+        <IndexNavigationBar />
+      </motion.div>
+      <motion.a 
+        href="/"
         className="font-semibold text-gray-200 z-100"
         style={{
           fontSize: titleFontSize,
+          color: titleColor,
           position: "sticky",
-          top: "40px",
-          left: "50px",
-          whiteSpace: "nowrap",
-          opacity: heroTitleOpacity,
-        }}
+          top: titleY,
+          left: titleX,
+          pointerEvents: titlePointerEvents,
+          overflow: "nowrap",
+          }}  
       >
-        Han Tiet
-      </motion.span>
+            Han Tiet
+      </motion.a>
       <div className="h-[100vh] w-[100vw] overflow-hidden">
         <video autoPlay muted loop playsInline className={styles.videobg}>
           <source
@@ -50,9 +63,8 @@ export default function Index() {
           />
         </video>
       </div>
-      <div className="h-[100vh] -z-1">
-        <NavigationBar />
-        <div className="flex flex-row items-left mt-[160px]">
+      <div className="h-[100vh]">
+        <div className="flex flex-row items-left mt-[10vh]">
           <div className="text-[32px]/[64px] h-[192px] w-[896px] ml-[50px] mr-auto">
             I’m passionate about building products that are both creative and
             useful, with a focus on clean and functional design that meets user
