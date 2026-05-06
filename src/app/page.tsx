@@ -72,13 +72,13 @@ export default function Index() {
         </video>
       </div>
       <div className="h-[100vh]">
-        <div className="flex flex-row items-left mt-[10vh]">
-          <div className="text-[32px]/[64px] h-[192px] w-[896px] ml-[50px] mr-auto">
+        <div className="flex flex-row items-left pt-[30vh]">
+          <div className="text-[2rem]/[4rem] h-full w-full ml-[3vw] mr-auto">
             I’m passionate about building products that are both creative and
             useful, with a focus on clean and functional design that meets user
             needs.
           </div>
-          <div className="w-[888px] h-[188px] mr-[50px]">
+          <div className="w-full h-full mr-[3vw]]">
             <Image
               src="/photos/race-car.png"
               width={888}
@@ -87,7 +87,7 @@ export default function Index() {
             />
           </div>
         </div>
-        <div className="mx-[50px] mt-[260px]">
+        <div className="mx-[3vw] mt-[28vh]">
           <SocialMediaLinks />
         </div>
       </div>
