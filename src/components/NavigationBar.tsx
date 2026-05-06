@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export default function NavigationBar() {
   return (
-    <div className="col-span-full grid grid-cols-2 items-center h-[140px] px-[50px]">
+    <div className="col-span-full grid grid-cols-2 items-center h-[14vh] px-[3vw]">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
