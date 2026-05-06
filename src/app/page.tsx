@@ -21,26 +21,34 @@ export default function Index() {
     ["25rem", "3rem"],
   );
 
-  const titleX = useTransform(scrollYProgress, [0, 0.5], ["3vw", "3vw"])
-  const titleY = useTransform(scrollYProgress, [0, 0.5], ["4vh", "4vh"])
-  const titleColor = useTransform(scrollYProgress, [0.40, 0.5], ["#FFFFFF", "#000000"]);
-  
-  const navBarOpacity = useTransform(scrollYProgress, [0.99, 1], [0, 1])
-  const titlePointerEvents = useTransform(scrollYProgress, [0.99, 1], ["none", "auto"]);
+  const titleX = useTransform(scrollYProgress, [0, 0.5], ["3vw", "3vw"]);
+  const titleY = useTransform(scrollYProgress, [0, 0.5], ["4vh", "4vh"]);
+  const titleColor = useTransform(
+    scrollYProgress,
+    [0.4, 0.5],
+    ["#FFFFFF", "#000000"],
+  );
+
+  const navBarOpacity = useTransform(scrollYProgress, [0.99, 1], [0, 1]);
+  const titlePointerEvents = useTransform(
+    scrollYProgress,
+    [0.99, 1],
+    ["none", "auto"],
+  );
 
   return (
     <div ref={containerRef}>
-      <motion.div 
+      <motion.div
         style={{
           position: "sticky",
           top: 0,
           left: 0,
-          opacity: navBarOpacity
+          opacity: navBarOpacity,
         }}
       >
         <IndexNavigationBar />
       </motion.div>
-      <motion.a 
+      <motion.a
         href="/"
         className="font-semibold text-gray-200 z-100"
         style={{
@@ -51,9 +59,9 @@ export default function Index() {
           left: titleX,
           pointerEvents: titlePointerEvents,
           overflow: "nowrap",
-          }}  
+        }}
       >
-            Han Tiet
+        Han Tiet
       </motion.a>
       <div className="h-[100vh] w-[100vw] overflow-hidden">
         <video autoPlay muted loop playsInline className={styles.videobg}>
