@@ -25,16 +25,18 @@ export default function Index() {
   const titleY = useTransform(scrollYProgress, [0, 0.5], ["4vh", "4vh"]);
   const titleColor = useTransform(
     scrollYProgress,
-    [0.4, 0.5],
-    ["#FFFFFF", "#000000"],
+    [0, 0.5],
+    ["#FAFAFA", "#000000"],
   );
-
-  const navBarOpacity = useTransform(scrollYProgress, [0.99, 1], [0, 1]);
   const titlePointerEvents = useTransform(
     scrollYProgress,
     [0.99, 1],
     ["none", "auto"],
   );
+
+  const navBarOpacity = useTransform(scrollYProgress, [0.99, 1], [0, 1]);
+  const navBarPointerEvents = useTransform(scrollYProgress, [0.99, 1], ["none", "auto"]);
+  
 
   return (
     <div ref={containerRef}>
@@ -44,13 +46,14 @@ export default function Index() {
           top: 0,
           left: 0,
           opacity: navBarOpacity,
+          pointerEvents: navBarPointerEvents
         }}
       >
         <IndexNavigationBar />
       </motion.div>
       <motion.a
         href="/"
-        className="font-semibold text-gray-200 z-100"
+        className="font-semibold z-100"
         style={{
           fontSize: titleFontSize,
           color: titleColor,
