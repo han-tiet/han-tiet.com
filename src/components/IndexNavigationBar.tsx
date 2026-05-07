@@ -16,7 +16,6 @@ export default function NavigationBar() {
         </NavigationMenuList>
       </NavigationMenu>
       <div className="flex flex-row justify-self-end gap-4">
-        <NavButton href="/about">About</NavButton>
         <NavButton href="/projects">Projects</NavButton>
         <NavButton href="/contact">Contact</NavButton>
       </div>
