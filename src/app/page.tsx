@@ -80,9 +80,9 @@ export default function Index() {
       <div className="h-[100vh]">
         <div className="flex flex-row items-left pt-[30vh]">
           <div className="text-[2rem]/[4rem] h-full w-full ml-[3vw] mr-auto">
-            I&apos;m passionate about building products that are both creative and
-            useful, with a focus on clean and functional design that meets user
-            needs.
+            I&apos;m passionate about building products that are both creative
+            and useful, with a focus on clean and functional design that meets
+            user needs.
           </div>
           <div className="w-full h-full mr-[3vw]]">
             <Image
