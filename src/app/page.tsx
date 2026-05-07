@@ -35,8 +35,11 @@ export default function Index() {
   );
 
   const navBarOpacity = useTransform(scrollYProgress, [0.99, 1], [0, 1]);
-  const navBarPointerEvents = useTransform(scrollYProgress, [0.99, 1], ["none", "auto"]);
-  
+  const navBarPointerEvents = useTransform(
+    scrollYProgress,
+    [0.99, 1],
+    ["none", "auto"],
+  );
 
   return (
     <div ref={containerRef}>
@@ -46,7 +49,7 @@ export default function Index() {
           top: 0,
           left: 0,
           opacity: navBarOpacity,
-          pointerEvents: navBarPointerEvents
+          pointerEvents: navBarPointerEvents,
         }}
       >
         <IndexNavigationBar />
