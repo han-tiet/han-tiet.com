@@ -37,7 +37,7 @@ export default function Index() {
   const navBarOpacity = useTransform(scrollYProgress, [0.99, 1], [0, 1]);
   const navBarPointerEvents = useTransform(
     scrollYProgress,
-    [0.99, 1],
+    [0.5, 1],
     ["none", "auto"],
   );
 
@@ -80,7 +80,7 @@ export default function Index() {
       <div className="h-[100vh]">
         <div className="flex flex-row items-left pt-[30vh]">
           <div className="text-[2rem]/[4rem] h-full w-full ml-[3vw] mr-auto">
-            I’m passionate about building products that are both creative and
+            I&apos;m passionate about building products that are both creative and
             useful, with a focus on clean and functional design that meets user
             needs.
           </div>
