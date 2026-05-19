@@ -12,11 +12,11 @@ const Results: React.FC<Props> = (props) => {
   return (
     <Box sx={{ width: 900, minHeight: 829, m: "auto" }}>
       <Masonry columns={3} spacing={2}>
-        {props.source_1.map((gif: React.ReactNode, index: number) => (
+        {props.source_1.map((source_1: React.ReactNode, index: number) => (
           <div key={index}>
             <img
-              src={`https://i.giphy.com/${gif.id}.webp`}
-              alt={gif.title}
+              src={`https://i.giphy.com/${source_1.id}.webp`}
+              alt={source_1.title}
               loading="lazy"
               style={{
                 borderBottomLeftRadius: 4,
@@ -27,11 +27,11 @@ const Results: React.FC<Props> = (props) => {
             />
           </div>
         ))}
-        {props.source_2.map((Gif: React.ReactNode, index: number) => (
+        {props.source_2.map((source_2: React.ReactNode, index: number) => (
           <div key={index + 10}>
             <img
-              src={Gif.file.hd.gif.url}
-              alt={Gif.title}
+              src={source_2.file.hd.gif.url}
+              alt={source_2.title}
               loading="lazy"
               style={{
                 borderBottomLeftRadius: 4,

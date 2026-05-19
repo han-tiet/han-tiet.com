@@ -6,7 +6,7 @@ import Form from "next/form";
 export default function Search() {
   return (
     <Box sx={{ width: "30rem", my: 5, mx: "auto" }}>
-      <Form action="/gif-hunter/search">
+      <Form action="/projects/gif-hunter/search">
         <Box
           sx={{
             display: "flex",
