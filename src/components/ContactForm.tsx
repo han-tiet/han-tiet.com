@@ -16,10 +16,10 @@ import { Textarea } from "@/components/ui/textarea";
 import SubmitButton from "@/components/SubmitButton";
 
 const formSchema = z.object({
-  firstName: z
+  forename: z
     .string()
-    .min(1, "First name must not be empty")
-    .max(30, "First name must not have more than 30 characters"),
+    .min(1, "forename must not be empty")
+    .max(30, "forename must not have more than 30 characters"),
   surname: z
     .string()
     .min(1, "Surname must not be empty")
@@ -35,11 +35,11 @@ const formSchema = z.object({
     .max(5000, "Message is too long"),
 });
 
-export function ContactForm() {
+export default function ContactForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
+      forename: "",
       surname: "",
       emailAddress: "",
       subject: "",
@@ -60,17 +60,18 @@ export function ContactForm() {
         <FieldGroup>
           <div className="grid grid-cols-2 gap-16">
             <Controller
-              name="firstName"
+              name="forename"
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
                   <Input
                     {...field}
-                    id="first-name"
+                    id="forename"
                     aria-invalid={fieldState.invalid}
                     type="input"
                     placeholder="Forename"
                     className="border-[2px] rounded-[8px]"
+                    autoComplete="off"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -78,38 +79,85 @@ export function ContactForm() {
                 </Field>
               )}
             />
-            <Field>
-              <Input
-                id="surname"
-                type="input"
-                placeholder="Surname"
-                className="border-[2px] rounded-[8px]"
-              />
-            </Field>
+            <Controller
+              name="surname"
+              control={form.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <Input
+                    {...field}
+                    id="surename"
+                    aria-invalid={fieldState.invalid}
+                    type="input"
+                    placeholder="Surname"
+                    className="border-[2px] rounded-[8px]"
+                    autoComplete="off"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
           </div>
-          <Field>
-            <Input
-              id="email-address"
-              type="input"
-              placeholder="Email Address"
-              className="border-[2px] rounded-[8px]"
-            />
-          </Field>
-          <Field>
-            <Input
-              id="subject"
-              type="input"
-              placeholder="Email Subject"
-              className="border-[2px] rounded-[8px]"
-            />
-          </Field>
-          <Field>
-            <Textarea
-              id="message"
-              placeholder="Write your message here"
-              className="h-[300px] border-[2px] rounded-[8px]"
-            />
-          </Field>
+          <Controller
+            name="emailAddress"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <Input
+                  {...field}
+                  id="email-address"
+                  aria-invalid={fieldState.invalid}
+                  type="input"
+                  placeholder="Email Address"
+                  className="border-[2px] rounded-[8px]"
+                  autoComplete="off"
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+          <Controller
+            name="subject"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <Input
+                  {...field}
+                  id="subject"
+                  aria-invalid={fieldState.invalid}
+                  type="input"
+                  placeholder="Subject"
+                  className="border-[2px] rounded-[8px]"
+                  autoComplete="off"
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+          <Controller
+            name="subject"
+            control={form.control}
+            render={({ fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <Textarea
+                  id="message"
+                  aria-invalid={fieldState.invalid}
+                  placeholder="Write your message here"
+                  className="h-[300px] border-[2px] rounded-[8px]"
+                  autoComplete="off"
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
           <Field>
             <div className="flex justify-center p-8">
               <SubmitButton />
