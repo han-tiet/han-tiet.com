@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
 import { Inter } from "next/font/google";
 
 const inter = Inter({
@@ -18,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
+    <html lang="en" className={inter.className}>
       <head>
         <meta charSet="utf-8" />
         <meta
@@ -28,11 +27,7 @@ export default function RootLayout({
         <meta httpEquiv="X-UA-Compatible" content="ie=edge"></meta>
         <title>Han Tiet&apos;s Portfolio</title>
       </head>
-      <body className="h-screen w-screen">
-        <ThemeProvider forcedTheme="light" disableTransitionOnChange>
-          {children}
-        </ThemeProvider>
-      </body>
+      <body className="h-screen w-screen">{children}</body>
     </html>
   );
 }
