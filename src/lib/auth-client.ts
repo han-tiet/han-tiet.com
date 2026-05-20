@@ -1,4 +1,6 @@
 import { createAuthClient } from "better-auth/react";
+import { ROUTES } from "@/constants/routes";
+
 export const authClient = createAuthClient({
-  basePath: "/projects/spotify-artist-collage/api/auth", // URL of index page
+  basePath: ROUTES.SPOTIFY_ARTIST_COLLAGE__AUTH_API, // URL of index page
 });

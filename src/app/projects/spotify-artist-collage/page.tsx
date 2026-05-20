@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { Navbar } from "@/features/spotify-artist-collage/src/components/Navbar";
 import { Collage } from "@/features/spotify-artist-collage/src/components/Collage";
+import { ROUTES } from "@/constants/routes";
 
 export default async function Page() {
   const session = await auth.api.getSession({
@@ -10,7 +11,7 @@ export default async function Page() {
   });
 
   if (!session) {
-    redirect("/projects/spotify-artist-collage/login");
+    redirect(ROUTES.SPOTIFY_ARTIST_COLLAGE__LOGIN);
   } else {
     const data = await fetchArtists();
     const user = await fetchUser();
