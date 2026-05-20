@@ -16,7 +16,7 @@ export default function About() {
         </div>
         <div className="w-[888px] h-[188px] mr-[50px]">
           <Image
-            src="/photos/race-car.png"
+            src={`${process.env.NEXT_PUBLIC_HOST}/images/race-car.png`}
             width={888}
             height={188}
             alt="race-car"
