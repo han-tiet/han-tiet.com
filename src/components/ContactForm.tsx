@@ -1,7 +1,6 @@
 "use client";
 
-
-import { useActionState } from "react"
+import { useActionState } from "react";
 import {
   Field,
   FieldDescription,
@@ -14,11 +13,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { sendEmail } from "@/app/actions/sendEmail";
 
-const initialState = { success: false, errors: {} }
-
+const initialState = { success: false, errors: {} };
 
 export default function ContactForm() {
-  const [state, formAction, isPending] = useActionState(sendEmail, initialState)
+  const [state, formAction, isPending] = useActionState(
+    sendEmail,
+    initialState,
+  );
 
   return (
     <form action={formAction}>
@@ -78,9 +79,7 @@ export default function ContactForm() {
           />
         </Field>
       </FieldGroup>
-      <Button type="submit">
-        Submit
-      </Button>
+      <Button type="submit">Submit</Button>
     </form>
-  )
+  );
 }
