@@ -10,6 +10,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.1057.0",
     "@barba/core": "^2.10.3",
     "@better-auth/prisma-adapter": "^1.6.0",
     "@emotion/react": "^11.14.0",
