@@ -1,9 +1,8 @@
 "use server";
 
-
 import { z } from "zod";
-import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses"
-import type { SESClientConfig } from "@aws-sdk/client-ses"
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import type { SESClientConfig } from "@aws-sdk/client-ses";
 import { Type } from "lucide-react";
 
 const schema = z.object({
@@ -46,39 +45,39 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
 
   const results = validatedFields;
 
-  const config = {}
-    const client = new SESClient(config)
-  
-    const input = { 
-      Source: results.data.emailAddress,
-      SourceArn: "",
-      Destination: {
-        BccAddresses: [],
-        CcAddresses: [],
-        ToAddresses: [process.env.EMAIL_ADDRESS_DEST]
+  const config = {};
+  const client = new SESClient(config);
+
+  const input = {
+    Source: results.data.emailAddress,
+    SourceArn: "",
+    Destination: {
+      BccAddresses: [],
+      CcAddresses: [],
+      ToAddresses: [process.env.EMAIL_ADDRESS_DEST],
+    },
+    Message: {
+      Subject: {
+        Data: results.data.subject,
+        Charset: "UTF-8",
       },
-      Message: {
-        Subject: {
-          Data: results.data.subject,
+      Body: {
+        Html: {
+          Data: "",
           Charset: "UTF-8",
         },
-        Body: {
-          Html: {
-            Data: "",
-            Charset: "UTF-8", 
-          },
-          Text: {
-            Data: results.data.message,
-            Charset: "UTF-8"
-          }
-        }
+        Text: {
+          Data: results.data.message,
+          Charset: "UTF-8",
+        },
       },
-      ReplyToAddresses: [],
-      ReturnPath: "",
-      ReturnPathArn: ""
-    }
-    const command = new SendEmailCommand(input)
-    const response = await client.send(command)
+    },
+    ReplyToAddresses: [],
+    ReturnPath: "",
+    ReturnPathArn: "",
+  };
+  const command = new SendEmailCommand(input);
+  const response = await client.send(command);
 
   return { success: true };
 }
