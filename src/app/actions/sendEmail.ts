@@ -2,8 +2,6 @@
 
 import { z } from "zod";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
-import type { SESClientConfig } from "@aws-sdk/client-ses";
-import { Type } from "lucide-react";
 
 const schema = z.object({
   forename: z
@@ -34,8 +32,6 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
     message: formData.get("message"),
   });
 
-  // console.log("Fields ", JSON.stringify(validatedFields)) // log to check if zod is silently blocking
-
   if (!validatedFields.success) {
     return console.log({
       success: false,
@@ -43,14 +39,13 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
     });
   }
 
-  const results = validatedFields;
+  const contactForm = validatedFields.data;
 
-  const config = {};
+  const config = {region: "us-east-1"};
   const client = new SESClient(config);
 
   const input = {
-    Source: results.data.emailAddress,
-    SourceArn: "",
+    Source: contactForm.emailAddress,
     Destination: {
       BccAddresses: [],
       CcAddresses: [],
@@ -58,26 +53,20 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
     },
     Message: {
       Subject: {
-        Data: results.data.subject,
+        Data: contactForm.subject,
         Charset: "UTF-8",
       },
       Body: {
-        Html: {
-          Data: "",
-          Charset: "UTF-8",
-        },
         Text: {
-          Data: results.data.message,
+          Data: `Message from ${contactForm.forename} ${contactForm.surname} \n\n ${contactForm.message}`,
           Charset: "UTF-8",
         },
       },
     },
     ReplyToAddresses: [],
-    ReturnPath: "",
-    ReturnPathArn: "",
   };
   const command = new SendEmailCommand(input);
   const response = await client.send(command);
 
-  return { success: true };
+  return { success: true, response };
 }
