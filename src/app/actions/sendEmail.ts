@@ -41,7 +41,7 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
 
   const contactForm = validatedFields.data;
 
-  const config = { region: "us-east-1" };
+  const config = { region: process.env.AWS_REGION };
   const client = new SESClient(config);
 
   const input = {
@@ -57,6 +57,15 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
         Charset: "UTF-8",
       },
       Body: {
+        Html: {
+          Data: `
+            <div style="font-family: Helevetica, sans-serif; font-size: 16px">
+              <p>Message from ${contactForm.forename} ${contactForm.surname}</p>
+              <p>${contactForm.message}</p>
+            </div>
+            `,
+          Charset: "UTF-8",
+        },
         Text: {
           Data: `Message from ${contactForm.forename} ${contactForm.surname} \n\n ${contactForm.message}`,
           Charset: "UTF-8",
@@ -65,8 +74,54 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
     },
     ReplyToAddresses: [],
   };
+
+  const emailVerification = {
+    Source: process.env.EMAIL_ADDRESS_DEST,
+    Destination: {
+      BccAddresses: [],
+      CcAddresses: [],
+      ToAddresses: [contactForm.emailAddress],
+    },
+    Message: {
+      Subject: {
+        Data: `Re: ${contactForm.subject}`,
+        Charset: "UTF-8",
+      },
+      Body: {
+        Html: {
+          Data: `
+            <div style="font-family: Helevetica, sans-serif; font-size: 16px">
+              <p>Hi ${contactForm.forename}, \n</p>
+              <p>Thanks for getting in touch!</p>
+              <p>I have received your email and will send a reply soon.</p>
+              <p></p>
+              <p>Kind regards</p>
+              <p>Han</p>
+            </div>
+            `,
+          Charset: "UTF-8",
+        },
+        Text: {
+          Data: `Hi sender, thanks for getting in touch! 
+          I have received your email and will send a reply soon. \n\n
+          Kind regards \n
+          Han`,
+          Charset: "UTF-8",
+        },
+      },
+    },
+    ReplyToAddresses: [],
+  };
+
   const command = new SendEmailCommand(input);
   const response = await client.send(command);
 
-  return { success: true, response };
+  if (!response) {
+    console.log("error sending email");
+    return console.log({ success: false, response });
+  } else {
+    const vCommand = new SendEmailCommand(emailVerification);
+    const vResponse = await client.send(vCommand);
+    return console.log({ success: true, response, vResponse });
+  }
 }
