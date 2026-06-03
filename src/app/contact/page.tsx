@@ -1,7 +1,3 @@
-import * as React from "react";
-
-import { redirect } from "next/navigation";
-
 import NavigationBar from "@/components/NavigationBar";
 import ContactForm from "@/components/ContactForm";
 
