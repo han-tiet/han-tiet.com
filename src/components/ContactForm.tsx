@@ -79,7 +79,11 @@ export default function ContactForm() {
           />
         </Field>
       </FieldGroup>
-      <Button type="submit">Submit</Button>
+      <div className="flex justify-center py-[2rem]">
+        <Button className="text-[18px] h-[52px] w-[170px]" type="submit">
+          Submit
+        </Button>
+      </div>
     </form>
   );
 }
