@@ -41,7 +41,7 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
 
   const contactForm = validatedFields.data;
 
-  const config = {region: "us-east-1"};
+  const config = { region: "us-east-1" };
   const client = new SESClient(config);
 
   const input = {
