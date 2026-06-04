@@ -6,8 +6,8 @@ import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 const schema = z.object({
   forename: z
     .string()
-    .min(1, "forename must not be empty")
-    .max(30, "forename must not have more than 30 characters"),
+    .min(1, "Forename must not be empty")
+    .max(30, "Forename must not have more than 30 characters"),
   surname: z
     .string()
     .min(1, "Surname must not be empty")
@@ -33,10 +33,10 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
   });
 
   if (!validatedFields.success) {
-    return console.log({
+    return {
       success: false,
       errors: validatedFields.error.flatten().fieldErrors,
-    });
+    };
   }
 
   const contactForm = validatedFields.data;
@@ -118,10 +118,10 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
 
   if (!response) {
     console.log("error sending email");
-    return console.log({ success: false, response });
+    return console.log({ success: false, errors: {} });
   } else {
     const vCommand = new SendEmailCommand(emailVerification);
     const vResponse = await client.send(vCommand);
-    return console.log({ success: true, response, vResponse });
+    return console.log({ success: true, errors: {} });
   }
 }
