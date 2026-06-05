@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/app/globals.css";
 import { Inter } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,7 +28,17 @@ export default function RootLayout({
         <meta httpEquiv="X-UA-Compatible" content="ie=edge"></meta>
         <title>Han Tiet&apos;s Portfolio</title>
       </head>
-      <body className="h-screen w-screen overflow-x-hidden">{children}</body>
+      <body className="h-screen w-screen overflow-x-hidden">
+        {children}
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: "#ff8181",
+            },
+          }}
+        />
+      </body>
     </html>
   );
 }
