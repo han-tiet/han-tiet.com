@@ -1,13 +1,7 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-} from "@/components/ui/field";
+import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -28,11 +22,15 @@ export default function ContactForm() {
 
   useEffect(() => {
     if (state.errorCode === "FORM_SUBMISSION_ERROR") {
-      toast.error("Form submission error, please try again");
+      toast.error("Form submission error, please try again", {
+        style: { background: "#ff8181" },
+      });
     }
 
     if (state.success == true) {
-      toast.success("Message sent successfully");
+      toast.success("Message sent successfully", {
+        style: { background: "#7aff8f" },
+      });
     }
   }, [state]);
 
@@ -156,7 +154,11 @@ export default function ContactForm() {
           </Field>
         </FieldGroup>
         <div className="flex justify-center py-[2rem]">
-          <Button className="text-[18px] h-[52px] w-[170px]" type="submit">
+          <Button
+            className="text-[18px] h-[52px] w-[170px]"
+            type="submit"
+            disabled={isPending}
+          >
             Submit
           </Button>
         </div>
