@@ -30,9 +30,7 @@ export default function RootLayout({
       </head>
       <body className="h-screen w-screen overflow-x-hidden">
         {children}
-        <Toaster
-          position="bottom-right"
-        />
+        <Toaster position="bottom-right" />
       </body>
     </html>
   );
