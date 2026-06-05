@@ -117,9 +117,7 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
   const command = new SendEmailCommand(input);
   const response = await client.send(command);
 
-  console.log(response);
-
-  if (!response) {
+  if (response.$metadata.httpStatusCode != 200) {
     return {
       success: false,
       errors: {},
