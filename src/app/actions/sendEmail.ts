@@ -36,6 +36,7 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
     return {
       success: false,
       errors: validatedFields.error.flatten().fieldErrors,
+      errorCode: "FORM_VALIDATION_ERROR",
     };
   }
 
@@ -75,7 +76,7 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
     ReplyToAddresses: [],
   };
 
-  const emailVerification = {
+  const emailConfirmation = {
     Source: process.env.EMAIL_ADDRESS_DEST,
     Destination: {
       BccAddresses: [],
@@ -116,12 +117,17 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
   const command = new SendEmailCommand(input);
   const response = await client.send(command);
 
+  console.log(response);
+
   if (!response) {
-    console.log("error sending email");
-    return console.log({ success: false, errors: {} });
+    return {
+      success: false,
+      errors: {},
+      errorCode: "FORM_SUBMISSION_ERROR",
+    };
   } else {
-    const vCommand = new SendEmailCommand(emailVerification);
-    const vResponse = await client.send(vCommand);
-    return console.log({ success: true, errors: {} });
+    const confirmationCommand = new SendEmailCommand(emailConfirmation);
+    const confirmationResponse = await client.send(confirmationCommand);
+    return { success: true, errors: {}, errorCode: null };
   }
 }
