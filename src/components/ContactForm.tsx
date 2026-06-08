@@ -38,52 +38,54 @@ export default function ContactForm() {
     <>
       <form action={formAction}>
         <FieldGroup>
-          <Field>
-            <Input
-              id="forename"
-              name="forename"
-              aria-describedby={
-                state.errors?.forename ? "forename-error" : undefined
-              }
-              type="input"
-              placeholder="Forename"
-              className="border-[2px] rounded-[8px]"
-              autoComplete="off"
-            />
-            {state.errors?.forename && (
-              <span
-                id="forename-error"
-                className="text-[12px]"
-                role="alert"
-                style={{ color: "red" }}
-              >
-                {state.errors?.forename[0]}
-              </span>
-            )}
-          </Field>
-          <Field>
-            <Input
-              id="surname"
-              name="surname"
-              aria-describedby={
-                state.errors?.surname ? "surname-error" : undefined
-              }
-              type="input"
-              placeholder="Surname"
-              className="border-[2px] rounded-[8px]"
-              autoComplete="off"
-            />
-            {state.errors?.surname && (
-              <span
-                id="surname-error"
-                className="text-[12px]"
-                role="alert"
-                style={{ color: "red" }}
-              >
-                {state.errors?.surname[0]}
-              </span>
-            )}
-          </Field>
+          <div className="flex flex-row gap-[4rem]">
+            <Field>
+              <Input
+                id="forename"
+                name="forename"
+                aria-describedby={
+                  state.errors?.forename ? "forename-error" : undefined
+                }
+                type="input"
+                placeholder="Forename"
+                className="border-[2px] rounded-[8px]"
+                autoComplete="off"
+              />
+              {state.errors?.forename && (
+                <span
+                  id="forename-error"
+                  className="text-[12px]"
+                  role="alert"
+                  style={{ color: "red" }}
+                >
+                  {state.errors?.forename[0]}
+                </span>
+              )}
+            </Field>
+            <Field>
+              <Input
+                id="surname"
+                name="surname"
+                aria-describedby={
+                  state.errors?.surname ? "surname-error" : undefined
+                }
+                type="input"
+                placeholder="Surname"
+                className="border-[2px] rounded-[8px]"
+                autoComplete="off"
+              />
+              {state.errors?.surname && (
+                <span
+                  id="surname-error"
+                  className="text-[12px]"
+                  role="alert"
+                  style={{ color: "red" }}
+                >
+                  {state.errors?.surname[0]}
+                </span>
+              )}
+            </Field>
+          </div>
           <Field>
             <Input
               id="emailAddress"
