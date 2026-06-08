@@ -16,7 +16,7 @@ const schema = z.object({
   subject: z
     .string()
     .min(1, "Subject must not be empty")
-    .max(50, "Surname must not have more than 50 characters"),
+    .max(50, "Subject must not have more than 50 characters"),
   message: z
     .string()
     .min(1, "Message must not be empty")
