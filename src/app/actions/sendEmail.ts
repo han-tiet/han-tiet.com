@@ -62,6 +62,7 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
           Data: `
             <div style="font-family: Helevetica, sans-serif; font-size: 16px">
               <p>Message from ${contactForm.forename} ${contactForm.surname}</p>
+              <br></br>
               <p>${contactForm.message}</p>
             </div>
             `,
