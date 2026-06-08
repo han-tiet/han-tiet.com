@@ -3,6 +3,7 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { ROUTES } from "@/constants/routes";
 
 export async function LogInAction() {
   await auth.api.signInSocial({
@@ -17,5 +18,5 @@ export async function LogOutAction() {
     headers: await headers(),
   });
 
-  redirect("/projects/spotify-artist-collage/login");
+  redirect(ROUTES.SPOTIFY_ARTIST_COLLAGE__LOGIN);
 }
