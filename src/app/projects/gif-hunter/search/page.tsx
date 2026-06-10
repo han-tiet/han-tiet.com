@@ -2,7 +2,7 @@ import React from "react";
 import Search from "@/features/gif-hunter/components/Search";
 import Results from "@/features/gif-hunter/components/Results";
 import { Box, Typography } from "@mui/material";
-import notFound from "@/app/not-found";
+import notFound from "@/app/projects/gif-hunter/not-found";
 
 export default async function resultsPage({
   searchParams,
@@ -10,24 +10,52 @@ export default async function resultsPage({
   searchParams: Promise<{ p: string }>;
 }) {
   const { p } = await searchParams;
-  // console.log(p)
 
-  try {
-    const giphyResp = await fetch(
-      `https://api.giphy.com/v1/gifs/search?api_key=${process.env.API_KEY_1}&q=${p}&limit=10&offset=0&rating=r&lang=en&bundle=messaging_non_clips`,
+  async function fetchResults1() {
+    const resp = await fetch(
+      `https://api.giphy.com/v1/gifs/search?api_key=${process.env.GH_API_KEY_1}&q=${p}&limit=10&offset=0&rating=r&lang=en&bundle=messaging_non_clips`,
     );
-    const tenorResp = await fetch(
-      `https://api.klipy.com/api/v1/${process.env.API_KEY_2}/gifs/search?page=1&per_page=24&q=${p}&customer_id=guest&locale=uk&content_filter=off`,
+    const json = await resp.json();
+    return json.data;
+  }
+
+  async function fetchResults2() {
+    const resp = await fetch(
+      `https://api.klipy.com/api/v1/${process.env.GH_API_KEY_2}/gifs/search?page=1&per_page=24&q=${p}&customer_id=guest&locale=uk&content_filter=off`,
     );
+    const json = await resp.json();
+    return json.data.data;
+  }
 
-    if (!giphyResp.ok) {
-      throw new Error(`HTTP ${giphyResp.status}`);
-    }
+  const [results1, results2] = await Promise.allSettled([
+    fetchResults1(),
+    fetchResults2(),
+  ]);
 
-    const respJson = await Promise.all([giphyResp.json(), tenorResp.json()]);
-  } catch (err) {
+  if (results1.status === "rejected" && results2.status === "rejected") {
     return notFound();
   }
+
+  const APIErrorMessage = () => {
+    if (results1.status === "rejected") {
+      return (
+        <Typography variant="h6" component="span" sx={{ color: "red" }}>
+          Error: Cannot connect to Giphy API
+        </Typography>
+      );
+    }
+
+    if (results2.status === "rejected") {
+      return (
+        <Typography variant="h6" component="span" sx={{ color: "red" }}>
+          Error: Cannot connect to Klipy API
+        </Typography>
+      );
+    }
+  };
+
+  const gifs1 = results1.status === "fulfilled" ? results1.value : [];
+  const gifs2 = results2.status === "fulfilled" ? results2.value : [];
 
   return (
     <Box>
@@ -35,14 +63,17 @@ export default async function resultsPage({
         <Typography
           variant="h3"
           component="a"
-          href="/gif-hunter"
+          href="/projects/gif-hunter"
           sx={{ textDecoration: "none", color: "black" }}
         >
           GIFHunter
         </Typography>
       </Box>
       <Search />
-      <Results source_1={respJson[0].data} source_2={respJson[1].data.data} />
+      <Results source_1={gifs1} source_2={gifs2} />
+      <Box sx={{ display: "flex", justifyContent: "center", p: "2rem" }}>
+        {APIErrorMessage()}
+      </Box>
     </Box>
   );
 }

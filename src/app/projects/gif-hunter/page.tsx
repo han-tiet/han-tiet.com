@@ -11,7 +11,7 @@ export default async function GifHunter() {
         <Typography
           variant="h3"
           component="a"
-          href="/gif-hunter"
+          href="/projects/gif-hunter"
           sx={{ textDecoration: "none", color: "black" }}
         >
           GIFHunter
