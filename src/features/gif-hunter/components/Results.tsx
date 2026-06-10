@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react"
+import { useState, useCallback, useEffect } from "react";
 import React from "react";
 import Box from "@mui/material/Box";
 import Masonry from "@mui/lab/Masonry";
@@ -11,22 +11,26 @@ interface Props {
 }
 
 const Results: React.FC<Props> = (props) => {
-  const [loadedCount, setLoadedCount] = useState(0)
-  const totalCount = props.source_1.length + props.source_2.length
-  const allLoaded = loadedCount >= totalCount
+  const [loadedCount, setLoadedCount] = useState(0);
+  const totalCount = props.source_1.length + props.source_2.length;
+  const allLoaded = loadedCount >= totalCount;
 
   const handleLoad = useCallback(() => {
-    setLoadedCount(prev => prev + 1)
-  }, [])
+    setLoadedCount((prev) => prev + 1);
+  }, []);
 
   useEffect(() => {
-    setLoadedCount(0)
-  }, [props])
+    setLoadedCount(0);
+  }, [props]);
 
   return (
     <Box sx={{ width: 900, minHeight: 829, m: "auto" }}>
-      {!allLoaded && (<div className="flex justify-center">Loading...</div>)}
-      <Masonry columns={3} spacing={2} style={{visibility: allLoaded ? "visible" : "hidden"}}>
+      {!allLoaded && <div className="flex justify-center">Loading...</div>}
+      <Masonry
+        columns={3}
+        spacing={2}
+        style={{ visibility: allLoaded ? "visible" : "hidden" }}
+      >
         {props.source_1.map((source_1: React.ReactNode, index: number) => (
           <div key={index}>
             <img
