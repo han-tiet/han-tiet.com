@@ -38,14 +38,21 @@ export default async function resultsPage({
 
   const APIErrorMessage = () => {
     if (results1.status === "rejected") {
-      return <Typography variant="h6" component="span" sx={{ color: "red"}}>Error: Cannot connect to Giphy API</Typography>
-    } 
-    
-    if (results2.status === "rejected") {
-      return <Typography variant="h6" component="span" sx={{ color: "red"}}>Error: Cannot connect to Klipy API</Typography>
+      return (
+        <Typography variant="h6" component="span" sx={{ color: "red" }}>
+          Error: Cannot connect to Giphy API
+        </Typography>
+      );
     }
-  }
-  
+
+    if (results2.status === "rejected") {
+      return (
+        <Typography variant="h6" component="span" sx={{ color: "red" }}>
+          Error: Cannot connect to Klipy API
+        </Typography>
+      );
+    }
+  };
 
   const gifs1 = results1.status === "fulfilled" ? results1.value : [];
   const gifs2 = results2.status === "fulfilled" ? results2.value : [];
@@ -64,7 +71,9 @@ export default async function resultsPage({
       </Box>
       <Search />
       <Results source_1={gifs1} source_2={gifs2} />
-      <Box sx={{ display: "flex", justifyContent: "center", p: "2rem" }}>{APIErrorMessage()}</Box>
+      <Box sx={{ display: "flex", justifyContent: "center", p: "2rem" }}>
+        {APIErrorMessage()}
+      </Box>
     </Box>
   );
 }
