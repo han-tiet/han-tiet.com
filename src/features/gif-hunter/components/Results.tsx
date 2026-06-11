@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from "react";
 import React from "react";
 import Box from "@mui/material/Box";
 import Masonry from "@mui/lab/Masonry";
+import CircularProgress from "@mui/material/CircularProgress";
 
 interface Props {
   source_1: React.ReactNode;
@@ -25,7 +26,9 @@ const Results: React.FC<Props> = (props) => {
 
   return (
     <Box sx={{ width: 900, minHeight: 829, m: "auto" }}>
-      {!allLoaded && <div className="flex justify-center">Loading...</div>}
+      <div className="flex flex-row justify-center">
+        {!allLoaded && <CircularProgress />}
+      </div>
       <Masonry
         columns={3}
         spacing={2}
