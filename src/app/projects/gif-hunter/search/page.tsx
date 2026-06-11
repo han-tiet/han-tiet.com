@@ -1,4 +1,3 @@
-import React from "react";
 import Search from "@/features/gif-hunter/components/Search";
 import Results from "@/features/gif-hunter/components/Results";
 import { Box, Typography } from "@mui/material";
@@ -58,22 +57,26 @@ export default async function resultsPage({
   const gifs2 = results2.status === "fulfilled" ? results2.value : [];
 
   return (
-    <Box>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
+      <Box sx={{ display: "flex-col", alignItems: "center" }}>
         <Typography
           variant="h3"
           component="a"
           href="/projects/gif-hunter"
-          sx={{ textDecoration: "none", color: "black" }}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            textDecoration: "none",
+            color: "black",
+          }}
         >
           GIFHunter
         </Typography>
+        <Search />
+        <Results source_1={gifs1} source_2={gifs2} />
+        <Box sx={{ display: "flex", justifyContent: "center", p: "2rem" }}>
+          {APIErrorMessage()}
+        </Box>
       </Box>
-      <Search />
-      <Results source_1={gifs1} source_2={gifs2} />
-      <Box sx={{ display: "flex", justifyContent: "center", p: "2rem" }}>
-        {APIErrorMessage()}
-      </Box>
-    </Box>
+      
   );
 }
