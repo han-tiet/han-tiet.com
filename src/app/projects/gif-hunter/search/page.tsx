@@ -56,6 +56,25 @@ export default async function resultsPage({
   const gifs1 = results1.status === "fulfilled" ? results1.value : [];
   const gifs2 = results2.status === "fulfilled" ? results2.value : [];
 
+  const fromGiphy = (gif: React.ReactNode) => ({
+    key: gif.id,
+    src: `https://i.giphy.com/${gif.id}.webp`,
+    id: gif.id,
+    title: gif.title,
+    })
+
+  const fromKlipy = (gif: React.ReactNode) => ({
+    key: gif.id,
+    src: gif.file.hd.gif.url,
+    id: gif.id,
+    title: gif.title,
+  })
+
+  const gifs = [
+    ...gifs1.map(fromGiphy), 
+    ...gifs2.map(fromKlipy)
+  ]
+
   return (
     <Box sx={{ display: "flex-col", alignItems: "center" }}>
       <Typography
@@ -72,7 +91,7 @@ export default async function resultsPage({
         GIFHunter
       </Typography>
       <Search />
-      <Results source_1={gifs1} source_2={gifs2} />
+      <Results source={gifs} />
       <Box sx={{ display: "flex", justifyContent: "center", p: "2rem" }}>
         {APIErrorMessage()}
       </Box>
