@@ -7,29 +7,31 @@ import Masonry from "@mui/lab/Masonry";
 import CircularProgress from "@mui/material/CircularProgress";
 
 interface Props {
-  source: React.ReactNode,
+  source: React.ReactNode;
 }
 
 const Results: React.FC<Props> = (props) => {
   const [loadedCount, setLoadedCount] = useState(0);
-  const allLoaded = loadedCount >= props.source.length
+  const allLoaded = loadedCount >= props.source.length;
 
   useEffect(() => {
     setLoadedCount(0);
   }, [props.source]);
-  
+
   const handleLoad = useCallback(() => {
-    setLoadedCount(prev => prev + 1)
-  }, [])
+    setLoadedCount((prev) => prev + 1);
+  }, []);
 
-  const imgRef = useCallback((node) => {
-    if (!node) return
-    if (node.complete) {
-      handleLoad()
-    }
-  }, [handleLoad])
+  const imgRef = useCallback(
+    (node) => {
+      if (!node) return;
+      if (node.complete) {
+        handleLoad();
+      }
+    },
+    [handleLoad],
+  );
 
-  
   return (
     <Box sx={{ width: 900, minHeight: 829, m: "auto" }}>
       <div className="flex flex-row justify-center">

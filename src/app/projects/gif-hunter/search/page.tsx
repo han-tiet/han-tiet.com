@@ -61,19 +61,16 @@ export default async function resultsPage({
     src: `https://i.giphy.com/${gif.id}.webp`,
     id: gif.id,
     title: gif.title,
-    })
+  });
 
   const fromKlipy = (gif: React.ReactNode) => ({
     key: gif.id,
     src: gif.file.hd.gif.url,
     id: gif.id,
     title: gif.title,
-  })
+  });
 
-  const gifs = [
-    ...gifs1.map(fromGiphy), 
-    ...gifs2.map(fromKlipy)
-  ]
+  const gifs = [...gifs1.map(fromGiphy), ...gifs2.map(fromKlipy)];
 
   return (
     <Box sx={{ display: "flex-col", alignItems: "center" }}>
