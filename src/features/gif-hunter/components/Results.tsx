@@ -12,25 +12,25 @@ interface Props {
 
 const Results: React.FC<Props> = (props) => {
   const [loadedCount, setLoadedCount] = useState(0);
-  const imgRefs = useRef([])
-  const allLoaded = loadedCount >= props.source.length ;
+  const imgRefs = useRef([]);
+  const allLoaded = loadedCount >= props.source.length;
 
   useEffect(() => {
     setLoadedCount(0);
-    imgRefs.current = imgRefs.current.slice(0, props.source.length)
+    imgRefs.current = imgRefs.current.slice(0, props.source.length);
   }, [props.source]);
 
   useEffect(() => {
-    let cachedCount = 0
+    let cachedCount = 0;
     imgRefs.current.forEach((img) => {
       if (img && img.complete) {
-        cachedCount++
+        cachedCount++;
       }
-    })
+    });
     if (cachedCount > 0) {
-      setLoadedCount((prev) => prev + cachedCount)
+      setLoadedCount((prev) => prev + cachedCount);
     }
-  }, [props.source.length])
+  }, [props.source.length]);
 
   const handleLoad = useCallback(() => {
     setLoadedCount((prev) => prev + 1);
