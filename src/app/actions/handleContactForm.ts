@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import { classifyError } from "@/lib/ses/classifyError";
 
 const schema = z.object({
   forename: z
@@ -23,14 +24,11 @@ const schema = z.object({
     .max(5000, "Message is too long"),
 });
 
-export async function sendEmail(prevState: FormData, formData: FormData) {
-  const validatedFields = schema.safeParse({
-    forename: formData.get("forename"),
-    surname: formData.get("surname"),
-    emailAddress: formData.get("emailAddress"),
-    subject: formData.get("subject"),
-    message: formData.get("message"),
-  });
+export async function handleContactForm(
+  prevState: FormData,
+  formData: FormData,
+) {
+  const validatedFields = validateInput(formData);
 
   if (!validatedFields.success) {
     return {
@@ -40,13 +38,32 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
     };
   }
 
-  const contactForm = validatedFields.data;
+  const validationResult = validatedFields.data;
 
   const config = { region: process.env.AWS_REGION };
   const client = new SESClient(config);
 
-  const input = {
-    Source: contactForm.emailAddress,
+  const contactEmail = generateContactEmail(validationResult);
+  const confirmationEmail = generateConfirmationEmail(validationResult);
+
+  return await sendEmail(client, contactEmail, confirmationEmail);
+}
+
+function validateInput(formData: FormData) {
+  const validatedFields = schema.safeParse({
+    forename: formData.get("forename"),
+    surname: formData.get("surname"),
+    emailAddress: formData.get("emailAddress"),
+    subject: formData.get("subject"),
+    message: formData.get("message"),
+  });
+
+  return validatedFields;
+}
+
+function generateContactEmail(validatedFields) {
+  const contactEmail = {
+    Source: validatedFields.emailAddress,
     Destination: {
       BccAddresses: [],
       CcAddresses: [],
@@ -54,22 +71,22 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
     },
     Message: {
       Subject: {
-        Data: contactForm.subject,
+        Data: validatedFields.subject,
         Charset: "UTF-8",
       },
       Body: {
         Html: {
           Data: `
             <div style="font-family: Helevetica, sans-serif; font-size: 16px">
-              <p>Message from ${contactForm.forename} ${contactForm.surname}</p>
+              <p>Message from ${validatedFields.forename} ${validatedFields.surname}</p>
               <br></br>
-              <p>${contactForm.message}</p>
+              <p>${validatedFields.message}</p>
             </div>
             `,
           Charset: "UTF-8",
         },
         Text: {
-          Data: `Message from ${contactForm.forename} ${contactForm.surname} \n\n ${contactForm.message}`,
+          Data: `Message from ${validatedFields.forename} ${validatedFields.surname} \n\n ${validatedFields.message}`,
           Charset: "UTF-8",
         },
       },
@@ -77,23 +94,27 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
     ReplyToAddresses: [],
   };
 
-  const emailConfirmation = {
+  return contactEmail;
+}
+
+function generateConfirmationEmail(validatedFields) {
+  const confirmationEmail = {
     Source: process.env.EMAIL_ADDRESS_DEST,
     Destination: {
       BccAddresses: [],
       CcAddresses: [],
-      ToAddresses: [contactForm.emailAddress],
+      ToAddresses: [validatedFields.emailAddress],
     },
     Message: {
       Subject: {
-        Data: `Re: ${contactForm.subject}`,
+        Data: `Re: ${validatedFields.subject}`,
         Charset: "UTF-8",
       },
       Body: {
         Html: {
           Data: `
             <div style="font-family: Helevetica, sans-serif; font-size: 16px">
-              <p>Hi ${contactForm.forename}, \n</p>
+              <p>Hi ${validatedFields.forename}, \n</p>
               <p>Thanks for getting in touch!</p>
               <p>I have received your email and will send a reply soon.</p>
               <p></p>
@@ -115,18 +136,32 @@ export async function sendEmail(prevState: FormData, formData: FormData) {
     ReplyToAddresses: [],
   };
 
-  const command = new SendEmailCommand(input);
-  const response = await client.send(command);
+  return confirmationEmail;
+}
 
-  if (response.$metadata.httpStatusCode != 200) {
-    return {
-      success: false,
+async function sendEmail(client: SESClient, contactEmail, confirmationEmail) {
+  try {
+    const command = new SendEmailCommand(contactEmail);
+    const response = await client.send(command);
+
+    const result = {
+      success: true,
+      messageId: response.MessageId,
       errors: {},
-      errorCode: "FORM_SUBMISSION_ERROR",
+      errorCode: null,
+      userMessage: "Your message has been sent successfully.",
+      internalMessage: `[SES] Email sent. MessageId: ${response.MessageId}`,
+      retryable: false,
     };
-  } else {
-    const confirmationCommand = new SendEmailCommand(emailConfirmation);
+    console.info(result.internalMessage);
+
+    const confirmationCommand = new SendEmailCommand(confirmationEmail);
     const confirmationResponse = await client.send(confirmationCommand);
-    return { success: true, errors: {}, errorCode: null };
+
+    return result;
+  } catch (error) {
+    console.log(error.internalMessage);
+
+    return classifyError(error);
   }
 }
