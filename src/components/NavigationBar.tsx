@@ -4,7 +4,7 @@ import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
-} from "@/components/ui/navigation-menu";
+} from "@/components/ui/NavigationMenu";
 import NavButton from "@/components/NavButton";
 import Link from "next/link";
 
