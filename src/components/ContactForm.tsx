@@ -1,28 +1,33 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import { Field, FieldGroup } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { sendEmail } from "@/app/actions/sendEmail";
+import { Field, FieldGroup } from "@/components/ui/Field";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/TextArea";
+import { Button } from "@/components/ui/Button";
+import { handleContactForm } from "@/app/actions/handleContactForm";
+import { SESResult } from "@/lib/ses/classifyError";
 import { toast } from "sonner";
 
-const initialState = {
+const initialState: SESResult = {
   success: false,
+  messageId: "",
   errors: {},
   errorCode: null,
+  userMessage: "",
+  internalMessage: "",
+  retryable: false,
 };
 
 export default function ContactForm() {
   const [state, formAction, isPending] = useActionState(
-    sendEmail,
+    handleContactForm,
     initialState,
   );
 
   useEffect(() => {
-    if (state.errorCode === "FORM_SUBMISSION_ERROR") {
-      toast.error("Form submission error, please try again", {
+    if (state.success == false) {
+      toast.error(state.userMessage, {
         style: { background: "#ff8181" },
       });
     }
