@@ -30,11 +30,29 @@ export async function handleContactForm(
 ) {
   const validatedFields = validateInput(formData);
 
+
   if (!validatedFields.success) {
+    const invalidFieldErrors = {
+    forename: validatedFields.error.flatten().fieldErrors?.forename,
+    surname: validatedFields.error.flatten().fieldErrors?.surname,
+    emailAddress: validatedFields.error.flatten().fieldErrors?.emailAddress,
+    subject: validatedFields.error.flatten().fieldErrors?.subject,
+    message: validatedFields.error.flatten().fieldErrors?.message,
+    }
+    
     return {
       success: false,
       errors: validatedFields.error.flatten().fieldErrors,
       errorCode: "FORM_VALIDATION_ERROR",
+      userMessage: "Some details are incorrect or missing, please try again",
+      internalMessage: `[SES] FormValidationError: 
+      ${invalidFieldErrors.forename},
+      ${invalidFieldErrors.surname},
+      ${invalidFieldErrors.emailAddress},
+      ${invalidFieldErrors.subject},
+      ${invalidFieldErrors.message}
+      `,
+      retryable: false,
     };
   }
 
@@ -160,7 +178,7 @@ async function sendEmail(client: SESClient, contactEmail, confirmationEmail) {
 
     return result;
   } catch (error) {
-    console.log(error.internalMessage);
+    console.log(error.errorCode);
 
     return classifyError(error);
   }
