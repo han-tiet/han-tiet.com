@@ -54,7 +54,7 @@ export function classifyError(error: unknown): SESResult {
       errors: {},
       errorCode: "UNVERIFIED_SENDER",
       userMessage:
-        "We're experiencing a configuration issue. Please contact us directly.",
+        "Your email address is not verified in SES, please contact the website administrator.",
       internalMessage: `[SES] MailFromDomainNotVerified: Sender domain/address is not verified in SES. ${error.message}`,
       retryable: false,
     };
@@ -66,7 +66,7 @@ export function classifyError(error: unknown): SESResult {
       errors: {},
       errorCode: "CONFIG_SET_MISSING",
       userMessage:
-        "We're experiencing a configuration issue. Please contact us directly.",
+        "We're experiencing a configuration issue. Please try again in a few hours.",
       internalMessage: `[SES] ConfigurationSetDoesNotExist: Check SES configuration set name. ${error.message}`,
       retryable: false,
     };
@@ -108,7 +108,7 @@ export function classifyError(error: unknown): SESResult {
         errors: {},
         errorCode: "INVALID_CREDENTIALS",
         userMessage:
-          "We're experiencing a configuration issue. Please contact us directly.",
+          "SES error, please contact the website administrator.",
         internalMessage: `[SES] Invalid AWS credentials (${code}): ${error.message}`,
         retryable: false,
       };
@@ -120,7 +120,7 @@ export function classifyError(error: unknown): SESResult {
         errors: {},
         errorCode: "INVALID_CREDENTIALS",
         userMessage:
-          "We're experiencing a configuration issue. Please contact us directly.",
+          "SES error, please contact the website administrator.",
         internalMessage: `[SES] AWS signature mismatch — check Secret Access Key. ${error.message}`,
         retryable: false,
       };
@@ -132,7 +132,7 @@ export function classifyError(error: unknown): SESResult {
         errors: {},
         errorCode: "INSUFFICIENT_PERMISSIONS",
         userMessage:
-          "We're experiencing a configuration issue. Please contact us directly.",
+          "Insufficient permissions, please contact the website administrator.",
         internalMessage: `[SES] AccessDenied: IAM role is missing ses:SendEmail permission. ${error.message}`,
         retryable: false,
       };
