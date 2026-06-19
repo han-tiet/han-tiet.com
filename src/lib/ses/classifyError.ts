@@ -107,8 +107,7 @@ export function classifyError(error: unknown): SESResult {
         success: false,
         errors: {},
         errorCode: "INVALID_CREDENTIALS",
-        userMessage:
-          "SES error, please contact the website administrator.",
+        userMessage: "SES error, please contact the website administrator.",
         internalMessage: `[SES] Invalid AWS credentials (${code}): ${error.message}`,
         retryable: false,
       };
@@ -119,8 +118,7 @@ export function classifyError(error: unknown): SESResult {
         success: false,
         errors: {},
         errorCode: "INVALID_CREDENTIALS",
-        userMessage:
-          "SES error, please contact the website administrator.",
+        userMessage: "SES error, please contact the website administrator.",
         internalMessage: `[SES] AWS signature mismatch — check Secret Access Key. ${error.message}`,
         retryable: false,
       };
