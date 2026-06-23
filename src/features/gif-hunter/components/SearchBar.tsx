@@ -1,17 +1,27 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { Box, TextField } from "@mui/material";
 import Form from "next/form";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
-export default function Search() {
+export default function SearchBar() {
   const searchParams = useSearchParams();
-  const [value, setValue] = useState(searchParams.get("p") ?? "");
 
   useEffect(() => {
     setValue(searchParams.get("p") ?? "");
   }, [searchParams]);
+
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
+  const [value, setValue] = useState("");
+
+  const handleSubmit = () => {
+    startTransition(() => {
+      router.push(`${pathname}/?p=${encodeURIComponent(value)}`);
+    });
+  };
 
   return (
     <Box sx={{ width: "30rem", my: 5, mx: "auto" }}>
@@ -30,6 +40,8 @@ export default function Search() {
             variant="outlined"
             name="p"
             onChange={(e) => setValue(e.target.value)}
+            disabled={isPending}
+            onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
             fullWidth
           />
         </Box>
