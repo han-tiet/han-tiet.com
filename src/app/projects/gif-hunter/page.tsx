@@ -1,6 +1,5 @@
 import IndexSearchBar from "@/features/gif-hunter/components/IndexSearchBar";
 import { Box, Typography } from "@mui/material";
-import notFound from "@/app/projects/gif-hunter/not-found";
 
 export default async function GifHunter() {
   return (
