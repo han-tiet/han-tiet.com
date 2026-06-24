@@ -7,15 +7,14 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export default function SearchBar() {
   const searchParams = useSearchParams();
-
-  useEffect(() => {
-    setValue(searchParams.get("p") ?? "");
-  }, [searchParams]);
-
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
   const [value, setValue] = useState("");
+
+  useEffect(() => {
+    setValue(searchParams.get("p") ?? "");
+  }, [searchParams]);
 
   const handleSubmit = () => {
     startTransition(() => {
