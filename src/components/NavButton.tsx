@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 
 export default function NavButton({
   href,
@@ -17,7 +17,7 @@ export default function NavButton({
   return (
     <Link href={href}>
       <Button
-        className={`${isActive ? "bg-primary" : "bg-background"} text-[18px] h-[52px] px-[16px]`}
+        className={`${isActive ? "bg-primary" : "bg-background"} text-[18px] h-[52px] px-[16px] py-[12px]`}
       >
         {children}
       </Button>
