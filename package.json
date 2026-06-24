@@ -10,12 +10,14 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.1057.0",
     "@barba/core": "^2.10.3",
     "@better-auth/prisma-adapter": "^1.6.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@fontsource/roboto": "^5.2.8",
     "@gsap/react": "^2.1.2",
+    "@hookform/resolvers": "^5.2.2",
     "@mui/icons-material": "^7.1.1",
     "@mui/lab": "^7.0.0-beta.13",
     "@mui/material": "^7.1.1",
@@ -33,6 +35,8 @@
     "radix-ui": "^1.4.3",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.76.0",
+    "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "tailwindcss-animate": "^1.0.7"
   },

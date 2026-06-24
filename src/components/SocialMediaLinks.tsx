@@ -12,9 +12,6 @@ export default function SocialMediaLinks() {
       <Link href="https://github.com/han-tiet">
         <Image src="/github.svg" width={48} height={48} alt="github" />
       </Link>
-      <Link href="mailto:hanweitiet@gmail.com">
-        <Image src="/envelope-alt.svg" width={48} height={48} alt="email" />
-      </Link>
     </div>
   );
 }
