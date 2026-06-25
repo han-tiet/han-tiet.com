@@ -6,18 +6,9 @@ import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/TextArea";
 import { Button } from "@/components/ui/Button";
 import { handleContactForm } from "@/app/actions/handleContactForm";
-import { SESResult } from "@/lib/ses/classifyError";
 import { toast } from "sonner";
 
-const initialState: SESResult = {
-  success: false,
-  messageId: "",
-  errors: {},
-  errorCode: null,
-  userMessage: "",
-  internalMessage: "",
-  retryable: false,
-};
+const initialState = {};
 
 export default function ContactForm() {
   const [state, formAction, isPending] = useActionState(
