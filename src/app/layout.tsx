@@ -31,7 +31,8 @@ export default function RootLayout({
       </head>
       <body className="h-screen w-screen overflow-x-hidden">
         <AppRouterCacheProvider>
-          <Toaster position="bottom-right">{children}</Toaster>
+          <Toaster position="bottom-right" />
+          {children}
         </AppRouterCacheProvider>
       </body>
     </html>
