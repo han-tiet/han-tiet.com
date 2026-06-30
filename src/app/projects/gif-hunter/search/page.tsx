@@ -10,7 +10,9 @@ export default async function GifHunter({
 }) {
   const { p } = await searchParams;
 
-  const res = await fetchResults(p);
+  const resp = await fetchResults(p);
+
+  const APIError = APIErrorMessage(resp.status1, resp.status2);
 
   return (
     <Box sx={{ display: "flex-col", alignItems: "center" }}>
@@ -28,10 +30,14 @@ export default async function GifHunter({
         GIFHunter
       </Typography>
       <SearchBar />
-      <Results source={res.gifs} />
-      <Box sx={{ display: "flex", justifyContent: "center", p: "2rem" }}>
-        {res.APIError}
-      </Box>
+      <Results source={resp.gifs} />
+      {APIError && (
+        <Box sx={{ display: "flex", justifyContent: "center", p: "2rem" }}>
+          <Typography variant="h6" component="span" sx={{ color: "red" }}>
+            {APIError.message}
+          </Typography>
+        </Box>
+      )}
     </Box>
   );
 }
@@ -58,11 +64,12 @@ async function fetchResults(p) {
     fetchResults2(),
   ]);
 
+  const status1 = results1.status;
+  const status2 = results2.status;
+
   if (results1.status === "rejected" && results2.status === "rejected") {
     return notFound();
   }
-
-  const APIError = APIErrorMessage(results1.status, results2.status);
 
   const gifs1 = results1.status === "fulfilled" ? results1.value : [];
   const gifs2 = results2.status === "fulfilled" ? results2.value : [];
@@ -83,23 +90,19 @@ async function fetchResults(p) {
 
   const gifs = [...gifs1.map(fromGiphy), ...gifs2.map(fromKlipy)];
 
-  return { gifs, APIError };
+  return { gifs: gifs, status1: status1, status2: status2 };
 }
 
-const APIErrorMessage = (status1, status2) => {
+function APIErrorMessage(status1, status2) {
   if (status1 === "rejected") {
-    return (
-      <Typography variant="h6" component="span" sx={{ color: "red" }}>
-        Error: Cannot connect to Giphy API
-      </Typography>
-    );
+    return {
+      message: "Error: Cannot connect to Giphy API",
+    };
   }
 
   if (status2 === "rejected") {
-    return (
-      <Typography variant="h6" component="span" sx={{ color: "red" }}>
-        Error: Cannot connect to Klipy API
-      </Typography>
-    );
+    return {
+      message: "Error: Cannot connect to Klipy API",
+    };
   }
-};
+}
