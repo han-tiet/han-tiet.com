@@ -13,7 +13,7 @@ export default async function GifHunter({
   const resp = await fetchResults(p);
 
   if (resp.gifs.length === 0) {
-    return notFound()
+    return notFound();
   }
 
   const APIError = APIErrorMessage(resp.status1, resp.status2);
