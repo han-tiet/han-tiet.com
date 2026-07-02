@@ -12,6 +12,10 @@ export default async function GifHunter({
 
   const resp = await fetchResults(p);
 
+  if (resp.gifs.length === 0) {
+    return notFound()
+  }
+
   const APIError = APIErrorMessage(resp.status1, resp.status2);
 
   return (
@@ -64,13 +68,6 @@ async function fetchResults(p) {
     fetchResults2(),
   ]);
 
-  const status1 = results1.status;
-  const status2 = results2.status;
-
-  if (results1.status === "rejected" && results2.status === "rejected") {
-    return notFound();
-  }
-
   const gifs1 = results1.status === "fulfilled" ? results1.value : [];
   const gifs2 = results2.status === "fulfilled" ? results2.value : [];
 
@@ -90,7 +87,7 @@ async function fetchResults(p) {
 
   const gifs = [...gifs1.map(fromGiphy), ...gifs2.map(fromKlipy)];
 
-  return { gifs: gifs, status1: status1, status2: status2 };
+  return { gifs: gifs, status1: results1.status, status2: results2.status };
 }
 
 function APIErrorMessage(status1, status2) {
