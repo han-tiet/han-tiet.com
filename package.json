@@ -64,7 +64,7 @@
     "typescript": "^5"
   },
   "prisma": {
-    "schema": "@/prisma/schema.prisma"
+    "schema": "prisma/schema.prisma"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx,json,css,md}": [
