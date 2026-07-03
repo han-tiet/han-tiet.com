@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack --experimental-https",
+    "postinstall": "npx prisma generate",
     "build": "next build --debug-prerender",
     "start": "next start",
     "lint": "npx eslint .",
