@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 
 export default async function GifHunter() {
   return (
-    <>
+    <div>
       <Box sx={{ display: "flex-col", alignItems: "center", paddingY: "30vh" }}>
         <Typography
           variant="h1"
@@ -20,6 +20,6 @@ export default async function GifHunter() {
         </Typography>
         <IndexSearchBar />
       </Box>
-    </>
+    </div>
   );
 }

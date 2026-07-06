@@ -23,7 +23,7 @@ export default function IndexSearchBar() {
   };
 
   return (
-    <>
+    <div>
       <Box sx={{ width: "50rem", my: 8, mx: "auto" }}>
         <Form action="/projects/gif-hunter/search">
           <Box
@@ -47,6 +47,6 @@ export default function IndexSearchBar() {
           </Box>
         </Form>
       </Box>
-    </>
+    </div>
   );
 }
