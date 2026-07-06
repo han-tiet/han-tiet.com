@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
 
 module.exports = {
   allowedDevOrigins: [
+    "han-tiet-com-git-han-016-han-tiets-projects.vercel.app/",
+    "*han-tiet-com-git-han-016-han-tiets-projects.vercel.app/",
     "192.168.50.121",
     "*192.168.50.121",
     "i.scdn.co",
