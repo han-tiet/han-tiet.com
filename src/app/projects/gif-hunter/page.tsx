@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import IndexSearchBar from "@/features/gif-hunter/components/IndexSearchBar";
 import { Box, Typography } from "@mui/material";
 
@@ -18,7 +19,9 @@ export default async function GifHunter() {
         >
           GIFHunter
         </Typography>
-        <IndexSearchBar />
+        <Suspense fallback={<></>}>
+          <IndexSearchBar />
+        </Suspense>
       </Box>
     </div>
   );

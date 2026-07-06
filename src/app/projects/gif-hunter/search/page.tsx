@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import SearchBar from "@/features/gif-hunter/components/SearchBar";
 import Results from "@/features/gif-hunter/components/Results";
 import { Box, Typography } from "@mui/material";
@@ -33,7 +34,9 @@ export default async function GifHunter({
       >
         GIFHunter
       </Typography>
-      <SearchBar />
+      <Suspense fallback={<></>}>
+        <SearchBar />
+      </Suspense>
       <Results source={resp.gifs} />
       {APIError && (
         <Box sx={{ display: "flex", justifyContent: "center", p: "2rem" }}>
