@@ -4,6 +4,7 @@ import {
   SESv2Client,
   PutSuppressedDestinationCommand,
 } from "@aws-sdk/client-sesv2";
+import { SNSPayload } from "@/lib/ses/types";
 
 const config = { region: process.env.AWS_REGION };
 const client = new SESv2Client(config);
@@ -31,19 +32,7 @@ export async function POST(request: Request) {
     if (payload.Type === "Notification") {
       // Feed string of payload fields into verifier
 
-      verify.update(
-        `Message
-${payload.Message}
-MessageId
-${payload.MessageId}
-Timestamp
-${payload.Timestamp}
-TopicArn
-${payload.TopicArn}
-Type
-${payload.Type}
-`,
-      );
+      verify.update(buildNotificationString(payload));
 
       // Fetch PEM certificate and verify against signature from payload
 
@@ -105,23 +94,7 @@ ${payload.Type}
     }
 
     if (payload.Type === "SubscriptionConfirmation") {
-      verify.update(
-        `Message
-${payload.Message}
-MessageId
-${payload.MessageId}
-SubscribeURL
-${payload.SubscribeURL}
-Timestamp
-${payload.Timestamp}
-Token
-${payload.Token}
-TopicArn
-${payload.TopicArn}
-Type
-${payload.Type}
-`,
-      );
+      verify.update(buildConfirmationString(payload));
 
       if (
         verify.verify(code, Buffer.from(payload.Signature, "base64")) == false
@@ -161,4 +134,42 @@ ${payload.Type}
       { status: 500 },
     );
   }
+}
+
+function buildNotificationString(payload: SNSPayload): string {
+  return (
+    [
+      "Message",
+      payload.Message,
+      "MessageId",
+      payload.MessageId,
+      "Timestamp",
+      payload.Timestamp,
+      "TopicArn",
+      payload.TopicArn,
+      "Type",
+      payload.Type,
+    ].join("\n") + "\n"
+  );
+}
+
+function buildConfirmationString(payload: SNSPayload): string {
+  return (
+    [
+      "Message",
+      payload.Message,
+      "MessageId",
+      payload.MessageId,
+      "SubscribeURL",
+      payload.SubscribeURL,
+      "Timestamp",
+      payload.Timestamp,
+      "Token",
+      payload.Token,
+      "TopicArn",
+      payload.TopicArn,
+      "Type",
+      payload.Type,
+    ].join("\n") + "\n"
+  );
 }
