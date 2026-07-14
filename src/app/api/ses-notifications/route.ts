@@ -4,7 +4,6 @@ import {
   SESv2Client,
   PutSuppressedDestinationCommand,
 } from "@aws-sdk/client-sesv2";
-import { email } from "better-auth";
 
 const config = { region: process.env.AWS_REGION };
 const client = new SESv2Client(config);
