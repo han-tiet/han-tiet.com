@@ -18,6 +18,10 @@ export async function POST(request: Request) {
     const signingCertURL = new URL(payload.SigningCertURL);
 
     if (!signingCertURL.hostname.endsWith(".amazonaws.com")) {
+      console.error({
+        message: "Invalid signingCertURL hostname",
+        hostname: signingCertURL.hostname,
+      });
       return NextResponse.json(
         { response: "400 Bad Request" },
         { status: 400 },
@@ -39,6 +43,9 @@ export async function POST(request: Request) {
       if (
         verify.verify(code, Buffer.from(payload.Signature, "base64")) == false
       ) {
+        console.error({
+          message: "PEM certificate does not match payload signature",
+        });
         return NextResponse.json(
           { response: "400 Bad Request" },
           { status: 400 },
@@ -99,6 +106,9 @@ export async function POST(request: Request) {
       if (
         verify.verify(code, Buffer.from(payload.Signature, "base64")) == false
       ) {
+        console.error({
+          message: "PEM certificate does not match payload signature",
+        });
         return NextResponse.json(
           { response: "400 Bad Request" },
           { status: 400 },
@@ -129,6 +139,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ response: "200 Success" }, { status: 200 });
     }
   } catch {
+    console.error({ message: "Payload not found" });
     return NextResponse.json(
       { error: "500 Internal Server Error" },
       { status: 500 },
