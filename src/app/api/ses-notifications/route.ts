@@ -11,6 +11,19 @@ const client = new SESv2Client(config);
 
 export async function POST(request: Request) {
   try {
+    const url = new URL(request.url);
+    const token = url.searchParams.get("x-vercel-protection-bypass");
+
+    if (token !== process.env.VERCEL_AUTOMATION_BYPASS_SECRET) {
+      console.error({
+        message: "Invalid bypass token",
+      });
+      return NextResponse.json(
+        { response: "401 Unauthorized" },
+        { status: 401 },
+      );
+    }
+
     const payload = await request.json();
 
     // Validate SigningCertURL hostname
