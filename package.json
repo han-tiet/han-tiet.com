@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack --experimental-https",
     "postinstall": "npx prisma generate",
-    "build": "next build --debug-prerender",
+    "build": "next build",
     "start": "next start",
     "lint": "npx eslint .",
     "prepare": "husky"
