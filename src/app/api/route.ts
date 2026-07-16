@@ -4,7 +4,11 @@ import {
   SESv2Client,
   PutSuppressedDestinationCommand,
 } from "@aws-sdk/client-sesv2";
-import { SNSPayload } from "@/lib/ses/types";
+import {
+  SNSPayload,
+  SESBounceMessage,
+  SESComplaintMessage,
+} from "@/lib/ses/types";
 
 const config = { region: process.env.AWS_REGION };
 const client = new SESv2Client(config);
@@ -64,12 +68,12 @@ async function handleNotification(payload: SNSPayload) {
 
   const message = JSON.parse(payload.Message);
 
-  if (message.notificationType == "Complaint") {
-    handleComplaint(payload);
+  if (message.notificationType === "Complaint") {
+    handleComplaint(message);
   }
 
-  if (message.notificationType == "Bounce") {
-    handleBounce(payload, code);
+  if (message.notificationType === "Bounce") {
+    handleBounce(payload, message);
   }
   return NextResponse.json({ response: "200 Success" }, { status: 200 });
 }
@@ -135,7 +139,7 @@ function verifyConfirmation(payload: SNSPayload, code: string) {
   }
 }
 
-async function handleComplaint(message) {
+async function handleComplaint(message: SESComplaintMessage) {
   const complainedRecipients = message.complaint.complainedRecipients;
 
   for (let i = 0; i < complainedRecipients.length; i++) {
@@ -148,8 +152,8 @@ async function handleComplaint(message) {
   }
 }
 
-async function handleBounce(payload: SNSPayload, message) {
-  if (message.bounce.bounceType == "Permanent") {
+async function handleBounce(payload: SNSPayload, message: SESBounceMessage) {
+  if (message.bounce.bounceType === "Permanent") {
     const bouncedRecipients = message.bounce.bouncedRecipients;
 
     for (let i = 0; i < bouncedRecipients.length; i++) {
