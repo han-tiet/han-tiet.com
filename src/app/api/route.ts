@@ -62,9 +62,9 @@ async function validateHostname(signingCertURL: URL) {
 }
 
 async function handleNotification(payload: SNSPayload) {
-  const code = await fetchPEMCert(payload);
+  const cert = await fetchPEMCert(payload);
 
-  verifyNotification(payload, code);
+  verifyNotification(payload, cert);
 
   const message = JSON.parse(payload.Message);
 
@@ -79,9 +79,9 @@ async function handleNotification(payload: SNSPayload) {
 }
 
 async function handleConfirmation(payload: SNSPayload) {
-  const code = await fetchPEMCert(payload);
+  const cert = await fetchPEMCert(payload);
 
-  verifyConfirmation(payload, code);
+  verifyConfirmation(payload, cert);
 
   const resp = await fetch(payload.SubscribeURL);
 
@@ -109,14 +109,14 @@ async function fetchPEMCert(payload: SNSPayload) {
   return cert;
 }
 
-function verifyNotification(payload: SNSPayload, code: string) {
+function verifyNotification(payload: SNSPayload, cert: string) {
   // Feed string of payload fields into verifier
 
   verify.update(buildNotificationString(payload));
 
   // Fetch PEM certificate and verify against signature from payload
 
-  if (verify.verify(code, Buffer.from(payload.Signature, "base64")) == false) {
+  if (verify.verify(cert, Buffer.from(payload.Signature, "base64")) == false) {
     console.error({
       message: "PEM certificate does not match payload signature",
     });
@@ -124,14 +124,14 @@ function verifyNotification(payload: SNSPayload, code: string) {
   }
 }
 
-function verifyConfirmation(payload: SNSPayload, code: string) {
+function verifyConfirmation(payload: SNSPayload, cert: string) {
   // Feed string of payload fields into verifier
 
   verify.update(buildConfirmationString(payload));
 
   // Fetch PEM certificate and verify against signature from payload
 
-  if (verify.verify(code, Buffer.from(payload.Signature, "base64")) == false) {
+  if (verify.verify(cert, Buffer.from(payload.Signature, "base64")) == false) {
     console.error({
       message: "PEM certificate does not match payload signature",
     });
