@@ -104,9 +104,9 @@ async function fetchPEMCert(payload: SNSPayload) {
   // Fetch PEMCert from SigningCertURL
 
   const resp = await fetch(payload.SigningCertURL);
-  const code = await resp.text();
+  const cert = await resp.text();
 
-  return code;
+  return cert;
 }
 
 function verifyNotification(payload: SNSPayload, code: string) {
