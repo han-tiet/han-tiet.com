@@ -3,6 +3,7 @@ import SearchBar from "@/features/gif-hunter/components/SearchBar";
 import Results from "@/features/gif-hunter/components/Results";
 import { Box, Typography } from "@mui/material";
 import notFound from "@/app/projects/gif-hunter/not-found";
+import { ROUTES } from "@/constants/routes";
 
 export default async function GifHunter({
   searchParams,
@@ -24,7 +25,7 @@ export default async function GifHunter({
       <Typography
         variant="h3"
         component="a"
-        href="/projects/gif-hunter"
+        href={ROUTES.GIFHUNTER_INDEX}
         sx={{
           display: "flex",
           justifyContent: "center",

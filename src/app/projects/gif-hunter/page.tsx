@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import IndexSearchBar from "@/features/gif-hunter/components/IndexSearchBar";
 import { Box, Typography } from "@mui/material";
+import { ROUTES } from "@/constants/routes";
 
 export default async function GifHunter() {
   return (
@@ -9,7 +10,7 @@ export default async function GifHunter() {
         <Typography
           variant="h1"
           component="a"
-          href="/projects/gif-hunter"
+          href={ROUTES.GIFHUNTER_INDEX}
           sx={{
             display: "flex",
             justifyContent: "center",

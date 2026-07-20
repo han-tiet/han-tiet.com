@@ -3,21 +3,22 @@
 import styles from "@/app/projects/page.module.css";
 import { useRef, useEffect, useState } from "react";
 import { Project, ProjectProps } from "@/components/Project";
+import { ROUTES } from "@/constants/routes";
 
 export default function CoverFlow() {
   const projects = [
     {
       name: "GIFHunter",
       description: "A GIF Search Engine",
-      href: "/projects/gif-hunter",
-      src: "/han-tiet.com/images/gifhunter-screen.png",
+      href: ROUTES.GIFHUNTER_INDEX,
+      src: `${process.env.NEXT_PUBLIC_HOST}/images/gifhunter-screen.png`,
       techsUsed: ["NextJS", "Typescript", "Fetch API"],
     },
     {
       name: "Spotify Artist Collage",
       description: "Your Top 50 Artists",
-      href: "/projects/spotify-artist-collage",
-      src: "/han-tiet.com/images/spotify-artist-collage-screen.png",
+      href: ROUTES.SPOTIFY_ARTIST_COLLAGE__LOGIN,
+      src: `${process.env.NEXT_PUBLIC_HOST}/images/spotify-artist-collage-screen.png`,
       techsUsed: ["CSS Animations", "OAuth", "Server Actions"],
     },
   ];

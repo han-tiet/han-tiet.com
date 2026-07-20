@@ -4,6 +4,7 @@ import { useState, useEffect, useTransition } from "react";
 import { Box, TextField } from "@mui/material";
 import Form from "next/form";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { ROUTES } from "@/constants/routes";
 
 export default function IndexSearchBar() {
   const searchParams = useSearchParams();
@@ -25,7 +26,7 @@ export default function IndexSearchBar() {
   return (
     <div>
       <Box sx={{ width: "50rem", my: 8, mx: "auto" }}>
-        <Form action="/projects/gif-hunter/search">
+        <Form action={ROUTES.GIFHUNTER_SEARCH}>
           <Box
             sx={{
               display: "flex",
