@@ -14,6 +14,16 @@ const config = { region: process.env.AWS_REGION };
 const client = new SESv2Client(config);
 const verify = crypto.createVerify("sha1");
 
+enum PayloadType {
+  Notification = "Notification",
+  SubscriptionConfirmation = "SubscriptionConfirmation",
+}
+
+enum NotificationType {
+  Complaint = "Complaint",
+  Bounce = "Bounce",
+}
+
 export async function POST(request: Request) {
   try {
     const payload = await request.json();
@@ -25,19 +35,19 @@ export async function POST(request: Request) {
 
     // Handle Notification
 
-    if (payload.Type === "Notification") {
+    if (payload.Type === PayloadType.Notification) {
       handleNotification(payload);
     }
 
     // Handle Subscription confirmation
 
-    if (payload.Type === "SubscriptionConfirmation") {
+    if (payload.Type === PayloadType.SubscriptionConfirmation) {
       handleConfirmation(payload);
     }
 
     if (
-      payload.Type != "Notification" &&
-      payload.Type != "SubscriptionConfirmation"
+      payload.Type != PayloadType.Notification &&
+      payload.Type != PayloadType.SubscriptionConfirmation
     ) {
       console.warn("200 Unrecognised Message Type");
       return NextResponse.json({ response: "200 Success" }, { status: 200 });
@@ -68,11 +78,11 @@ async function handleNotification(payload: SNSPayload) {
 
   const message = JSON.parse(payload.Message);
 
-  if (message.notificationType === "Complaint") {
+  if (message.notificationType === NotificationType.Complaint) {
     handleComplaint(message);
   }
 
-  if (message.notificationType === "Bounce") {
+  if (message.notificationType === NotificationType.Bounce) {
     handleBounce(payload, message);
   }
   return NextResponse.json({ response: "200 Success" }, { status: 200 });
