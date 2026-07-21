@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import SearchBar from "@/features/gif-hunter/components/SearchBar";
 import Results from "@/features/gif-hunter/components/Results";
 import { Box, Typography } from "@mui/material";
 import notFound from "@/app/projects/gif-hunter/not-found";
+import { ROUTES } from "@/constants/routes";
 
 export default async function GifHunter({
   searchParams,
@@ -35,7 +37,7 @@ export default async function GifHunter({
       <Typography
         variant="h3"
         component="a"
-        href="/projects/gif-hunter"
+        href={ROUTES.GIFHUNTER_INDEX}
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -45,7 +47,9 @@ export default async function GifHunter({
       >
         GIFHunter
       </Typography>
-      <SearchBar />
+      <Suspense fallback={<></>}>
+        <SearchBar />
+      </Suspense>
       <Results source={resp.gifs} />
       {APIError && (
         <Box sx={{ display: "flex", justifyContent: "center", p: "2rem" }}>

@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/NavigationMenu";
 import NavButton from "@/components/NavButton";
 import Link from "next/link";
+import { ROUTES } from "@/constants/routes";
 
 export default function NavigationBar() {
   return (
@@ -21,8 +22,8 @@ export default function NavigationBar() {
         </NavigationMenuList>
       </NavigationMenu>
       <div className="flex flex-row justify-self-end gap-4">
-        <NavButton href="/projects">Projects</NavButton>
-        <NavButton href="/contact">Contact</NavButton>
+        <NavButton href={ROUTES.PROJECTS}>Projects</NavButton>
+        <NavButton href={ROUTES.CONTACT}>Contact</NavButton>
       </div>
     </div>
   );
