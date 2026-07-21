@@ -7,6 +7,7 @@ import {
   NavigationMenuList,
 } from "@/features/spotify-artist-collage/src/components/ui/navigation-menu";
 import LogOutButton from "@/features/spotify-artist-collage/src/components/LogOutButton";
+import { ROUTES } from "@/constants/routes";
 
 type NavbarProps = {
   user: string;
@@ -19,7 +20,10 @@ export function Navbar({ user }: NavbarProps) {
       <NavigationMenu className="justify-self-center">
         <NavigationMenuList>
           <NavigationMenuItem>
-            <Link href="/" className="text-center text-xl font-bold">
+            <Link
+              href={ROUTES.SPOTIFY_ARTIST_COLLAGE__LOGIN}
+              className="text-center text-xl font-bold"
+            >
               {user}&apos;s Spotify Artist Collage
             </Link>
           </NavigationMenuItem>
