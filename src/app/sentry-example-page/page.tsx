@@ -4,7 +4,10 @@ import * as Sentry from "@sentry/nextjs";
 import notFound from "@/app/sentry-example-page/not-found";
 
 export default function SentryTestPage() {
-  if (process.env.VERCEL_ENV != "development") {
+  if (
+    process.env.VERCEL_ENV === "preview" ||
+    process.env.VERCEL_ENV === "production"
+  ) {
     return notFound();
   }
   // 1. Thrown error — tests error tracking + source maps
