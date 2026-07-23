@@ -32,7 +32,7 @@ export default async function GifHunter({
           "&:hover": { color: "oklch(0.6911 0.2062 41.46)" },
         }}
       >
-        <a href={`${process.env.NEXT_PUBLIC_PROJECTS}`}>&lt;&lt; Projects</a>
+        <a href={ROUTES.PROJECTS}>&lt;&lt; Projects</a>
       </Box>
       <Typography
         variant="h3"
