@@ -8,7 +8,7 @@ export const auth = betterAuth({
     allowedHosts: [
       `${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`,
       `www.${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`,
-      `${process.env.BETTER_AUTH_URL}`,
+      `${process.env.NEXT_PUBLIC_HOST}`,
     ],
     protocol: "https",
     fallback: "https://han-tiet.com",
@@ -23,7 +23,7 @@ export const auth = betterAuth({
   trustedOrigins: [
     `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`,
     `https://*.${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`,
-    `https://${process.env.BETTER_AUTH_URL}`,
+    `https://${process.env.NEXT_PUBLIC_HOST}`,
   ], // Added index to trusted origins to remove NextJS warning
 
   socialProviders: {
@@ -32,7 +32,7 @@ export const auth = betterAuth({
       clientId: process.env.SPOTIFY_ID as string,
       clientSecret: process.env.SPOTIFY_SECRET as string,
       scope: ["user-top-read", "user-read-recently-played"],
-      redirectURI: `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL || process.env.BETTER_AUTH_URL}/projects/spotify-artist-collage/api/auth/callback/spotify`,
+      redirectURI: `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL || process.env.NEXT_PUBLIC_HOST}/projects/spotify-artist-collage/api/auth/callback/spotify`,
     },
   },
 
