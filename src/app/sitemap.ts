@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `https://${process.env.VERCEL_BRANCH_URL}/projects`,
       lastModified: new Date(),
-      changeFrequency: "yearly",
+      changeFrequency: "monthly",
     },
     {
       url: `https://${process.env.VERCEL_BRANCH_URL}/projects/gif-hunter`,
