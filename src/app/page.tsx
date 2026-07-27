@@ -72,7 +72,7 @@ export default function Index() {
       <div className="h-[100vh] w-[100vw] overflow-hidden">
         <video autoPlay muted loop playsInline className={styles.videobg}>
           <source
-            src={`${process.env.NEXT_PUBLIC_HOST}/videos/index-bg.mp4`}
+            src={`${process.env.NEXT_PUBLIC_IMAGEHOST}/videos/index-bg.mp4`}
             type="video/mp4"
           />
         </video>
@@ -86,7 +86,7 @@ export default function Index() {
           </div>
           <div className="w-full h-full mr-[3vw]]">
             <Image
-              src={`${process.env.NEXT_PUBLIC_HOST}/images/race-car.png`}
+              src={`${process.env.NEXT_PUBLIC_IMAGEHOST}/images/race-car.png`}
               width={888}
               height={188}
               alt="race-car"

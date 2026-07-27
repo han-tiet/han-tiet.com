@@ -43,3 +43,6 @@ next-env.d.ts
 
 certificates
 .env*
+
+# Sentry Config File
+.env.sentry-build-plugin
