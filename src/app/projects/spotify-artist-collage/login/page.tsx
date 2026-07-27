@@ -1,14 +1,13 @@
 "use client";
 
 import LogInButton from "@/features/spotify-artist-collage/src/components/LogInButton";
+import { ROUTES } from "@/constants/routes";
 
 export default function LoginPage() {
   return (
     <div className="grid grid-col-12 h-[65vh]">
       <div className="flex justify-start items-center h-[5vh] px-[1vw] hover:text-primary">
-        <a href={`${process.env.NEXT_PUBLIC_PROJECTS}` || ""}>
-          &lt;&lt; Projects
-        </a>
+        <a href={ROUTES.PROJECTS}>&lt;&lt; Projects</a>
       </div>
       <div className="flex flex-col justify-center items-center gap-8">
         <div className="flex flex-col justify-center items-center gap-4">

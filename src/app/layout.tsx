@@ -3,6 +3,7 @@ import "@/app/globals.css";
 import { Inter } from "next/font/google";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v16-appRouter";
 import { Toaster } from "@/components/ui/Sonner";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <Toaster position="bottom-right" />
           {children}
+          <Analytics />
         </AppRouterCacheProvider>
       </body>
     </html>

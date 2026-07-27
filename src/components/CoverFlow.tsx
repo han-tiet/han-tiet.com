@@ -11,14 +11,14 @@ export default function CoverFlow() {
       name: "GIFHunter",
       description: "A GIF Search Engine",
       href: ROUTES.GIFHUNTER_INDEX,
-      src: `${process.env.NEXT_PUBLIC_HOST}/images/gifhunter-screen.png`,
+      src: `${process.env.NEXT_PUBLIC_IMAGEHOST}/images/gifhunter-screen.png`,
       techsUsed: ["NextJS", "Typescript", "Fetch API"],
     },
     {
       name: "Spotify Artist Collage",
       description: "Your Top 50 Artists",
       href: ROUTES.SPOTIFY_ARTIST_COLLAGE__LOGIN,
-      src: `${process.env.NEXT_PUBLIC_HOST}/images/spotify-artist-collage-screen.png`,
+      src: `${process.env.NEXT_PUBLIC_IMAGEHOST}/images/spotify-artist-collage-screen.png`,
       techsUsed: ["CSS Animations", "OAuth", "Server Actions"],
     },
   ];
