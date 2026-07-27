@@ -35,7 +35,7 @@ export default async function GifHunter({
         <a href={ROUTES.PROJECTS}>&lt;&lt; Projects</a>
       </Box>
       <Typography
-        variant="h3"
+        variant="h2"
         component="a"
         href={ROUTES.GIFHUNTER_INDEX}
         sx={{
