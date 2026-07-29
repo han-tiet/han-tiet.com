@@ -6,6 +6,8 @@ import { ROUTES } from "@/constants/routes";
 export const auth = betterAuth({
   baseURL: {
     allowedHosts: [
+      `${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`,
+      `www.${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`,
       `${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`,
       `www.${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`,
       `${process.env.NEXT_PUBLIC_HOST}`,
@@ -21,6 +23,8 @@ export const auth = betterAuth({
   }),
 
   trustedOrigins: [
+    `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`,
+    `https://*.${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`,
     `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`,
     `https://*.${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`,
     `https://${process.env.NEXT_PUBLIC_HOST}`,
@@ -32,7 +36,7 @@ export const auth = betterAuth({
       clientId: process.env.SPOTIFY_ID as string,
       clientSecret: process.env.SPOTIFY_SECRET as string,
       scope: ["user-top-read", "user-read-recently-played"],
-      redirectURI: `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL || process.env.NEXT_PUBLIC_HOST}/projects/spotify-artist-collage/api/auth/callback/spotify`,
+      redirectURI: `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL || process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL || process.env.NEXT_PUBLIC_HOST}/projects/spotify-artist-collage/api/auth/callback/spotify`,
     },
   },
 
