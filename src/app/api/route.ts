@@ -52,6 +52,7 @@ export async function POST(request: Request) {
       console.warn("200 Unrecognised Message Type");
       return NextResponse.json({ response: "200 Success" }, { status: 200 });
     }
+    return NextResponse.json({ response: "200 Success" }, { status: 200 });
   } catch {
     console.error({ message: "Payload not found" });
     return NextResponse.json(
@@ -69,6 +70,8 @@ async function validateHostname(signingCertURL: URL) {
     });
     return NextResponse.json({ response: "400 Bad Request" }, { status: 400 });
   }
+
+  return NextResponse.json({ response: "200 Valid Hostname" }, { status: 200 });
 }
 
 async function handleNotification(payload: SNSPayload) {
@@ -85,7 +88,10 @@ async function handleNotification(payload: SNSPayload) {
   if (message.notificationType === NotificationType.Bounce) {
     handleBounce(payload, message);
   }
-  return NextResponse.json({ response: "200 Success" }, { status: 200 });
+  return NextResponse.json(
+    { response: "200 Notification Handled" },
+    { status: 200 },
+  );
 }
 
 async function handleConfirmation(payload: SNSPayload) {
@@ -107,7 +113,10 @@ async function handleConfirmation(payload: SNSPayload) {
     );
   }
 
-  return NextResponse.json({ response: "200 Success" }, { status: 200 });
+  return NextResponse.json(
+    { response: "200 Confirmation Handled" },
+    { status: 200 },
+  );
 }
 
 async function fetchPEMCert(payload: SNSPayload) {
@@ -132,6 +141,11 @@ function verifyNotification(payload: SNSPayload, cert: string) {
     });
     return NextResponse.json({ response: "400 Bad Request" }, { status: 400 });
   }
+
+  return NextResponse.json(
+    { message: "200 Notification Verified" },
+    { status: 200 },
+  );
 }
 
 function verifyConfirmation(payload: SNSPayload, cert: string) {
@@ -147,6 +161,10 @@ function verifyConfirmation(payload: SNSPayload, cert: string) {
     });
     return NextResponse.json({ response: "400 Bad Request" }, { status: 400 });
   }
+  return NextResponse.json(
+    { message: "200 Confirmation Verified" },
+    { status: 200 },
+  );
 }
 
 async function handleComplaint(message: SESComplaintMessage) {
@@ -160,6 +178,10 @@ async function handleComplaint(message: SESComplaintMessage) {
 
     await client.send(command);
   }
+  return NextResponse.json(
+    { message: "200 Complaints Handled" },
+    { status: 200 },
+  );
 }
 
 async function handleBounce(payload: SNSPayload, message: SESBounceMessage) {
@@ -174,6 +196,10 @@ async function handleBounce(payload: SNSPayload, message: SESBounceMessage) {
 
       await client.send(command);
     }
+    return NextResponse.json(
+      { message: "200 Permanent Bounces Handled" },
+      { status: 200 },
+    );
   } else {
     const bouncedRecipients = message.bounce.bouncedRecipients;
 
@@ -190,6 +216,10 @@ async function handleBounce(payload: SNSPayload, message: SESBounceMessage) {
         originalMessageId: message.mail.messageId,
       });
     }
+    return NextResponse.json(
+      { message: "200 Temporary Bounces Handled" },
+      { status: 200 },
+    );
   }
 }
 
