@@ -96,6 +96,7 @@ function generateContactEmail(validatedFields) {
           Data: `
             <div style="font-family: Helevetica, sans-serif; font-size: 16px">
               <p>Message from ${validatedFields.forename} ${validatedFields.surname}</p>
+              <p>Sender's email address: ${validatedFields.emailAddress}</p>
               <br></br>
               <p>${validatedFields.message}</p>
             </div>
