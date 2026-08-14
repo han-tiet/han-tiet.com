@@ -80,11 +80,11 @@ function validateInput(formData: FormData) {
 
 function generateContactEmail(validatedFields) {
   const contactEmail = {
-    Source: validatedFields.emailAddress,
+    Source: process.env.NOREPLY_EMAIL_ADDRESS,
     Destination: {
       BccAddresses: [],
       CcAddresses: [],
-      ToAddresses: [process.env.EMAIL_ADDRESS_DEST],
+      ToAddresses: [process.env.HAN_EMAIL_ADDRESS],
     },
     Message: {
       Subject: {
@@ -96,6 +96,7 @@ function generateContactEmail(validatedFields) {
           Data: `
             <div style="font-family: Helevetica, sans-serif; font-size: 16px">
               <p>Message from ${validatedFields.forename} ${validatedFields.surname}</p>
+              <p>Sender's email address: ${validatedFields.emailAddress}</p>
               <br></br>
               <p>${validatedFields.message}</p>
             </div>
@@ -116,7 +117,7 @@ function generateContactEmail(validatedFields) {
 
 function generateConfirmationEmail(validatedFields) {
   const confirmationEmail = {
-    Source: process.env.EMAIL_ADDRESS_DEST,
+    Source: process.env.HAN_EMAIL_ADDRESS,
     Destination: {
       BccAddresses: [],
       CcAddresses: [],
