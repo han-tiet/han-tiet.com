@@ -6,6 +6,7 @@ import styles from "@/app/page.module.css";
 import Image from "next/image";
 import IndexNavigationBar from "@/components/IndexNavigationBar";
 import SocialMediaLinks from "@/components/SocialMediaLinks";
+import { CTAButton } from "@/components/CTAButton";
 
 export default function Index() {
   const containerRef = useRef(null);
@@ -93,8 +94,9 @@ export default function Index() {
             />
           </div>
         </div>
-        <div className="mx-[3vw] mt-[28vh]">
+        <div className="flex justify-between mx-[3vw] mt-[28vh]">
           <SocialMediaLinks />
+          <CTAButton />
         </div>
       </div>
     </div>
