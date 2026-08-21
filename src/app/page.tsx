@@ -12,7 +12,7 @@ export default function Index() {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end start"],
+    offset: ["start start", "end end"],
   });
 
   const titleFontSize = useTransform(
@@ -72,7 +72,7 @@ export default function Index() {
       <div className="h-[100vh] w-[100vw] overflow-hidden">
         <video autoPlay muted loop playsInline className={styles.videobg}>
           <source
-            src={`${process.env.NEXT_PUBLIC_IMAGEHOST}/videos/index-bg.mp4`}
+            src={`${process.env.NEXT_PUBLIC_IMAGEHOST}/videos/index-bg.webm`}
             type="video/mp4"
           />
         </video>
