@@ -10,6 +10,18 @@ import { toast } from "sonner";
 
 const initialState = {};
 
+/**
+ * Every dimension below is written in `em` so the whole form is driven by a
+ * single knob: the `fontSize` on the wrapper. That value is `1em === 16px` at a
+ * 1920px viewport (the design reference) and shrinks linearly with viewport
+ * width down to `1em === 12px`, so the form scales proportionally across tablet
+ * and mobile without any breakpoint reflow.
+ */
+const fluidScale = "clamp(12px, calc(12px + (100vw - 480px) / 360), 16px)";
+
+const inputClassName =
+  "h-[2.25em] rounded-[0.5em] border-[0.125em] px-[0.75em] py-[0.25em] text-[1em] md:text-[1em]";
+
 export default function ContactForm() {
   const [state, formAction, isPending] = useActionState(
     handleContactForm,
@@ -31,10 +43,10 @@ export default function ContactForm() {
   }, [state]);
 
   return (
-    <>
+    <div className="w-full px-10" style={{ fontSize: fluidScale }}>
       <form action={formAction}>
-        <FieldGroup>
-          <div className="flex flex-row gap-[4rem]">
+        <FieldGroup className="gap-[1.75em]">
+          <div className="flex flex-row gap-[4em]">
             <Field>
               <Input
                 id="forename"
@@ -44,13 +56,13 @@ export default function ContactForm() {
                 }
                 type="input"
                 placeholder="Forename"
-                className="border-[2px] rounded-[8px]"
+                className={inputClassName}
                 autoComplete="off"
               />
               {state.errors?.forename && (
                 <span
                   id="forename-error"
-                  className="text-[12px]"
+                  className="text-[0.75em]"
                   role="alert"
                   style={{ color: "red" }}
                 >
@@ -67,13 +79,13 @@ export default function ContactForm() {
                 }
                 type="input"
                 placeholder="Surname"
-                className="border-[2px] rounded-[8px]"
+                className={inputClassName}
                 autoComplete="off"
               />
               {state.errors?.surname && (
                 <span
                   id="surname-error"
-                  className="text-[12px]"
+                  className="text-[0.75em]"
                   role="alert"
                   style={{ color: "red" }}
                 >
@@ -91,13 +103,13 @@ export default function ContactForm() {
               }
               type="input"
               placeholder="Email Address"
-              className="border-[2px] rounded-[8px]"
+              className={inputClassName}
               autoComplete="off"
             />
             {state.errors?.emailAddress && (
               <span
                 id="email-address-error"
-                className="text-[12px]"
+                className="text-[0.75em]"
                 role="alert"
                 style={{ color: "red" }}
               >
@@ -114,13 +126,13 @@ export default function ContactForm() {
               }
               type="input"
               placeholder="Subject"
-              className="border-[2px] rounded-[8px]"
+              className={inputClassName}
               autoComplete="off"
             />
             {state.errors?.subject && (
               <span
                 id="subject-error"
-                className="text-[12px]"
+                className="text-[0.75em]"
                 role="alert"
                 style={{ color: "red" }}
               >
@@ -136,13 +148,13 @@ export default function ContactForm() {
                 state.errors?.message ? "message-error" : undefined
               }
               placeholder="Write your message here"
-              className="h-[300px] border-[2px] rounded-[8px]"
+              className="h-[18.75em] min-h-[4em] rounded-[0.5em] border-[0.125em] px-[0.75em] py-[0.5em] text-[1em] md:text-[1em]"
               autoComplete="off"
             />
             {state.errors?.message && (
               <span
                 id="message-error"
-                className="text-[12px]"
+                className="text-[0.75em]"
                 role="alert"
                 style={{ color: "red" }}
               >
@@ -151,9 +163,11 @@ export default function ContactForm() {
             )}
           </Field>
         </FieldGroup>
-        <div className="flex justify-center py-[2rem]">
+        <div className="flex justify-center py-[2em]">
           <Button
-            className="text-[18px] h-[52px] w-[170px]"
+            // Box units are `em`, which resolve against this button's own
+            // 1.125em (18px) font size: 2.889em ≈ 52px tall, 9.444em ≈ 170px wide.
+            className="h-[2.889em] w-[9.444em] gap-[0.444em] rounded-[0.444em] px-[0.889em] py-[0.444em] text-[1.125em]"
             type="submit"
             disabled={isPending}
           >
@@ -161,6 +175,6 @@ export default function ContactForm() {
           </Button>
         </div>
       </form>
-    </>
+    </div>
   );
 }
