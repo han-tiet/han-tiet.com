@@ -1,16 +1,116 @@
 "use client";
 
-import NavButton from "./NavButton";
+import { useState } from "react";
+import {
+  motion,
+  useTransform,
+  useMotionTemplate,
+  useMotionValueEvent,
+  type MotionValue,
+} from "framer-motion";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+} from "@/components/ui/NavigationMenu";
+import NavButton from "@/components/NavButton";
+import MobileNav from "@/components/MobileNav";
 import { ROUTES } from "@/constants/routes";
 
-export default function NavigationBar() {
+const TITLE = "Han Tiet";
+
+export default function IndexNavigationBar({
+  scrollYProgress,
+}: {
+  scrollYProgress: MotionValue<number>;
+}) {
+  // vw term hits 0 at the end, so clamp() falls back to --title-size:
+  // 24px, or 48px from md up — NavigationBar's exact sizes.
+  const titleVw = useTransform(scrollYProgress, [0, 0.5], [20, 0]);
+  const titleFontSize = useMotionTemplate`clamp(var(--title-size), ${titleVw}vw, 25rem)`;
+
+  const titleLeadingVw = useTransform(scrollYProgress, [0, 0.5], [24, 0]);
+  const titleLineHeight = useMotionTemplate`clamp(60px, ${titleLeadingVw}vw, 30rem)`;
+
+  // Centre of the viewport -> the nav bar's left padding (px-[3vw]).
+  const leftVw = useTransform(scrollYProgress, [0, 0.5], [50, 3]);
+  const left = useMotionTemplate`${leftVw}vw`;
+
+  // Centre of the viewport -> vertically centred in the h-[14vh] bar:
+  // half the bar (7vh) minus half the 60px line box.
+  const topVh = useTransform(scrollYProgress, [0, 0.5], [50, 7]);
+  const topPx = useTransform(scrollYProgress, [0, 0.5], [0, -30]);
+  const top = useMotionTemplate`calc(${topVh}vh + ${topPx}px)`;
+
+  // Anchored by its own centre at the start, by its top-left at the end.
+  const shiftPct = useTransform(scrollYProgress, [0, 0.5], [50, 0]);
+  const transform = useMotionTemplate`translate(-${shiftPct}%, -${shiftPct}%)`;
+
+  const titleColor = useTransform(
+    scrollYProgress,
+    [0, 0.5],
+    ["#FAFAFA", "#000000"],
+  );
+  const titlePointerEvents = useTransform(
+    scrollYProgress,
+    [0.49, 0.5],
+    ["none", "auto"],
+  );
+
+  const navOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  const navPointerEvents = useTransform(
+    scrollYProgress,
+    [0.99, 1],
+    ["none", "auto"],
+  );
+
+  const [navReady, setNavReady] = useState(false);
+  useMotionValueEvent(scrollYProgress, "change", (v) => setNavReady(v >= 0.99));
+
   return (
     <div className="col-span-full grid grid-cols-2 items-center h-[14vh] px-[3vw]">
-      <div />
-      <div className="flex flex-row justify-self-end gap-4">
-        <NavButton href={ROUTES.PROJECTS}>Projects</NavButton>
-        <NavButton href={ROUTES.CONTACT}>Contact</NavButton>
-      </div>
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            {/* Reserves the box NavigationBar's title occupies, so the
+                fixed copy has something to land on. */}
+            <span
+              aria-hidden
+              className="invisible text-[24px]/[60px] md:text-[48px]/[60px] font-semibold"
+            >
+              {TITLE}
+            </span>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+
+      <motion.a
+        href={ROUTES.INDEX}
+        className="fixed z-100 whitespace-nowrap font-semibold [--title-size:24px] md:[--title-size:48px]"
+        style={{
+          top,
+          left,
+          transform,
+          fontSize: titleFontSize,
+          lineHeight: titleLineHeight,
+          color: titleColor,
+          pointerEvents: titlePointerEvents,
+        }}
+      >
+        {TITLE}
+      </motion.a>
+
+      <motion.div
+        inert={!navReady}
+        className="justify-self-end"
+        style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
+      >
+        <div className="hidden flex-row gap-4 md:flex">
+          <NavButton href={ROUTES.PROJECTS}>Projects</NavButton>
+          <NavButton href={ROUTES.CONTACT}>Contact</NavButton>
+        </div>
+        <MobileNav />
+      </motion.div>
     </div>
   );
 }
