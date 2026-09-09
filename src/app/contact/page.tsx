@@ -5,9 +5,9 @@ export default function Contact() {
   return (
     <div>
       <NavigationBar />
-      <div className="pt-[24px] flex justify-center h-full">
-        <div className="flex-col justify-center w-[588px]">
-          <div className="flex justify-center pb-[20px] text-[32px] font-semibold">
+      <div className="pb-[1rem] flex justify-center h-full">
+        <div className="flex-col justify-center w-[100vw]">
+          <div className="flex justify-center pb-[1rem] text-[1.25rem] font-semibold">
             Let&apos;s have a chat
           </div>
           <ContactForm />

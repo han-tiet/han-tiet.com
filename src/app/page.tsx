@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useScroll } from "framer-motion";
 import styles from "@/app/page.module.css";
 import Image from "next/image";
 import IndexNavigationBar from "@/components/IndexNavigationBar";
@@ -15,85 +15,37 @@ export default function Index() {
     offset: ["start start", "end end"],
   });
 
-  const titleFontSize = useTransform(
-    scrollYProgress,
-    [0, 0.5],
-    ["25rem", "3rem"],
-  );
-
-  const titleX = useTransform(scrollYProgress, [0, 0.5], ["3vw", "3vw"]);
-  const titleY = useTransform(scrollYProgress, [0, 0.5], ["4vh", "4vh"]);
-  const titleColor = useTransform(
-    scrollYProgress,
-    [0, 0.5],
-    ["#FAFAFA", "#000000"],
-  );
-  const titlePointerEvents = useTransform(
-    scrollYProgress,
-    [0.49, 0.5],
-    ["none", "auto"],
-  );
-
-  const navBarOpacity = useTransform(scrollYProgress, [0.99, 1], [0, 1]);
-  const navBarPointerEvents = useTransform(
-    scrollYProgress,
-    [0.5, 1],
-    ["none", "auto"],
-  );
-
   return (
-    <div ref={containerRef}>
-      <motion.div
-        style={{
-          position: "sticky",
-          top: 0,
-          left: 0,
-          opacity: navBarOpacity,
-          pointerEvents: navBarPointerEvents,
-        }}
-      >
-        <IndexNavigationBar />
-      </motion.div>
-      <motion.a
-        href="/"
-        className="font-semibold z-100"
-        style={{
-          fontSize: titleFontSize,
-          color: titleColor,
-          position: "sticky",
-          top: titleY,
-          left: titleX,
-          pointerEvents: titlePointerEvents,
-          overflow: "nowrap",
-        }}
-      >
-        Han Tiet
-      </motion.a>
-      <div className="h-[100vh] w-[100vw] overflow-hidden">
+    <div ref={containerRef} className="flex flex-col">
+      <div className="fixed top-0 left-0 z-100 w-full">
+        <IndexNavigationBar scrollYProgress={scrollYProgress} />
+      </div>
+      <div className="relative h-[100svh] w-full overflow-hidden">
         <video autoPlay muted loop playsInline className={styles.videobg}>
           <source
             src={`${process.env.NEXT_PUBLIC_IMAGEHOST}/videos/index-bg.webm`}
-            type="video/mp4"
+            type="video/webm"
           />
         </video>
       </div>
-      <div className="h-[100vh]">
-        <div className="flex flex-row items-left pt-[30vh]">
-          <div className="text-[2rem]/[4rem] h-full w-full ml-[3vw] mr-auto pr-[10vh]">
+      <div className="min-h-dvh md:h-screen">
+        <div className="flex flex-col md:flex-row items-start pt-16 sm:pt-24 md:pt-[30vh]">
+          <div className="w-full px-[5vw] text-lg/[1.75rem] sm:text-xl/[2rem] md:h-full md:w-auto md:ml-[3vw] md:mr-auto md:px-0 md:pr-[10vh] md:text-[2rem]/[4rem]">
             I&apos;m passionate about building products that are both creative
             and useful, with a focus on clean and functional design that meets
             user needs.
           </div>
-          <div className="w-full h-full mr-[3vw]]">
+          <div className="w-full mt-8 px-[5vw] md:mt-0 md:h-full md:w-full md:px-0 md:mr-[3vw]">
             <Image
               src={`${process.env.NEXT_PUBLIC_IMAGEHOST}/images/race-car.png`}
               width={888}
               height={188}
               alt="race-car"
+              className="h-auto w-full"
             />
           </div>
         </div>
-        <div className="mx-[3vw] mt-[28vh]">
+        <div className="mt-12 px-[5vw] sm:mt-16 md:mx-[3vw] md:mt-[28vh] md:px-0">
           <SocialMediaLinks />
         </div>
       </div>
