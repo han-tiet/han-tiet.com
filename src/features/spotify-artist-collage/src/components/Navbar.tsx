@@ -15,21 +15,21 @@ type NavbarProps = {
 
 export function Navbar({ user }: NavbarProps) {
   return (
-    <div className="col-span-full grid grid-cols-3 items-center h-[5vh] px-4">
-      <div />
-      <NavigationMenu className="justify-self-center">
+    <div className="col-span-full flex flex-col items-center gap-2 py-3 px-4 md:grid md:grid-cols-3 md:items-center md:h-[5vh] md:gap-0 md:py-0">
+      <div className="hidden md:block" />
+      <NavigationMenu className="md:justify-self-center">
         <NavigationMenuList>
           <NavigationMenuItem>
             <Link
               href={ROUTES.SPOTIFY_ARTIST_COLLAGE__LOGIN}
-              className="text-center text-xl font-bold"
+              className="text-center text-base sm:text-lg md:text-xl font-bold"
             >
               {user}&apos;s Spotify Artist Collage
             </Link>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      <div className="flex flex-row justify-self-end gap-4">
+      <div className="flex flex-row gap-4 md:justify-self-end">
         <LogOutButton />
       </div>
     </div>

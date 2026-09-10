@@ -37,13 +37,21 @@ const Results: React.FC<Props> = (props) => {
   }, []);
 
   return (
-    <Box sx={{ width: 900, minHeight: 829, m: "auto" }}>
+    <Box
+      sx={{
+        width: { xs: "100%", md: 900 },
+        maxWidth: "100%",
+        minHeight: { xs: 400, md: 829 },
+        m: "auto",
+        px: { xs: 2, md: 0 },
+      }}
+    >
       <div className="flex flex-row justify-center">
         {!allLoaded && <CircularProgress />}
       </div>
       <Masonry
-        columns={3}
-        spacing={2}
+        columns={{ xs: 1, sm: 2, md: 3 }}
+        spacing={{ xs: 1, md: 2 }}
         style={{ visibility: allLoaded ? "visible" : "hidden" }}
       >
         {props.source.map((gif: React.ReactNode, index: number) => (

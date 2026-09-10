@@ -25,7 +25,13 @@ export default function IndexSearchBar() {
 
   return (
     <div>
-      <Box sx={{ width: "50rem", my: 8, mx: "auto" }}>
+      <Box
+        sx={{
+          width: { xs: "90vw", sm: "80vw", md: "50rem" },
+          my: { xs: 4, md: 8 },
+          mx: "auto",
+        }}
+      >
         <Form action={ROUTES.GIFHUNTER_SEARCH}>
           <Box
             sx={{

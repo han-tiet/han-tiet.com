@@ -11,7 +11,7 @@ type CollageProps = {
 
 export function Collage({ data }: CollageProps) {
   return (
-    <div className="grid grid-cols-10">
+    <div className="grid w-full max-w-300 grid-cols-3 sm:grid-cols-5 md:grid-cols-8 lg:grid-cols-10">
       {data.map((artist: ArtistImageProps, i) => (
         <div
           key={artist.id}
