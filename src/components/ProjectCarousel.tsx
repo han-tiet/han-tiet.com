@@ -202,7 +202,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
           }
         }}
         style={scrollerStyle}
-        className="no-scrollbar relative flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain py-10 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 md:gap-8"
+        className="no-scrollbar relative flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain py-4 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 md:gap-8"
       >
         {projects.map((project, index) => {
           const isActive = index === active;
