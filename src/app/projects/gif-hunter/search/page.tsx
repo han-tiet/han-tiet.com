@@ -43,6 +43,7 @@ export default async function GifHunter({
           justifyContent: "center",
           textDecoration: "none",
           color: "black",
+          fontSize: { xs: "2rem", sm: "2.75rem", md: "3.75rem" },
         }}
       >
         GIFHunter

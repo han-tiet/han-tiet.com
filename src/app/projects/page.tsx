@@ -12,7 +12,7 @@ export default function Projects() {
   return (
     <>
       <NavigationBar />
-      <main className="mx-auto w-full max-w-6xl px-6 pb-24">
+      <main className="mx-auto w-full max-w-6xl px-6">
         <ProjectCarousel projects={PROJECTS} />
       </main>
     </>

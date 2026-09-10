@@ -18,7 +18,13 @@ export default async function GifHunter() {
       >
         <a href={`${ROUTES.PROJECTS}`}>&lt;&lt; Projects</a>
       </Box>
-      <Box sx={{ display: "flex-col", alignItems: "center", paddingY: "30vh" }}>
+      <Box
+        sx={{
+          display: "flex-col",
+          alignItems: "center",
+          paddingY: { xs: "12vh", sm: "20vh", md: "30vh" },
+        }}
+      >
         <Typography
           variant="h1"
           component="a"
@@ -28,6 +34,7 @@ export default async function GifHunter() {
             justifyContent: "center",
             textDecoration: "none",
             color: "black",
+            fontSize: { xs: "2.5rem", sm: "3.75rem", md: "6rem" },
           }}
         >
           GIFHunter
