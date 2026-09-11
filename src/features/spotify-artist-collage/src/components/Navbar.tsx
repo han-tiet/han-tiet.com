@@ -15,7 +15,7 @@ type NavbarProps = {
 
 export function Navbar({ user }: NavbarProps) {
   return (
-    <div className="col-span-full flex flex-col items-center gap-2 py-3 px-4 md:grid md:grid-cols-3 md:items-center md:h-[5vh] md:gap-0 md:py-0">
+    <div className="col-span-full flex flex-col items-center gap-2 py-3 px-4 md:grid md:grid-cols-3 md:items-center md:min-h-[5vh] md:gap-0 md:py-0">
       <div className="hidden md:block" />
       <NavigationMenu className="md:justify-self-center">
         <NavigationMenuList>

@@ -12,7 +12,7 @@ export default function SocialMediaLinks() {
           width={48}
           height={48}
           alt="linkedin"
-          className="size-8 md:size-12"
+          className="size-8 md:size-12 [@media(max-height:500px)_and_(orientation:landscape)]:size-8"
         />
       </Link>
       <Link href="https://github.com/han-tiet">
@@ -21,7 +21,7 @@ export default function SocialMediaLinks() {
           width={48}
           height={48}
           alt="github"
-          className="size-8 md:size-12"
+          className="size-8 md:size-12 [@media(max-height:500px)_and_(orientation:landscape)]:size-8"
         />
       </Link>
     </div>

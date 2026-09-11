@@ -45,7 +45,10 @@ export default function ContactForm() {
   return (
     <div className="w-full px-10" style={{ fontSize: fluidScale }}>
       <form action={formAction}>
-        <FieldGroup className="gap-[1.75em]">
+        {/* On short landscape screens (phones on their side) the stacked form
+            is taller than the viewport, so the message box moves into a
+            second column beside the other fields. */}
+        <FieldGroup className="gap-[1.75em] [@media(max-height:500px)_and_(orientation:landscape)]:grid [@media(max-height:500px)_and_(orientation:landscape)]:grid-cols-2 [@media(max-height:500px)_and_(orientation:landscape)]:gap-x-[2em] [@media(max-height:500px)_and_(orientation:landscape)]:gap-y-[1em]">
           <div className="flex flex-row gap-[4em]">
             <Field>
               <Input
@@ -140,7 +143,7 @@ export default function ContactForm() {
               </span>
             )}
           </Field>
-          <Field>
+          <Field className="[@media(max-height:500px)_and_(orientation:landscape)]:col-start-2 [@media(max-height:500px)_and_(orientation:landscape)]:row-span-3 [@media(max-height:500px)_and_(orientation:landscape)]:row-start-1">
             <Textarea
               id="message"
               name="message"
@@ -148,7 +151,7 @@ export default function ContactForm() {
                 state.errors?.message ? "message-error" : undefined
               }
               placeholder="Write your message here"
-              className="h-[18.75em] min-h-[4em] rounded-[0.5em] border-[0.125em] px-[0.75em] py-[0.5em] text-[1em] md:text-[1em]"
+              className="h-[18.75em] min-h-[4em] rounded-[0.5em] border-[0.125em] px-[0.75em] py-[0.5em] text-[1em] md:text-[1em] [@media(max-height:500px)_and_(orientation:landscape)]:h-auto [@media(max-height:500px)_and_(orientation:landscape)]:flex-1"
               autoComplete="off"
             />
             {state.errors?.message && (
@@ -163,7 +166,7 @@ export default function ContactForm() {
             )}
           </Field>
         </FieldGroup>
-        <div className="flex justify-center py-[2em]">
+        <div className="flex justify-center py-[2em] [@media(max-height:500px)_and_(orientation:landscape)]:py-[1em]">
           <Button
             // Box units are `em`, which resolve against this button's own
             // 1.125em (18px) font size: 2.889em ≈ 52px tall, 9.444em ≈ 170px wide.

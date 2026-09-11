@@ -25,7 +25,8 @@ export default function IndexNavigationBar({
   scrollYProgress: MotionValue<number>;
 }) {
   // vw term hits 0 at the end, so clamp() falls back to --title-size:
-  // 24px, or 48px from md up — NavigationBar's exact sizes.
+  // 24px, or 48px from md up (back to 24px on handheld) —
+  // NavigationBar's exact sizes.
   const titleVw = useTransform(scrollYProgress, [0, 0.5], [20, 0]);
   const titleFontSize = useMotionTemplate`clamp(var(--title-size), ${titleVw}vw, 25rem)`;
 
@@ -76,7 +77,7 @@ export default function IndexNavigationBar({
                 fixed copy has something to land on. */}
             <span
               aria-hidden
-              className="invisible text-[24px]/[60px] md:text-[48px]/[60px] font-semibold"
+              className="invisible text-[24px]/[60px] md:text-[48px]/[60px] handheld:text-[24px]/[60px] font-semibold"
             >
               {TITLE}
             </span>
@@ -86,7 +87,7 @@ export default function IndexNavigationBar({
 
       <motion.a
         href={ROUTES.INDEX}
-        className="fixed z-100 whitespace-nowrap font-semibold [--title-size:24px] md:[--title-size:48px]"
+        className="fixed z-100 whitespace-nowrap font-semibold [--title-size:24px] md:[--title-size:48px] handheld:[--title-size:24px]"
         style={{
           top,
           left,
@@ -105,7 +106,7 @@ export default function IndexNavigationBar({
         className="justify-self-end"
         style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
       >
-        <div className="hidden flex-row gap-4 md:flex">
+        <div className="hidden flex-row gap-4 md:flex handheld:hidden">
           <NavButton href={ROUTES.PROJECTS}>Projects</NavButton>
           <NavButton href={ROUTES.CONTACT}>Contact</NavButton>
         </div>

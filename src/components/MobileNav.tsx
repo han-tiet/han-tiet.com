@@ -15,7 +15,7 @@ export default function MobileNav() {
     <DialogPrimitive.Root open={open} onOpenChange={setOpen}>
       <DialogPrimitive.Trigger
         aria-label="Open menu"
-        className="flex size-[52px] items-center justify-center rounded-md outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 md:hidden"
+        className="flex size-[52px] items-center justify-center rounded-md outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 md:hidden handheld:flex"
       >
         <MenuIcon className="size-7" />
       </DialogPrimitive.Trigger>

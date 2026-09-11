@@ -21,14 +21,13 @@ import type { Project } from "@/data/projects";
  * tap settles with the same overshoot-and-recover feel as releasing a drag.
  */
 
-const CARD_WIDTH = "min(84vw, 440px)";
-
 // How far the cards trail behind the scroll, in px. Small on purpose: this
 // should read as weight, not as a slide.
 const DRAG_LAG = 0;
 
+// --card-w is set in the scroller's className rather than here so it can be
+// widened on short landscape screens, where ProjectCard lays out side by side.
 const scrollerStyle = {
-  "--card-w": CARD_WIDTH,
   paddingInline: "calc(50% - var(--card-w) / 2)",
 } as React.CSSProperties;
 
@@ -202,7 +201,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
           }
         }}
         style={scrollerStyle}
-        className="no-scrollbar relative flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain py-4 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 md:gap-8"
+        className="no-scrollbar relative flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain py-4 outline-none [--card-w:min(84vw,440px)] focus-visible:ring-[3px] focus-visible:ring-ring/50 md:gap-8 [@media(max-height:500px)_and_(orientation:landscape)]:[--card-w:min(84vw,640px)]"
       >
         {projects.map((project, index) => {
           const isActive = index === active;
@@ -263,7 +262,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
         <ChevronRight className="size-5" />
       </button>
 
-      <div className="flex flex-col gap-16">
+      <div className="flex flex-col gap-16 [@media(max-height:500px)_and_(orientation:landscape)]:gap-8">
         <div className="mt-4 flex justify-center gap-1">
           {projects.map((project, index) => (
             <button

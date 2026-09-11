@@ -3,15 +3,30 @@ import IndexSearchBar from "@/features/gif-hunter/components/IndexSearchBar";
 import { Box, Typography } from "@mui/material";
 import { ROUTES } from "@/constants/routes";
 
+// On short landscape screens (phones on their side) the vh-based padding
+// pushes the search bar off the bottom, so the title and search bar are
+// centred in the space under the back link instead.
+const SHORT_LANDSCAPE =
+  "@media (max-height: 500px) and (orientation: landscape)";
+
 export default async function GifHunter() {
   return (
-    <Box sx={{ display: "flex-col" }}>
+    <Box
+      sx={{
+        display: "flex-col",
+        [SHORT_LANDSCAPE]: {
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100svh",
+        },
+      }}
+    >
       <Box
         sx={{
           display: "flex",
           justifyContent: "start",
           alignItems: "center",
-          height: "5vh",
+          minHeight: "5vh",
           padding: "1vw",
           "&:hover": { color: "oklch(0.6911 0.2062 41.46)" },
         }}
@@ -23,6 +38,13 @@ export default async function GifHunter() {
           display: "flex-col",
           alignItems: "center",
           paddingY: { xs: "12vh", sm: "20vh", md: "30vh" },
+          [SHORT_LANDSCAPE]: {
+            paddingY: 0,
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          },
         }}
       >
         <Typography

@@ -19,7 +19,7 @@ export default async function Page() {
     return (
       <div className="grid grid-cols-12">
         <Navbar user={user.display_name} />
-        <div className="col-span-full px-4 py-8 flex justify-center items-start text-5xl md:col-start-2 md:col-span-10 md:items-center md:h-[85vh] md:py-0">
+        <div className="col-span-full px-4 py-8 flex justify-center items-start text-5xl md:col-start-2 md:col-span-10 md:items-center md:min-h-[85vh] md:py-0">
           <Collage data={data} />
         </div>
       </div>

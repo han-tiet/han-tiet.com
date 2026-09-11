@@ -11,7 +11,9 @@ type CollageProps = {
 
 export function Collage({ data }: CollageProps) {
   return (
-    <div className="grid w-full max-w-300 grid-cols-3 sm:grid-cols-5 md:grid-cols-8 lg:grid-cols-10">
+    // 13 columns on short landscape screens puts all 50 artists in 4 rows,
+    // which fits on a phone on its side.
+    <div className="grid w-full max-w-300 grid-cols-3 sm:grid-cols-5 md:grid-cols-8 lg:grid-cols-10 [@media(max-height:500px)_and_(orientation:landscape)]:grid-cols-13">
       {data.map((artist: ArtistImageProps, i) => (
         <div
           key={artist.id}

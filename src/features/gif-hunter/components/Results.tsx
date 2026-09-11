@@ -68,6 +68,10 @@ const Results: React.FC<Props> = (props) => {
                 borderBottomRightRadius: 4,
                 display: "block",
                 width: "100%",
+                // Keeps each GIF within one screen on short (landscape)
+                // viewports; `contain` scales it down rather than cropping.
+                maxHeight: "calc(100svh - 2rem)",
+                objectFit: "contain",
               }}
             />
           </div>

@@ -27,7 +27,7 @@ export default async function GifHunter({
           display: "flex",
           justifyContent: "start",
           alignItems: "center",
-          height: "5vh",
+          minHeight: "5vh",
           padding: "1vw",
           "&:hover": { color: "oklch(0.6911 0.2062 41.46)" },
         }}

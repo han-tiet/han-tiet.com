@@ -6,7 +6,7 @@ import { ROUTES } from "@/constants/routes";
 export default function LoginPage() {
   return (
     <div className="grid grid-col-12 min-h-[65vh]">
-      <div className="flex justify-start items-center h-[5vh] px-4 hover:text-primary">
+      <div className="flex justify-start items-center min-h-[5vh] px-4 hover:text-primary">
         <a href={ROUTES.PROJECTS}>&lt;&lt; Projects</a>
       </div>
       <div className="flex flex-col justify-center items-center gap-8 px-6 py-12 text-center">
