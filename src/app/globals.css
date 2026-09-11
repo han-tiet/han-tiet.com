@@ -1,6 +1,17 @@
 @plugin "tailwindcss-animate";
 @import "tailwindcss";
 
+/* Phones and tablets, in either orientation. Tablets, and phones on their
+   side, are wide enough to hit the md breakpoint but should still get the
+   mobile navigation. Screen size alone can't tell a tablet from a laptop, so
+   this matches touch screens (pointer: coarse), plus any landscape screen too
+   short to be a desktop. */
+@custom-variant handheld {
+  @media (pointer: coarse), (orientation: landscape) and (max-height: 500px) {
+    @slot;
+  }
+}
+
 @utility no-scrollbar {
   scrollbar-width: none;
   -ms-overflow-style: none;
