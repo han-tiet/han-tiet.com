@@ -26,7 +26,7 @@ export default function NavButton({
       <Button
         className={cn(
           isActive ? "bg-primary" : "bg-background",
-          "text-[18px] h-[52px] px-[16px] py-[12px]",
+          "text-[1.5rem] h-[2rem] px-[2rem] py-[2.5rem]",
           buttonClassName,
         )}
       >
