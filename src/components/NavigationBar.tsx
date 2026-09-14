@@ -16,9 +16,11 @@ export default function NavigationBar() {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
+            {/* ps-[12px] matches the burger icon's inset inside its 52px
+                tap target, so both sit the same distance from the edge. */}
             <Link
               href="/"
-              className="text-[24px]/[60px] md:text-[48px]/[60px] handheld:text-[24px]/[60px] font-semibold"
+              className="text-[24px]/[60px] md:text-[48px]/[60px] handheld:text-[24px]/[60px] font-semibold ps-[12px] md:ps-0 handheld:ps-[12px]"
             >
               Han Tiet
             </Link>
@@ -26,7 +28,7 @@ export default function NavigationBar() {
         </NavigationMenuList>
       </NavigationMenu>
       <div className="justify-self-end">
-        <div className="hidden flex-row gap-4 md:flex handheld:hidden">
+        <div className="hidden flex-row gap-4 md:flex touch:hidden">
           <NavButton href={ROUTES.PROJECTS}>Projects</NavButton>
           <NavButton href={ROUTES.CONTACT}>Contact</NavButton>
         </div>

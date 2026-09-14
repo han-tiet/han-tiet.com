@@ -33,9 +33,12 @@ export default function IndexNavigationBar({
   const titleLeadingVw = useTransform(scrollYProgress, [0, 0.5], [24, 0]);
   const titleLineHeight = useMotionTemplate`clamp(60px, ${titleLeadingVw}vw, 30rem)`;
 
-  // Centre of the viewport -> the nav bar's left padding (px-[3vw]).
+  // Centre of the viewport -> the nav bar's left padding (px-[3vw]), plus
+  // --title-inset once fully shrunk so the text lands level with the burger
+  // icon's inset inside its 52px tap target.
   const leftVw = useTransform(scrollYProgress, [0, 0.5], [50, 3]);
-  const left = useMotionTemplate`${leftVw}vw`;
+  const leftInset = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+  const left = useMotionTemplate`calc(${leftVw}vw + ${leftInset} * var(--title-inset))`;
 
   // Centre of the viewport -> vertically centred in the h-[14vh] bar:
   // half the bar (7vh) minus half the 60px line box.
@@ -77,7 +80,7 @@ export default function IndexNavigationBar({
                 fixed copy has something to land on. */}
             <span
               aria-hidden
-              className="invisible text-[24px]/[60px] md:text-[48px]/[60px] handheld:text-[24px]/[60px] font-semibold"
+              className="invisible text-[24px]/[60px] md:text-[48px]/[60px] handheld:text-[24px]/[60px] font-semibold ps-[12px] md:ps-0 handheld:ps-[12px]"
             >
               {TITLE}
             </span>
@@ -87,7 +90,7 @@ export default function IndexNavigationBar({
 
       <motion.a
         href={ROUTES.INDEX}
-        className="fixed z-100 whitespace-nowrap font-semibold [--title-size:24px] md:[--title-size:48px] handheld:[--title-size:24px]"
+        className="fixed z-100 whitespace-nowrap font-semibold [--title-size:24px] md:[--title-size:48px] handheld:[--title-size:24px] [--title-inset:12px] md:[--title-inset:0px] handheld:[--title-inset:12px]"
         style={{
           top,
           left,
@@ -106,7 +109,7 @@ export default function IndexNavigationBar({
         className="justify-self-end"
         style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
       >
-        <div className="hidden flex-row gap-4 md:flex handheld:hidden">
+        <div className="hidden flex-row gap-4 md:flex touch:hidden">
           <NavButton href={ROUTES.PROJECTS}>Projects</NavButton>
           <NavButton href={ROUTES.CONTACT}>Contact</NavButton>
         </div>
