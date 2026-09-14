@@ -6,6 +6,24 @@
    mobile navigation. Screen size alone can't tell a tablet from a laptop, so
    this matches touch screens (pointer: coarse), plus any landscape screen too
    short to be a desktop. */
+/* Tablets held sideways. They are wide enough to hit lg: and so inherit the
+   desktop layout, but only have a tablet's height to fit it into. Phones on
+   their side are excluded by min-height; they have their own rules. */
+@custom-variant tablet-landscape {
+  @media (pointer: coarse) and (orientation: landscape) and (min-height: 501px) {
+    @slot;
+  }
+}
+
+/* Touch devices only. The nav uses this rather than `handheld` so that a
+   laptop with a short browser window keeps the desktop nav: its primary
+   pointer is fine, while phones and tablets report coarse. */
+@custom-variant touch {
+  @media (pointer: coarse) {
+    @slot;
+  }
+}
+
 @custom-variant handheld {
   @media (pointer: coarse), (orientation: landscape) and (max-height: 500px) {
     @slot;
