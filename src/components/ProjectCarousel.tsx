@@ -182,10 +182,14 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
   const atEnd = active === projects.length - 1;
 
   return (
+    // Breaks out of the page's max-w-6xl container: a neighbouring card only
+    // clears the edge once the scroller is ~2.9 card widths plus two gaps
+    // across, which is wider than that container. body is overflow-x hidden,
+    // so the 100vw width can't introduce a horizontal scrollbar.
     <section
       aria-roledescription="carousel"
       aria-label="Projects"
-      className="relative w-full"
+      className="relative left-1/2 w-screen max-w-none -translate-x-1/2"
     >
       <ul
         ref={scrollerRef}
