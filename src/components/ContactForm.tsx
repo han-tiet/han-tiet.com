@@ -43,7 +43,7 @@ export default function ContactForm() {
   }, [state]);
 
   return (
-    <div className="w-full px-10" style={{ fontSize: fluidScale }}>
+    <div className="w-full px-8" style={{ fontSize: fluidScale }}>
       <form action={formAction}>
         {/* On short landscape screens (phones on their side) the stacked form
             is taller than the viewport, so the message box moves into a
