@@ -26,7 +26,8 @@ import type { Project } from "@/data/projects";
 const DRAG_LAG = 0;
 
 // --card-w is set in the scroller's className rather than here so it can be
-// widened on short landscape screens, where ProjectCard lays out side by side.
+// widened on short landscape screens, where ProjectCard lays out side by side,
+// and doubled on laptops and desktops.
 const scrollerStyle = {
   paddingInline: "calc(50% - var(--card-w) / 2)",
 } as React.CSSProperties;
@@ -205,7 +206,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
           }
         }}
         style={scrollerStyle}
-        className="no-scrollbar relative flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain py-4 outline-none [--card-w:min(84vw,440px)] focus-visible:ring-[3px] focus-visible:ring-ring/50 md:gap-8 [@media(max-height:500px)_and_(orientation:landscape)]:[--card-w:min(84vw,640px)]"
+        className="no-scrollbar relative flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain py-4 desktop:py-8 outline-none [--card-w:min(84vw,440px)] desktop:[--card-w:min(84vw,700px)] focus-visible:ring-[3px] focus-visible:ring-ring/50 md:gap-8 desktop:gap-16 [@media(max-height:500px)_and_(orientation:landscape)]:[--card-w:min(84vw,640px)]"
       >
         {projects.map((project, index) => {
           const isActive = index === active;
@@ -251,9 +252,9 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
         tabIndex={-1}
         onClick={() => scrollToIndex(active - 1)}
         disabled={atStart}
-        className="absolute top-1/2 left-4 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur transition-opacity active:scale-95 disabled:opacity-0 md:flex"
+        className="absolute top-1/2 left-4 desktop:left-8 hidden size-11 desktop:size-22 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur transition-opacity active:scale-95 disabled:opacity-0 md:flex"
       >
-        <ChevronLeft className="size-5" />
+        <ChevronLeft className="size-5 desktop:size-10" />
       </button>
       <button
         type="button"
@@ -261,13 +262,13 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
         tabIndex={-1}
         onClick={() => scrollToIndex(active + 1)}
         disabled={atEnd}
-        className="absolute top-1/2 right-4 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur transition-opacity active:scale-95 disabled:opacity-0 md:flex"
+        className="absolute top-1/2 right-4 desktop:right-8 hidden size-11 desktop:size-22 -translate-y-1/2 items-center justify-center rounded-full border border-border bg-background/80 backdrop-blur transition-opacity active:scale-95 disabled:opacity-0 md:flex"
       >
-        <ChevronRight className="size-5" />
+        <ChevronRight className="size-5 desktop:size-10" />
       </button>
 
-      <div className="flex flex-col gap-16 [@media(max-height:500px)_and_(orientation:landscape)]:gap-8">
-        <div className="mt-4 flex justify-center gap-1">
+      <div className="flex flex-col gap-16 desktop:gap-32 [@media(max-height:500px)_and_(orientation:landscape)]:gap-8">
+        <div className="mt-4 desktop:mt-8 flex justify-center gap-1 desktop:gap-2">
           {projects.map((project, index) => (
             <button
               key={project.slug}
@@ -275,10 +276,10 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
               onClick={() => scrollToIndex(index)}
               aria-label={`Show ${project.name}`}
               aria-current={index === active}
-              className="p-2"
+              className="p-2 desktop:p-4"
             >
               <motion.span
-                className="block size-2 rounded-full bg-foreground"
+                className="block size-2 desktop:size-4 rounded-full bg-foreground"
                 animate={{
                   scale: index === active ? 1.4 : 1,
                   opacity: index === active ? 1 : 0.3,
@@ -299,7 +300,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="pointer-events-none absolute inset-x-0 bottom-0 hidden items-center justify-center gap-2 text-sm text-muted-foreground md:flex"
+                className="pointer-events-none absolute inset-x-0 bottom-0 hidden items-center justify-center gap-2 desktop:gap-4 text-sm desktop:text-[1.75rem] text-muted-foreground md:flex"
               >
                 <motion.span
                   animate={reduceMotion ? undefined : { x: [-4, 4, -4] }}
@@ -309,7 +310,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
                     ease: "easeInOut",
                   }}
                 >
-                  <MoveHorizontal className="size-4" />
+                  <MoveHorizontal className="size-4 desktop:size-8" />
                 </motion.span>
                 Scroll to see more projects
               </motion.p>
