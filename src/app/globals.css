@@ -24,6 +24,15 @@
   }
 }
 
+/* Laptops and desktops: a fine primary pointer, from the md breakpoint up.
+   Tablets in landscape are wide enough to hit md and lg but report a coarse
+   pointer, so they keep their own rules. */
+@custom-variant desktop {
+  @media (pointer: fine) and (min-width: 48rem) {
+    @slot;
+  }
+}
+
 @custom-variant handheld {
   @media (pointer: coarse), (orientation: landscape) and (max-height: 500px) {
     @slot;
@@ -160,6 +169,21 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* ContactForm is sized entirely in `em` off this one value, so doubling it
+   doubles the whole form. `1em === 16px` at the 1920px design reference,
+   shrinking linearly with viewport width to `1em === 12px`. Laptops and
+   desktops get 1.5x that. */
+:root {
+  --contact-form-base: clamp(12px, calc(12px + (100vw - 480px) / 360), 16px);
+  --contact-form-scale: var(--contact-form-base);
+}
+
+@media (pointer: fine) and (min-width: 48rem) {
+  :root {
+    --contact-form-scale: calc(1.5 * var(--contact-form-base));
+  }
 }
 
 @layer base {
