@@ -12,12 +12,13 @@ const initialState = {};
 
 /**
  * Every dimension below is written in `em` so the whole form is driven by a
- * single knob: the `fontSize` on the wrapper. That value is `1em === 16px` at a
- * 1920px viewport (the design reference) and shrinks linearly with viewport
- * width down to `1em === 12px`, so the form scales proportionally across tablet
- * and mobile without any breakpoint reflow.
+ * single knob: the `fontSize` on the wrapper. `--contact-form-scale` is defined
+ * in globals.css — `1em === 16px` at a 1920px viewport (the design reference),
+ * shrinking linearly with viewport width down to `1em === 12px`, so the form
+ * scales proportionally across tablet and mobile without any breakpoint
+ * reflow. Laptops and desktops get twice that, which doubles the form.
  */
-const fluidScale = "clamp(12px, calc(12px + (100vw - 480px) / 360), 16px)";
+const fluidScale = "var(--contact-form-scale)";
 
 const inputClassName =
   "h-[2.25em] rounded-[0.5em] border-[0.125em] px-[0.75em] py-[0.25em] text-[1em] md:text-[1em]";
