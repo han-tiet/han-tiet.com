@@ -45,7 +45,7 @@ export default function MobileNav() {
             <NavButton
               href={ROUTES.PROJECTS}
               className="w-full"
-              buttonClassName="w-full px-[6px] text-[13px]"
+              buttonClassName="w-full px-2 text-md md:text-lg"
               onNavigate={close}
             >
               Projects
@@ -53,7 +53,7 @@ export default function MobileNav() {
             <NavButton
               href={ROUTES.CONTACT}
               className="w-full"
-              buttonClassName="w-full px-[6px] text-[13px]"
+              buttonClassName="w-full px-2 text-md md:text-lg"
               onNavigate={close}
             >
               Contact
