@@ -19,12 +19,12 @@ export function ArtistImage({ id, name, images, ranking }: ArtistImageProps) {
             className="w-full h-full object-cover" /* Image expands to div w and h */
             src={images[0].url}
             alt={name}
-            width={120}
-            height={120}
+            width={600}
+            height={600}
             loading="lazy"
           />
         </div>
-        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80 text-gray-300 text-center text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/80 text-gray-300 text-center text-sm desktop:text-[1.5rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div>{ranking}</div>
           <div>{name}</div>
         </div>
