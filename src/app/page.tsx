@@ -8,19 +8,21 @@ import IndexNavigationBar from "@/components/IndexNavigationBar";
 import SocialMediaLinks from "@/components/SocialMediaLinks";
 
 export default function Index() {
-  const containerRef = useRef(null);
+  const heroRef = useRef(null);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
+  // 0 while the hero fills the viewport, 1 once its bottom edge reaches the
+  // top of the viewport.
+  const { scrollYProgress: heroScrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
   });
 
   return (
-    <div ref={containerRef} className="flex flex-col">
+    <div className="flex flex-col">
       <div className="fixed top-0 left-0 z-100 w-full">
-        <IndexNavigationBar scrollYProgress={scrollYProgress} />
+        <IndexNavigationBar heroScrollYProgress={heroScrollYProgress} />
       </div>
-      <div className="relative h-[100svh] w-full overflow-hidden">
+      <div ref={heroRef} className="relative h-[100svh] w-full overflow-hidden">
         <video autoPlay muted loop playsInline className={styles.videobg}>
           <source
             src={`${process.env.NEXT_PUBLIC_IMAGEHOST}/videos/index-bg.webm`}

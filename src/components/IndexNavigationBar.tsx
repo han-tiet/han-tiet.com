@@ -20,56 +20,60 @@ import { ROUTES } from "@/constants/routes";
 const TITLE = "Han Tiet";
 
 export default function IndexNavigationBar({
-  scrollYProgress,
+  heroScrollYProgress,
 }: {
-  scrollYProgress: MotionValue<number>;
+  heroScrollYProgress: MotionValue<number>;
 }) {
   // vw term hits 0 at the end, so clamp() falls back to --title-size:
   // 24px, or 48px from md up (back to 24px on handheld) —
   // NavigationBar's exact sizes.
-  const titleVw = useTransform(scrollYProgress, [0, 0.5], [20, 0]);
+  const titleVw = useTransform(heroScrollYProgress, [0, 0.5], [20, 0]);
   const titleFontSize = useMotionTemplate`clamp(var(--title-size), ${titleVw}vw, 25rem)`;
 
-  const titleLeadingVw = useTransform(scrollYProgress, [0, 0.5], [24, 0]);
+  const titleLeadingVw = useTransform(heroScrollYProgress, [0, 0.5], [24, 0]);
   const titleLineHeight = useMotionTemplate`clamp(60px, ${titleLeadingVw}vw, 30rem)`;
 
   // Centre of the viewport -> the nav bar's left padding (px-[3vw]), plus
   // --title-inset once fully shrunk so the text lands level with the burger
   // icon's inset inside its 52px tap target.
-  const leftVw = useTransform(scrollYProgress, [0, 0.5], [50, 3]);
-  const leftInset = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+  const leftVw = useTransform(heroScrollYProgress, [0, 0.5], [50, 3]);
+  const leftInset = useTransform(heroScrollYProgress, [0, 0.5], [0, 1]);
   const left = useMotionTemplate`calc(${leftVw}vw + ${leftInset} * var(--title-inset))`;
 
   // Centre of the viewport -> vertically centred in the h-[14vh] bar:
   // half the bar (7vh) minus half the 60px line box.
-  const topVh = useTransform(scrollYProgress, [0, 0.5], [50, 7]);
-  const topPx = useTransform(scrollYProgress, [0, 0.5], [0, -30]);
+  const topVh = useTransform(heroScrollYProgress, [0, 0.5], [50, 7]);
+  const topPx = useTransform(heroScrollYProgress, [0, 0.5], [0, -30]);
   const top = useMotionTemplate`calc(${topVh}vh + ${topPx}px)`;
 
   // Anchored by its own centre at the start, by its top-left at the end.
-  const shiftPct = useTransform(scrollYProgress, [0, 0.5], [50, 0]);
+  const shiftPct = useTransform(heroScrollYProgress, [0, 0.5], [50, 0]);
   const transform = useMotionTemplate`translate(-${shiftPct}%, -${shiftPct}%)`;
 
   const titleColor = useTransform(
-    scrollYProgress,
+    heroScrollYProgress,
     [0, 0.5],
     ["#FAFAFA", "#000000"],
   );
   const titlePointerEvents = useTransform(
-    scrollYProgress,
+    heroScrollYProgress,
     [0.49, 0.5],
     ["none", "auto"],
   );
 
-  const navOpacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
+  // Hidden until the bottom of the hero section clears the top of the
+  // viewport, then visible for the rest of the page.
+  const navOpacity = useTransform(heroScrollYProgress, [0.99, 1], [0, 1]);
   const navPointerEvents = useTransform(
-    scrollYProgress,
+    heroScrollYProgress,
     [0.99, 1],
     ["none", "auto"],
   );
 
   const [navReady, setNavReady] = useState(false);
-  useMotionValueEvent(scrollYProgress, "change", (v) => setNavReady(v >= 0.99));
+  useMotionValueEvent(heroScrollYProgress, "change", (v) =>
+    setNavReady(v >= 0.99),
+  );
 
   return (
     <div className="col-span-full grid grid-cols-2 items-center h-[14vh] px-[3vw]">
