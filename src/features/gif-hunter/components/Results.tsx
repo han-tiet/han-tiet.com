@@ -50,7 +50,7 @@ const Results: React.FC<Props> = (props) => {
         {!allLoaded && <CircularProgress />}
       </div>
       <Masonry
-        columns={{ xs: 1, sm: 2, md: 3 }}
+        columns={{ xs: 1, sm: 2, md: 3, lg: 3 }}
         spacing={{ xs: 1, md: 2 }}
         style={{ visibility: allLoaded ? "visible" : "hidden" }}
       >
