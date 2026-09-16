@@ -27,8 +27,24 @@ export default async function GifHunter({
           display: "flex",
           justifyContent: "start",
           alignItems: "center",
-          minHeight: "5vh",
-          padding: "1vw",
+          minHeight: "4rem",
+          padding: "0rem 0rem 0rem 1rem",
+          // Matches the `text-sm md:text-lg desktop:text-xl` back link on the
+          // Spotify Artist Collage pages. Raw media queries rather than MUI
+          // breakpoint keys: MUI's `md` is 900px where Tailwind's is 768px,
+          // and `desktop` is a pointer query MUI cannot express. `desktop` is
+          // listed after `md` so it wins at the same width on a fine pointer,
+          // which is the order the compiled Tailwind emits.
+          fontSize: "0.875rem",
+          lineHeight: "1.25rem",
+          "@media (min-width: 48rem)": {
+            fontSize: "1.125rem",
+            lineHeight: "1.75rem",
+          },
+          "@media (pointer: fine) and (min-width: 48rem)": {
+            fontSize: "1.25rem",
+            lineHeight: "1.75rem",
+          },
           "&:hover": { color: "oklch(0.6911 0.2062 41.46)" },
         }}
       >
