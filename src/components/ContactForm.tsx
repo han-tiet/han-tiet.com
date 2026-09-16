@@ -46,10 +46,12 @@ export default function ContactForm() {
   return (
     <div className="w-full px-8" style={{ fontSize: fluidScale }}>
       <form action={formAction}>
-        {/* On short landscape screens (phones on their side) the stacked form
-            is taller than the viewport, so the message box moves into a
-            second column beside the other fields. */}
-        <FieldGroup className="gap-[1.75em] [@media(max-height:500px)_and_(orientation:landscape)]:grid [@media(max-height:500px)_and_(orientation:landscape)]:grid-cols-2 [@media(max-height:500px)_and_(orientation:landscape)]:gap-x-[2em] [@media(max-height:500px)_and_(orientation:landscape)]:gap-y-[1em]">
+        {/* Short landscape screens (phones on their side) keep the same single
+            column as everywhere else, so the message box sits below the
+            subject. The form is taller than the viewport there and the page
+            scrolls, which is preferred to splitting it into two columns. The
+            gap tightens because vertical space is still worth saving. */}
+        <FieldGroup className="gap-[1.75em] [@media(max-height:500px)_and_(orientation:landscape)]:gap-[1em]">
           <div className="flex flex-row gap-[4em]">
             <Field>
               <Input
@@ -144,7 +146,7 @@ export default function ContactForm() {
               </span>
             )}
           </Field>
-          <Field className="[@media(max-height:500px)_and_(orientation:landscape)]:col-start-2 [@media(max-height:500px)_and_(orientation:landscape)]:row-span-3 [@media(max-height:500px)_and_(orientation:landscape)]:row-start-1">
+          <Field>
             <Textarea
               id="message"
               name="message"
@@ -152,7 +154,7 @@ export default function ContactForm() {
                 state.errors?.message ? "message-error" : undefined
               }
               placeholder="Write your message here"
-              className="h-[18.75em] min-h-[4em] rounded-[0.5em] border-[0.125em] px-[0.75em] py-[0.5em] text-[1em] md:text-[1em] [@media(max-height:500px)_and_(orientation:landscape)]:h-auto [@media(max-height:500px)_and_(orientation:landscape)]:flex-1"
+              className="h-[18.75em] min-h-[4em] rounded-[0.5em] border-[0.125em] px-[0.75em] py-[0.5em] text-[1em] md:text-[1em]"
               autoComplete="off"
             />
             {state.errors?.message && (
