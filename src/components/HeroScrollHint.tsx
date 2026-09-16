@@ -23,7 +23,7 @@ export default function HeroScrollHint({
 }) {
   const reduceMotion = useReducedMotion();
 
-  const opacity = useTransform(heroScrollYProgress, [0, 0.8], [1, 0]);
+  const opacity = useTransform(heroScrollYProgress, [0, 1], [1, 0]);
 
   return (
     <motion.div
