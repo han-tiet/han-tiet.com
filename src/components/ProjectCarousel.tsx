@@ -267,7 +267,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
         <ChevronRight className="size-5 desktop:size-10" />
       </button>
 
-      <div className="flex flex-col gap-16 desktop:gap-32 [@media(max-height:500px)_and_(orientation:landscape)]:gap-8">
+      <div className="flex flex-col gap-8 desktop:gap-32 [@media(max-height:500px)_and_(orientation:landscape)]:gap-8">
         <div className="mt-4 desktop:mt-8 flex justify-center gap-1 desktop:gap-2">
           {projects.map((project, index) => (
             <button
