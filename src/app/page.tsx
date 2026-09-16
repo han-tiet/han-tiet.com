@@ -5,6 +5,7 @@ import { useScroll } from "framer-motion";
 import styles from "@/app/page.module.css";
 import Image from "next/image";
 import IndexNavigationBar from "@/components/IndexNavigationBar";
+import HeroScrollHint from "@/components/HeroScrollHint";
 import SocialMediaLinks from "@/components/SocialMediaLinks";
 
 export default function Index() {
@@ -29,6 +30,7 @@ export default function Index() {
             type="video/webm"
           />
         </video>
+        <HeroScrollHint heroScrollYProgress={heroScrollYProgress} />
       </div>
       <div className="flex flex-col items-center min-h-dvh md:h-dvh md:gap-16 desktop:h-auto desktop:gap-32 [@media(max-height:500px)_and_(orientation:landscape)]:h-dvh [@media(max-height:500px)_and_(orientation:landscape)]:overflow-y-auto [@media(max-height:500px)_and_(orientation:landscape)]:justify-center [@media(max-height:500px)_and_(orientation:landscape)]:gap-8">
         <div className="flex w-full justify-center pt-24 px-[5vw] md:pt-36 desktop:pt-[calc(14vh+2rem)] md:w-full md:px-0 [@media(max-height:500px)_and_(orientation:landscape)]:pt-8 [@media(max-height:500px)_and_(orientation:landscape)]:max-w-44">
