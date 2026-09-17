@@ -35,10 +35,10 @@ export default async function GifHunter({
           // and `desktop` is a pointer query MUI cannot express. `desktop` is
           // listed after `md` so it wins at the same width on a fine pointer,
           // which is the order the compiled Tailwind emits.
-          fontSize: "0.875rem",
+          fontSize: "1rem",
           lineHeight: "1.25rem",
           "@media (min-width: 48rem)": {
-            fontSize: "1.125rem",
+            fontSize: "1.25rem",
             lineHeight: "1.75rem",
           },
           "@media (pointer: fine) and (min-width: 48rem)": {
