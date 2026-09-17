@@ -53,7 +53,7 @@ export default function IndexNavigationBar({
   const titleColor = useTransform(
     heroScrollYProgress,
     [0, 0.5],
-    ["#FAFAFA", "#000000"],
+    ["#F0F0F0", "#000000"],
   );
   const titlePointerEvents = useTransform(
     heroScrollYProgress,

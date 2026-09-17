@@ -28,8 +28,8 @@ export default function HeroScrollHint({
   return (
     <motion.div
       style={{ opacity }}
-      // #FAFAFA is the colour the title starts at over this video.
-      className="pointer-events-none absolute inset-x-0 bottom-8 flex flex-col items-center justify-center gap-2 desktop:gap-4 text-[#FAFAFA] text-sm md:text-base desktop:text-[1.75rem] [@media(max-height:500px)_and_(orientation:landscape)]:bottom-3 [@media(max-height:500px)_and_(orientation:landscape)]:gap-1"
+      // #F0F0F0 is the colour the title starts at over this video.
+      className="pointer-events-none absolute inset-x-0 bottom-8 flex flex-col items-center justify-center gap-2 desktop:gap-4 text-[#F0F0F0] text-sm md:text-base desktop:text-[1.25rem] [@media(max-height:500px)_and_(orientation:landscape)]:bottom-3 [@media(max-height:500px)_and_(orientation:landscape)]:gap-1"
     >
       Scroll down for more
       <motion.span
