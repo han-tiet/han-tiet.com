@@ -20,7 +20,7 @@ export default function NavigationBar() {
                 tap target, so both sit the same distance from the edge. */}
             <Link
               href="/"
-              className="text-[24px]/[60px] md:text-[48px]/[60px] handheld:text-[24px]/[60px] font-semibold ps-[12px] md:ps-0 handheld:ps-[12px]"
+              className="text-[1.5rem]/[3.75rem] md:text-[3rem]/[3.75rem] handheld:text-[1.5rem]/[3.75rem] font-semibold ps-[12px] md:ps-0 handheld:ps-[12px]"
             >
               Han Tiet
             </Link>
