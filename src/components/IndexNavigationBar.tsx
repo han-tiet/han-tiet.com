@@ -24,29 +24,28 @@ export default function IndexNavigationBar({
 }: {
   heroScrollYProgress: MotionValue<number>;
 }) {
-  // vw term hits 0 at the end, so clamp() falls back to --title-size:
-  // 24px, or 48px from md up (back to 24px on handheld) —
-  // NavigationBar's exact sizes.
+  // Title size: vw term hits 0 at the end, so clamp() falls back to --title-size:
+  // 1.5rem, or 3rem from md up (back to 1.5rem on handheld) —
   const titleVw = useTransform(heroScrollYProgress, [0, 0.5], [20, 0]);
   const titleFontSize = useMotionTemplate`clamp(var(--title-size), ${titleVw}vw, 25rem)`;
 
   const titleLeadingVw = useTransform(heroScrollYProgress, [0, 0.5], [24, 0]);
-  const titleLineHeight = useMotionTemplate`clamp(60px, ${titleLeadingVw}vw, 30rem)`;
+  const titleLineHeight = useMotionTemplate`clamp(3.75rem, ${titleLeadingVw}vw, 30rem)`;
 
-  // Centre of the viewport -> the nav bar's left padding (px-[3vw]), plus
+  // Title distance from left: Centre of the viewport -> the nav bar's left padding (px-[3vw]), plus
   // --title-inset once fully shrunk so the text lands level with the burger
   // icon's inset inside its 52px tap target.
   const leftVw = useTransform(heroScrollYProgress, [0, 0.5], [50, 3]);
   const leftInset = useTransform(heroScrollYProgress, [0, 0.5], [0, 1]);
   const left = useMotionTemplate`calc(${leftVw}vw + ${leftInset} * var(--title-inset))`;
 
-  // Centre of the viewport -> vertically centred in the h-[14vh] bar:
-  // half the bar (7vh) minus half the 60px line box.
-  const topVh = useTransform(heroScrollYProgress, [0, 0.5], [50, 7]);
-  const topPx = useTransform(heroScrollYProgress, [0, 0.5], [0, -30]);
-  const top = useMotionTemplate`calc(${topVh}vh + ${topPx}px)`;
+  // Title distance from top: Centre of the viewport -> vertically centred in the h-[14svh] bar:
+  // half the bar (7svh) minus half the 3.75rem line box.
+  const topSvh = useTransform(heroScrollYProgress, [0, 0.5], [50, 7]);
+  const topRem = useTransform(heroScrollYProgress, [0, 0.5], [0, -1.875]);
+  const top = useMotionTemplate`calc(${topSvh}svh + ${topRem}rem)`;
 
-  // Anchored by its own centre at the start, by its top-left at the end.
+  // Centre position of title: Anchored by its own centre at the start, by its top-left at the end.
   const shiftPct = useTransform(heroScrollYProgress, [0, 0.5], [50, 0]);
   const transform = useMotionTemplate`translate(-${shiftPct}%, -${shiftPct}%)`;
 
@@ -57,7 +56,7 @@ export default function IndexNavigationBar({
   );
   const titlePointerEvents = useTransform(
     heroScrollYProgress,
-    [0.49, 0.5],
+    [0, 0.5],
     ["none", "auto"],
   );
 
@@ -76,7 +75,7 @@ export default function IndexNavigationBar({
   );
 
   return (
-    <div className="col-span-full grid grid-cols-2 items-center h-[14vh] px-[3vw]">
+    <div className="col-span-full grid grid-cols-2 items-center h-[14svh] px-[3vw]">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
@@ -84,7 +83,7 @@ export default function IndexNavigationBar({
                 fixed copy has something to land on. */}
             <span
               aria-hidden
-              className="invisible text-[24px]/[60px] md:text-[48px]/[60px] handheld:text-[24px]/[60px] font-semibold ps-[12px] md:ps-0 handheld:ps-[12px]"
+              className="invisible text-[1.5rem]/[3.75rem] md:text-[3rem]/[3.75rem] handheld:text-[1.5rem]/[3.75rem] font-semibold ps-[12px] md:ps-0 handheld:ps-[12px]"
             >
               {TITLE}
             </span>
@@ -94,7 +93,7 @@ export default function IndexNavigationBar({
 
       <motion.a
         href={ROUTES.INDEX}
-        className="fixed z-100 whitespace-nowrap font-semibold [--title-size:24px] md:[--title-size:48px] handheld:[--title-size:24px] [--title-inset:12px] md:[--title-inset:0px] handheld:[--title-inset:12px]"
+        className="fixed z-100 whitespace-nowrap font-semibold [--title-size:1.5rem] md:[--title-size:3rem] handheld:[--title-size:1.5rem] [--title-inset:12px] md:[--title-inset:0px] handheld:[--title-inset:12px]"
         style={{
           top,
           left,
