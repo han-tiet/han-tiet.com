@@ -41,7 +41,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
   // -1, 0 or 1. Non-zero while a spring is running, which pulls the cards
   // against the direction of travel and lets them settle back to 0.
   const [lag, setLag] = useState(0);
-  const reduceMotion = false;
+  const reduceMotion = useReducedMotion();
 
   // Track the centred card with an IntersectionObserver rather than a scroll
   // listener. The callback only fires when a card crosses the middle 10% of the
