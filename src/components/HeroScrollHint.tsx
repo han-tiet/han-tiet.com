@@ -13,7 +13,7 @@ import { ChevronDown } from "lucide-react";
  *
  * Driven by the hero's own scroll progress rather than a scroll listener, so
  * it shares the single motion value the index page already creates. It is gone
- * well before the hero clears the viewport, which also stops the looping
+ * just before the hero clears the viewport, which also stops the looping
  * chevron animation running under the rest of the page.
  */
 export default function HeroScrollHint({
