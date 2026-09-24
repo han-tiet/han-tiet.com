@@ -52,7 +52,6 @@ export default function Index() {
         </div>
         <div className="pt-16 px-[5vw] md:mx-[3vw] md:pt-0 desktop:pt-8 tablet-landscape:pt-0 [@media(max-height:500px)_and_(orientation:landscape)]:pt-0 [@media(max-height:500px)_and_(orientation:landscape)]:mx-0">
           <SocialMediaLinks />
-          <CTAButton />
         </div>
       </div>
     </div>
