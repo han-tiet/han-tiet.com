@@ -7,7 +7,6 @@ import Image from "next/image";
 import IndexNavigationBar from "@/components/IndexNavigationBar";
 import HeroScrollHint from "@/components/HeroScrollHint";
 import SocialMediaLinks from "@/components/SocialMediaLinks";
-import { CTAButton } from "@/components/CTAButton";
 
 export default function Index() {
   const heroRef = useRef(null);
