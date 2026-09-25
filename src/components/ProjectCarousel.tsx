@@ -217,6 +217,7 @@ export default function ProjectCarousel({ projects }: { projects: Project[] }) {
               ref={(el) => {
                 itemRefs.current[index] = el;
               }}
+              inert={!isActive}
               data-index={index}
               style={{ width: "var(--card-w)" }}
               className="flex shrink-0 snap-center"
