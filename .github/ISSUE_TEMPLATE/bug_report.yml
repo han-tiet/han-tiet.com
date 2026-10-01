@@ -1,0 +1,150 @@
+name: Bug report
+description: Report something that is broken or looks wrong on the site
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this. The more detail you give, the faster it can be reproduced and fixed.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected area
+      description: Which part of the site is the problem in?
+      options:
+        - Portfolio pages (home / projects / contact)
+        - Contact form
+        - GIFHunter
+        - Spotify Artist Collage
+        - Other / not sure
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: Page URL
+      description: The page where the problem happens.
+      placeholder: https://han-tiet.com/projects/gif-hunter/search?q=cats
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen instead?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type of bug
+      multiple: true
+      options:
+        - Visual / layout
+        - Functionality
+        - Performance
+        - Accessibility
+        - Authentication / login
+        - Content / copy
+    validations:
+      required: true
+
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device type
+      multiple: true
+      options:
+        - Desktop / laptop (mouse or trackpad)
+        - Tablet (touch)
+        - Phone (touch)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: orientation
+    attributes:
+      label: Orientation
+      description: Only relevant for phones and tablets.
+      options:
+        - Portrait
+        - Landscape
+        - Both
+        - Not applicable
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      multiple: true
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Samsung Internet
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: OS, browser version and viewport size
+      placeholder: iOS 18.2, Safari 18, 844x390
+    validations:
+      required: false
+
+  - type: dropdown
+    id: deployment
+    attributes:
+      label: Where did you see it?
+      options:
+        - Production (han-tiet.com)
+        - Vercel preview deployment
+        - Local development
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / recordings
+      description: Drag and drop images or videos here.
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console or network errors
+      description: Paste anything relevant from the browser DevTools console or network tab. Remove tokens, cookies and email addresses first.
+      render: shell
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Anything else that might help, e.g. browser extensions, reduced motion, slow connection.
