@@ -1,0 +1,69 @@
+name: Feature request
+description: Suggest a new feature or an improvement to the site
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the site would this change?
+      options:
+        - Portfolio pages (home / projects / contact)
+        - Contact form
+        - GIFHunter
+        - Spotify Artist Collage
+        - New project / page
+        - Tooling / CI / infrastructure
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What is missing or frustrating today? Who is affected?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: Describe what you would like to see. Link designs or mockups if you have them.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: How do we know this is done?
+      value: |
+        - [ ]
+        - [ ]
+        - [ ]
+
+  - type: checkboxes
+    id: considerations
+    attributes:
+      label: Considerations
+      description: Tick everything this change is likely to touch.
+      options:
+        - label: Responsive behavior (desktop, tablet, phone, landscape)
+        - label: Accessibility (keyboard, screen reader, contrast, reduced motion)
+        - label: Performance (bundle size, images, Core Web Vitals)
+        - label: SEO / metadata
+        - label: New environment variables or third-party APIs
+        - label: Database schema changes
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Screenshots, references, or links to similar implementations.
