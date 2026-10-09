@@ -180,7 +180,7 @@ describe("handleContactForm", () => {
     it("handles the confirmation email failing after the contact email", async () => {
       const error = new MessageRejected({ message: "rejected", $metadata: {} });
       send
-        .mockResolvedValueOnce({ messageId: MESSAGE_ID })
+        .mockResolvedValueOnce({ MessageId: MESSAGE_ID })
         .mockRejectedValueOnce(error);
       const result = await submit();
 
