@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { handleContactForm } from "@/app/actions/handleContactForm";
+import { MessageRejected } from "@aws-sdk/client-ses";
 
 const { send } = vi.hoisted(() => ({ send: vi.fn() }));
 
@@ -24,6 +25,39 @@ const validFields = {
   message: "Just saying hi",
 };
 
+const overrideEntries = [
+  ["forename", "empty", ""],
+  ["forename", "too long", "a".repeat(31)],
+  ["surname", "empty", ""],
+  ["surname", "too long", "a".repeat(31)],
+  ["emailAddress", "empty", ""],
+  ["emailAddress", "malformed", "not-an-email"],
+  ["subject", "empty", ""],
+  ["subject", "too long", "a".repeat(51)],
+  ["message", "empty", ""],
+  ["message", "too long", "a".repeat(5001)],
+  ["forename", "missing", null],
+  ["surname", "missing", null],
+  ["emailAddress", "missing", null],
+  ["subject", "missing", null],
+  ["message", "missing", null],
+] as const;
+
+const brokenFields = {
+  forename: "a".repeat(31),
+  surname: "",
+  emailAddress: "abcdefg",
+  message: null,
+};
+
+const maxLength = {
+  forename: "a".repeat(30),
+  surname: "a".repeat(30),
+  emailAddress: "ada@example.com",
+  subject: "a".repeat(50),
+  message: "a".repeat(5000),
+};
+
 type Overrides = Partial<Record<keyof typeof validFields, string | null>>;
 
 describe("handleContactForm", () => {
@@ -41,10 +75,40 @@ describe("handleContactForm", () => {
   });
 
   describe("validation", () => {
-    it.todo("rejects each field when it is empty, too long or malformed");
-    it.todo("rejects a field that is missing from the form");
-    it.todo("reports every invalid field when several are broken");
-    it.todo("accepts every field at its maximum length");
+    it.each(overrideEntries)(
+      "rejects %s when it is %s",
+      async (fieldName, _label, value) => {
+        const result = await submit({ [fieldName]: value });
+
+        expect(result).toMatchObject({
+          success: false,
+          errorCode: "FORM_VALIDATION_ERROR",
+        });
+        expect(Object.keys(result.errors)).toEqual([fieldName]);
+        expect(send).not.toHaveBeenCalled();
+      },
+    );
+    it("reports every invalid field when several are broken", async () => {
+      const result = await submit(brokenFields);
+
+      expect(result).toMatchObject({
+        success: false,
+        errorCode: "FORM_VALIDATION_ERROR",
+      });
+      expect(result.errors).toEqual({
+        forename: expect.any(Array),
+        surname: expect.any(Array),
+        emailAddress: expect.any(Array),
+        message: expect.any(Array),
+      });
+      expect(send).not.toHaveBeenCalled();
+    });
+    it("accepts every field at its maximum length", async () => {
+      const result = await submit(maxLength);
+
+      expect(result.success).toBe(true);
+      expect(send).toHaveBeenCalledTimes(2);
+    });
   });
 
   describe("sending", () => {
@@ -59,19 +123,73 @@ describe("handleContactForm", () => {
       ]);
     });
 
-    it.todo("sends the contact email from the no-reply address");
-    it.todo("puts the sender's name, address and message in the contact email");
-    it.todo("sends the confirmation email from Han's address");
-    it.todo('prefixes the confirmation subject with "Re:"');
+    it("sends the contact email from the no-reply address", async () => {
+      await submit();
+
+      expect(sentEmail(0).Source).toBe(NOREPLY_EMAIL_ADDRESS);
+    });
+    it("puts the sender's name, address and message in the contact email", async () => {
+      await submit();
+
+      expect(sentEmail(0).Message.Body.Html.Data).toContain(
+        validFields.forename,
+      );
+      expect(sentEmail(0).Message.Body.Html.Data).toContain(
+        validFields.surname,
+      );
+      expect(sentEmail(0).Message.Body.Html.Data).toContain(
+        validFields.emailAddress,
+      );
+      expect(sentEmail(0).Message.Body.Html.Data).toContain(
+        validFields.message,
+      );
+    });
+    it("sends the confirmation email from Han's address", async () => {
+      await submit();
+
+      expect(sentEmail(1).Source).toBe(HAN_EMAIL_ADDRESS);
+    });
+    it('prefixes the confirmation subject with "Re:"', async () => {
+      await submit();
+
+      expect(sentEmail(1).Message.Subject.Data).toBe(
+        "Re: " + validFields.subject,
+      );
+    });
   });
 
   describe("SES failures", () => {
-    it.todo("returns a failed result when the contact email fails");
-    it.todo("does not send the confirmation when the contact email fails");
+    it("returns a failed result when the contact email fails", async () => {
+      const error = new MessageRejected({ message: "rejected", $metadata: {} });
+      send.mockRejectedValueOnce(error);
+      const result = await submit();
 
-    // TODO(human): decide what the visitor should be told when only the
-    // confirmation email fails, then replace this it.todo with a test for it.
-    it.todo("handles the confirmation email failing after the contact email");
+      expect(result).toMatchObject({
+        success: false,
+        errorCode: "MESSAGE_REJECTED",
+      });
+    });
+    it("does not send the confirmation when the contact email fails", async () => {
+      const error = new MessageRejected({ message: "rejected", $metadata: {} });
+      send.mockRejectedValueOnce(error);
+      await submit();
+
+      expect(send).toHaveBeenCalledTimes(1);
+    });
+
+    it("handles the confirmation email failing after the contact email", async () => {
+      const error = new MessageRejected({ message: "rejected", $metadata: {} });
+      send
+        .mockResolvedValueOnce({ messageId: MESSAGE_ID })
+        .mockRejectedValueOnce(error);
+      const result = await submit();
+
+      expect(result).toMatchObject({
+        success: false,
+        errorCode: "MESSAGE_REJECTED",
+      });
+      expect(send).toHaveBeenCalledTimes(2);
+    });
   });
 });
 
