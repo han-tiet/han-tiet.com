@@ -2,7 +2,7 @@
 
 <!-- Briefly describe the critical issue being fixed and its impact -->
 
-**Hotfix branch:** `hotfix/`
+**Hotfix branch:** `[Hotfix] vX.Y.Z`
 **Target branch:** `main`
 
 ## Severity
@@ -56,7 +56,6 @@
 - [ ] I have tested this fix against the reported issue
 - [ ] I have verified this does not reintroduce previously fixed bugs
 - [ ] Existing tests pass, and I've added a regression test where practical
-- [ ] I have notified relevant stakeholders (on-call, team lead, etc.)
 - [ ] This branch is up to date with `main`
 - [ ] I have a plan to also merge this fix back into `develop` (to avoid it being lost on the next release)
 
@@ -66,11 +65,9 @@
 
 ## Post-Merge Actions
 
-- [ ] Deploy to production
 - [ ] Verify fix in production
 - [ ] Merge/cherry-pick into `develop`
-- [ ] Close incident / update status page
-- [ ] Post-mortem scheduled (if applicable)
+- [ ] Close incident
 
 ## Additional Context
 
