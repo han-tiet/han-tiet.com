@@ -2,7 +2,7 @@
 
 <!-- Briefly describe what this PR does and why. -->
 
-**Feature branch:** `feature/`
+**Feature branch:** `HAN-NNN`
 **Target branch:** `develop`
 
 ## Related Issue(s)
@@ -42,15 +42,15 @@
 
 ## Checklist
 
-- [ ] My code follows the project's style guidelines
+- [ ] My code passes the following style checks:
+  - [ ] `npm run lint`
+  - [ ] `npx prettier . --check`
+  - [ ] `npx tsc --noEmit`
 - [ ] I have performed a self-review of my own code
 - [ ] I have commented my code, particularly in hard-to-understand areas
 - [ ] I have updated relevant documentation
 - [ ] My changes generate no new warnings or errors
-- [ ] I have added tests that prove my fix/feature works
-- [ ] New and existing unit tests pass locally with my changes
 - [ ] I have rebased/merged the latest `develop` into my branch and resolved conflicts
-- [ ] I have verified this branch is up to date with `develop`
 
 ## Deployment Notes
 
