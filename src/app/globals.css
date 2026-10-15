@@ -1,6 +1,53 @@
 @plugin "tailwindcss-animate";
 @import "tailwindcss";
 
+/* Phones and tablets, in either orientation. Tablets, and phones on their
+   side, are wide enough to hit the md breakpoint but should still get the
+   mobile navigation. Screen size alone can't tell a tablet from a laptop, so
+   this matches touch screens (pointer: coarse), plus any landscape screen too
+   short to be a desktop. */
+/* Tablets held sideways. They are wide enough to hit lg: and so inherit the
+   desktop layout, but only have a tablet's height to fit it into. Phones on
+   their side are excluded by min-height; they have their own rules. */
+@custom-variant tablet-landscape {
+  @media (pointer: coarse) and (orientation: landscape) and (min-height: 501px) {
+    @slot;
+  }
+}
+
+/* Touch devices only. The nav uses this rather than `handheld` so that a
+   laptop with a short browser window keeps the desktop nav: its primary
+   pointer is fine, while phones and tablets report coarse. */
+@custom-variant touch {
+  @media (pointer: coarse) {
+    @slot;
+  }
+}
+
+/* Laptops and desktops: a fine primary pointer, from the md breakpoint up.
+   Tablets in landscape are wide enough to hit md and lg but report a coarse
+   pointer, so they keep their own rules. */
+@custom-variant desktop {
+  @media (pointer: fine) and (min-width: 48rem) {
+    @slot;
+  }
+}
+
+@custom-variant handheld {
+  @media (pointer: coarse), (orientation: landscape) and (max-height: 500px) {
+    @slot;
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -122,6 +169,21 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* ContactForm is sized entirely in `em` off this one value, so doubling it
+   doubles the whole form. `1em === 16px` at the 1920px design reference,
+   shrinking linearly with viewport width to `1em === 12px`. Laptops and
+   desktops get 1.5x that. */
+:root {
+  --contact-form-base: clamp(12px, calc(12px + (100vw - 480px) / 360), 12px);
+  --contact-form-scale: var(--contact-form-base);
+}
+
+@media (pointer: fine) and (min-width: 48rem) {
+  :root {
+    --contact-form-scale: calc(1.5 * var(--contact-form-base));
+  }
 }
 
 @layer base {

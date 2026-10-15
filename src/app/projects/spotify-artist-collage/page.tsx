@@ -19,7 +19,7 @@ export default async function Page() {
     return (
       <div className="grid grid-cols-12">
         <Navbar user={user.display_name} />
-        <div className="col-start-2 col-span-10 flex justify-center items-center text-5xl h-[85vh]">
+        <div className="col-span-full px-4 desktop:px-6 py-8 desktop:py-12 flex justify-center items-start text-5xl md:col-start-2 md:col-span-10 md:items-center md:min-h-[85vh] md:py-0">
           <Collage data={data} />
         </div>
       </div>
@@ -28,12 +28,7 @@ export default async function Page() {
 }
 
 async function fetchArtists() {
-  const { accessToken } = await auth.api.getAccessToken({
-    body: {
-      providerId: "spotify",
-    },
-    headers: await headers(),
-  });
+  const accessToken = await fetchToken();
   const resp = await fetch(
     "https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=50",
     {
@@ -50,12 +45,7 @@ async function fetchArtists() {
 }
 
 async function fetchUser() {
-  const { accessToken } = await auth.api.getAccessToken({
-    body: {
-      providerId: "spotify",
-    },
-    headers: await headers(),
-  });
+  const accessToken = await fetchToken();
   const resp = await fetch("https://api.spotify.com/v1/me", {
     headers: {
       Authorization: "Bearer " + accessToken,
@@ -63,4 +53,17 @@ async function fetchUser() {
   });
 
   return await resp.json();
+}
+
+async function fetchToken() {
+  const accounts = await auth.api.listUserAccounts({
+    headers: await headers(),
+  });
+  const spotify = accounts.find((a) => a.providerId === "spotify");
+  const { accessToken } = await auth.api.getAccessToken({
+    body: { accountId: spotify!.id },
+    headers: await headers(),
+  });
+
+  return accessToken;
 }

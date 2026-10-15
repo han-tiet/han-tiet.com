@@ -3,6 +3,11 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import prisma from "@/lib/prisma";
 import { ROUTES } from "@/constants/routes";
 
+const host =
+  process.env.NEXT_PUBLIC_VERCEL_ENV === "production"
+    ? process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+    : process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL || process.env.NEXT_PUBLIC_HOST;
+
 export const auth = betterAuth({
   baseURL: {
     allowedHosts: [
@@ -36,7 +41,7 @@ export const auth = betterAuth({
       clientId: process.env.SPOTIFY_ID as string,
       clientSecret: process.env.SPOTIFY_SECRET as string,
       scope: ["user-top-read", "user-read-recently-played"],
-      redirectURI: `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL || process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL || process.env.NEXT_PUBLIC_HOST}/projects/spotify-artist-collage/api/auth/callback/spotify`,
+      redirectURI: `https://${host}${ROUTES.SPOTIFY_ARTIST_COLLAGE__AUTH_API}/callback/spotify`,
     },
   },
 
