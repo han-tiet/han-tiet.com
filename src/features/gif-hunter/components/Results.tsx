@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback } from "react";
 import React from "react";
 import Box from "@mui/material/Box";
 import Masonry from "@mui/lab/Masonry";
@@ -11,29 +11,11 @@ interface Props {
 }
 
 const Results: React.FC<Props> = (props) => {
-  const [loadedCount, setLoadedCount] = useState(0);
-  const imgRefs = useRef([]);
-  const allLoaded = loadedCount >= props.source.length;
+  const [loadedIds, setLoadedIds] = useState<Set<string>>(() => new Set());
+  const allLoaded = loadedIds.size >= props.source.length;
 
-  useEffect(() => {
-    setLoadedCount(0);
-    imgRefs.current = imgRefs.current.slice(0, props.source.length);
-  }, [props.source]);
-
-  useEffect(() => {
-    let cachedCount = 0;
-    imgRefs.current.forEach((img) => {
-      if (img && img.complete) {
-        cachedCount++;
-      }
-    });
-    if (cachedCount > 0) {
-      setLoadedCount((prev) => prev + cachedCount);
-    }
-  }, [props.source.length]);
-
-  const handleLoad = useCallback(() => {
-    setLoadedCount((prev) => prev + 1);
+  const markLoaded = useCallback((id: string) => {
+    setLoadedIds((prev) => (prev.has(id) ? prev : new Set(prev).add(id)));
   }, []);
 
   return (
@@ -54,15 +36,16 @@ const Results: React.FC<Props> = (props) => {
         spacing={{ xs: 1, md: 2 }}
         style={{ visibility: allLoaded ? "visible" : "hidden" }}
       >
-        {props.source.map((gif: React.ReactNode, index: number) => (
+        {props.source.map((gif: React.ReactNode) => (
           <div key={gif.id}>
             <img
-              ref={(el) => (imgRefs.current[index] = el)}
+              ref={(el) => {
+                if (el?.complete) markLoaded(gif.id);
+              }}
               src={gif.src}
               alt={gif.title}
-              loading="lazy"
-              onLoad={handleLoad}
-              onError={handleLoad}
+              onLoad={() => markLoaded(gif.id)}
+              onError={() => markLoaded(gif.id)}
               style={{
                 borderBottomLeftRadius: 4,
                 borderBottomRightRadius: 4,
