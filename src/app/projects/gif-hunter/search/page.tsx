@@ -67,7 +67,7 @@ export default async function GifHunter({
       <Suspense fallback={<></>}>
         <SearchBar />
       </Suspense>
-      <Results source={resp.gifs} />
+      <Results key={p} source={resp.gifs} />
       {APIError && (
         <Box sx={{ display: "flex", justifyContent: "center", p: "2rem" }}>
           <Typography variant="h6" component="span" sx={{ color: "red" }}>
