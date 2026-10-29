@@ -9,21 +9,45 @@ type KlipyGif = {
   title: string;
 };
 
+const fromGiphy = (gif: GiphyGif) => ({
+  key: gif.id,
+  src: `https://i.giphy.com/${gif.id}.webp`,
+  id: gif.id,
+  title: gif.title,
+});
+
+const fromKlipy = (gif: KlipyGif) => ({
+  key: gif.id,
+  src: gif.file.hd.gif.url,
+  id: gif.id,
+  title: gif.title,
+});
+
 export async function fetchResults(p: string) {
   async function fetchResults1() {
     const resp = await fetch(
       `https://api.giphy.com/v1/gifs/search?api_key=${process.env.GH_API_KEY_1}&q=${p}&limit=10&offset=0&rating=r&lang=en&bundle=messaging_non_clips`,
     );
+
+    if (!resp.ok) {
+      throw new Error(`Giphy responded with ${resp.status}`);
+    }
+
     const json = await resp.json();
-    return json.data;
+    return json.data.map(fromGiphy);
   }
 
   async function fetchResults2() {
     const resp = await fetch(
       `https://api.klipy.com/api/v1/${process.env.GH_API_KEY_2}/gifs/search?page=1&per_page=24&q=${p}&customer_id=guest&locale=uk&content_filter=off`,
     );
+
+    if (!resp.ok) {
+      throw new Error(`Klipy responded with ${resp.status}`);
+    }
+
     const json = await resp.json();
-    return json.data.data;
+    return json.data.data.map(fromKlipy);
   }
 
   const [results1, results2] = await Promise.allSettled([
@@ -34,21 +58,7 @@ export async function fetchResults(p: string) {
   const gifs1 = results1.status === "fulfilled" ? results1.value : [];
   const gifs2 = results2.status === "fulfilled" ? results2.value : [];
 
-  const fromGiphy = (gif: GiphyGif) => ({
-    key: gif.id,
-    src: `https://i.giphy.com/${gif.id}.webp`,
-    id: gif.id,
-    title: gif.title,
-  });
-
-  const fromKlipy = (gif: KlipyGif) => ({
-    key: gif.id,
-    src: gif.file.hd.gif.url,
-    id: gif.id,
-    title: gif.title,
-  });
-
-  const gifs = [...gifs1.map(fromGiphy), ...gifs2.map(fromKlipy)];
+  const gifs = [...gifs1, ...gifs2];
 
   return { gifs: gifs, status1: results1.status, status2: results2.status };
 }
