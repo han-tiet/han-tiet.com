@@ -149,12 +149,55 @@ describe("fetchResults", () => {
       klipy: { body: klipyBody([klipyGif("k1")]) },
     });
 
-    // TODO(human): call fetchResults and assert what *should* happen here.
+    const result = await fetchResults(QUERY);
+
+    expect(result.gifs.map((gif) => gif.id)).toEqual(["k1"]);
+    expect(result.status1).toBe("rejected");
+    expect(result.status2).toBe("fulfilled");
   });
 
-  it.todo("8. treats a Klipy body without data.data as a Klipy failure");
-  it.todo("9. survives a Klipy item that has no file.hd");
-  it.todo("10. produces unique keys when both providers return the same id");
+  it("8. treats a Klipy body without data.data as a Klipy failure", async () => {
+    mockApis({
+      giphy: { body: giphyBody([giphyGif("g1")]) },
+      klipy: { body: { data: {} } }, // data is empty object
+    });
+
+    const result = await fetchResults(QUERY);
+
+    expect(result.gifs.map((gif) => gif.id)).toEqual(["g1"]);
+    expect(result.status1).toBe("fulfilled");
+    expect(result.status2).toBe("rejected");
+  });
+
+  it("9. survives a Klipy item that has no file.hd", async () => {
+    mockApis({
+      giphy: { body: giphyBody([giphyGif("g1")]) },
+      klipy: { body: klipyBody([{ id: "k1", title: "Klipy k1", file: {} }]) },
+    });
+
+    const result = await fetchResults(QUERY);
+
+    expect(result.gifs.map((gif) => gif.id)).toEqual(["g1"]);
+    expect(result.status1).toBe("fulfilled");
+    expect(result.status2).toBe("rejected");
+  });
+
+  it.fails(
+    "10. produces unique keys when both providers return the same id",
+    async () => {
+      mockApis({
+        giphy: { body: giphyBody([giphyGif("123")]) },
+        klipy: { body: klipyBody([klipyGif("123")]) },
+      });
+
+      const result = await fetchResults(QUERY);
+
+      const keys = result.gifs.map((gif) => gif.key);
+
+      // Duplicate keys are dropped when adding to a Set. If set size = keys.length, no duplicates
+      expect(new Set(keys).size).toBe(keys.length);
+    },
+  );
 });
 
 describe("APIErrorMessage", () => {
