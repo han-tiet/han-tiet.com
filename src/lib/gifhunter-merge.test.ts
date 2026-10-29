@@ -40,6 +40,15 @@ function mockApis({ giphy, klipy }: { giphy: ApiOutcome; klipy: ApiOutcome }) {
   });
 }
 
+// The URL fetch was called with for one provider, parsed so tests can read
+// individual query params rather than matching substrings.
+function requestedUrl(host: string) {
+  const call = vi
+    .mocked(fetch)
+    .mock.calls.find(([input]) => String(input).includes(host));
+  return new URL(String(call?.[0]));
+}
+
 beforeEach(() => {
   vi.stubGlobal("fetch", vi.fn());
   vi.stubEnv("GH_API_KEY_1", GH_API_KEY_1);
@@ -78,13 +87,13 @@ describe("fetchResults", () => {
 
     expect(gifs).toEqual([
       {
-        key: "g1",
+        key: "giphy-g1",
         src: "https://i.giphy.com/g1.webp",
         id: "g1",
         title: "Giphy g1",
       },
       {
-        key: "k1",
+        key: "klipy-k1",
         src: "https://static.klipy.com/k1.gif",
         id: "k1",
         title: "Klipy k1",
@@ -143,9 +152,10 @@ describe("fetchResults", () => {
     expect(APIErrorMessage(result.status1, result.status2)).toBeUndefined();
   });
 
-  it("7. treats a Giphy HTTP 500 error body as a Giphy failure", async () => {
+  it("7. treats a Giphy HTTP 500 as a Giphy failure", async () => {
     mockApis({
-      giphy: { status: 500, body: { message: "Internal Server Error" } },
+      // A well-formed body, so only the resp.ok check can reject it.
+      giphy: { status: 500, body: giphyBody([giphyGif("g1")]) },
       klipy: { body: klipyBody([klipyGif("k1")]) },
     });
 
@@ -182,22 +192,77 @@ describe("fetchResults", () => {
     expect(result.status2).toBe("rejected");
   });
 
-  it.fails(
-    "10. produces unique keys when both providers return the same id",
-    async () => {
-      mockApis({
-        giphy: { body: giphyBody([giphyGif("123")]) },
-        klipy: { body: klipyBody([klipyGif("123")]) },
-      });
+  it("10. produces unique keys when both providers return the same id", async () => {
+    mockApis({
+      giphy: { body: giphyBody([giphyGif("123")]) },
+      klipy: { body: klipyBody([klipyGif("123")]) },
+    });
 
-      const result = await fetchResults(QUERY);
+    const result = await fetchResults(QUERY);
 
-      const keys = result.gifs.map((gif) => gif.key);
+    const keys = result.gifs.map((gif) => gif.key);
 
-      // Duplicate keys are dropped when adding to a Set. If set size = keys.length, no duplicates
-      expect(new Set(keys).size).toBe(keys.length);
-    },
-  );
+    // Duplicate keys are dropped when adding to a Set. If set size = keys.length, no duplicates
+    expect(new Set(keys).size).toBe(keys.length);
+  });
+
+  it("11. treats a Klipy HTTP 500 as a Klipy failure", async () => {
+    mockApis({
+      giphy: { body: giphyBody([giphyGif("g1")]) },
+      // A well-formed body, so only the resp.ok check can reject it.
+      klipy: { status: 500, body: klipyBody([klipyGif("k1")]) },
+    });
+
+    const result = await fetchResults(QUERY);
+
+    expect(result.gifs.map((gif) => gif.id)).toEqual(["g1"]);
+    expect(result.status1).toBe("fulfilled");
+    expect(result.status2).toBe("rejected");
+  });
+
+  it("12. treats a Giphy body without data as a Giphy failure", async () => {
+    mockApis({
+      giphy: { body: {} },
+      klipy: { body: klipyBody([klipyGif("k1")]) },
+    });
+
+    const result = await fetchResults(QUERY);
+
+    expect(result.gifs.map((gif) => gif.id)).toEqual(["k1"]);
+    expect(result.status1).toBe("rejected");
+    expect(result.status2).toBe("fulfilled");
+  });
+
+  it("13. sends each provider its API key and the query", async () => {
+    mockApis({
+      giphy: { body: giphyBody([]) },
+      klipy: { body: klipyBody([]) },
+    });
+
+    await fetchResults(QUERY);
+
+    const giphyUrl = requestedUrl("api.giphy.com");
+    expect(giphyUrl.searchParams.get("api_key")).toBe(GH_API_KEY_1);
+    expect(giphyUrl.searchParams.get("q")).toBe(QUERY);
+
+    const klipyUrl = requestedUrl("api.klipy.com");
+    expect(klipyUrl.pathname).toContain(`/${GH_API_KEY_2}/`);
+    expect(klipyUrl.searchParams.get("q")).toBe(QUERY);
+  });
+
+  it("14. encodes special characters in the query", async () => {
+    // Unencoded, & starts a new param and # starts the URL fragment.
+    const query = "cats & dogs #1";
+    mockApis({
+      giphy: { body: giphyBody([]) },
+      klipy: { body: klipyBody([]) },
+    });
+
+    await fetchResults(query);
+
+    expect(requestedUrl("api.giphy.com").searchParams.get("q")).toBe(query);
+    expect(requestedUrl("api.klipy.com").searchParams.get("q")).toBe(query);
+  });
 });
 
 describe("APIErrorMessage", () => {

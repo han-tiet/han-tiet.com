@@ -9,24 +9,28 @@ type KlipyGif = {
   title: string;
 };
 
+// Keys are prefixed by provider: Giphy and Klipy ids are independent, so the
+// same id can come back from both.
 const fromGiphy = (gif: GiphyGif) => ({
-  key: gif.id,
+  key: `giphy-${gif.id}`,
   src: `https://i.giphy.com/${gif.id}.webp`,
   id: gif.id,
   title: gif.title,
 });
 
 const fromKlipy = (gif: KlipyGif) => ({
-  key: gif.id,
+  key: `klipy-${gif.id}`,
   src: gif.file.hd.gif.url,
   id: gif.id,
   title: gif.title,
 });
 
 export async function fetchResults(p: string) {
+  const q = encodeURIComponent(p);
+
   async function fetchResults1() {
     const resp = await fetch(
-      `https://api.giphy.com/v1/gifs/search?api_key=${process.env.GH_API_KEY_1}&q=${p}&limit=10&offset=0&rating=r&lang=en&bundle=messaging_non_clips`,
+      `https://api.giphy.com/v1/gifs/search?api_key=${process.env.GH_API_KEY_1}&q=${q}&limit=10&offset=0&rating=r&lang=en&bundle=messaging_non_clips`,
     );
 
     if (!resp.ok) {
@@ -39,7 +43,7 @@ export async function fetchResults(p: string) {
 
   async function fetchResults2() {
     const resp = await fetch(
-      `https://api.klipy.com/api/v1/${process.env.GH_API_KEY_2}/gifs/search?page=1&per_page=24&q=${p}&customer_id=guest&locale=uk&content_filter=off`,
+      `https://api.klipy.com/api/v1/${process.env.GH_API_KEY_2}/gifs/search?page=1&per_page=24&q=${q}&customer_id=guest&locale=uk&content_filter=off`,
     );
 
     if (!resp.ok) {

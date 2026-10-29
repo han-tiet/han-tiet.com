@@ -37,15 +37,15 @@ const Results: React.FC<Props> = (props) => {
         style={{ visibility: allLoaded ? "visible" : "hidden" }}
       >
         {props.source.map((gif: React.ReactNode) => (
-          <div key={gif.id}>
+          <div key={gif.key}>
             <img
               ref={(el) => {
-                if (el?.complete) markLoaded(gif.id);
+                if (el?.complete) markLoaded(gif.key);
               }}
               src={gif.src}
               alt={gif.title}
-              onLoad={() => markLoaded(gif.id)}
-              onError={() => markLoaded(gif.id)}
+              onLoad={() => markLoaded(gif.key)}
+              onError={() => markLoaded(gif.key)}
               style={{
                 borderBottomLeftRadius: 4,
                 borderBottomRightRadius: 4,
