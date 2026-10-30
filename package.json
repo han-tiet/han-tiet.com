@@ -10,7 +10,9 @@
     "lint": "npx eslint .",
     "prepare": "husky",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@aws-sdk/client-ses": "^3.1057.0",
@@ -52,6 +54,7 @@
     "@commitlint/cli": "^20.4.1",
     "@commitlint/config-conventional": "^20.4.1",
     "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
@@ -82,5 +85,12 @@
     "*.{js,ts,jsx,tsx,json,css,md}": [
       "prettier --write"
     ]
+  },
+  "allowScripts": {
+    "@prisma/engines@7.10.0": true,
+    "@sentry/cli@2.58.6": true,
+    "esbuild@0.28.2": true,
+    "prisma@7.10.0": true,
+    "unrs-resolver@1.12.2": true
   }
 }
