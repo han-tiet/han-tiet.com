@@ -114,7 +114,7 @@ export default function ContactForm() {
             />
             {state.errors?.emailAddress && (
               <span
-                id="email-address-error"
+                id="emailAddress-error"
                 className="text-[0.75em]"
                 role="alert"
                 style={{ color: "red" }}
