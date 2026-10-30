@@ -89,8 +89,22 @@ describe("ContactForm toasts", () => {
     expect(toast.success).not.toHaveBeenCalled();
   });
 
-  // TODO(human): replace this it.todo with a test that submits twice.
-  it.todo(
-    "shows the error toast again when a second submit fails the same way",
-  );
+  it("shows the error toast again when a second submit fails the same way", async () => {
+    // A real server action returns a new object per response, and the toast
+    // effect depends on that object's identity.
+    vi.mocked(handleContactForm).mockImplementation(async () => ({
+      ...errorResult,
+    }));
+    render(<ContactForm />);
+
+    await submitForm();
+    await waitFor(() => expect(toast.error).toHaveBeenCalledTimes(1));
+
+    await submitForm();
+    await waitFor(() => expect(toast.error).toHaveBeenCalledTimes(2));
+    expect(toast.error).toHaveBeenLastCalledWith(
+      USER_MESSAGE,
+      expect.anything(),
+    );
+  });
 });
