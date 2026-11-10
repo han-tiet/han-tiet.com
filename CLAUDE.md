@@ -13,11 +13,22 @@ npm run dev          # next dev --turbopack --experimental-https (serves https:/
 npm run build        # next build (wrapped by Sentry, uploads source maps)
 npm run lint         # eslint .
 npx prettier . --check
+npm test             # vitest run (unit/component tests)
+npm run test:watch   # vitest in watch mode
+npx vitest run src/lib/classifyError.test.ts   # single file; add -t "<name>" for a single test
+npm run test:e2e     # playwright test (starts npm run dev if it isn't already running)
+npm run test:e2e:ui  # playwright UI mode
 npx prisma generate  # also runs on postinstall; client output is src/generated/prisma (gitignored)
 npx prisma migrate dev
 ```
 
-There is no test suite. `next.config.ts` sets `typescript.ignoreBuildErrors: true`, so `npm run build` will not catch type errors — run `npx tsc --noEmit` to type-check.
+`next.config.ts` sets `typescript.ignoreBuildErrors: true`, so `npm run build` will not catch type errors — run `npx tsc --noEmit` to type-check.
+
+## Testing
+
+- **Unit/component tests (Vitest):** configured in `vitest.config.mts` (jsdom environment, `@/*` alias, v8 coverage; `vitest.setup.ts` loads the `@testing-library/jest-dom` matchers). Test files live in `src/lib/*.test.ts(x)`, whatever module they cover. External services are always mocked, so no `.env` or network is needed: SES via `vi.mock("@aws-sdk/client-ses")` with a `vi.hoisted` `send` mock, Giphy/Klipy via `vi.stubGlobal("fetch", …)`, server actions and `sonner` via `vi.mock`, and env vars via `vi.stubEnv`.
+- **End-to-end tests (Playwright):** configured in `playwright.config.ts`, tests in `e2e/`. They run against `https://localhost:3000` (`ignoreHTTPSErrors` for the local certificates) in three projects: `desktop`, `phone` (Pixel 7) and `phone-landscape`, so each test runs three times. They use the real dev server and `.env`, but stub external sites in the browser with `page.route` where possible. Tests tagged `@live` call real third-party APIs (Giphy/Klipy); skip them with `npm run test:e2e -- --grep-invert @live`. Run `npx playwright install` once to download the browsers.
+- Vitest excludes `e2e/**`, but it does not exclude `.claude/worktrees/`, so with a local worktree present it picks up duplicate copies of the tests. Run `npx vitest run --exclude ".claude/**"` for accurate counts.
 
 ## Git workflow
 
@@ -42,7 +53,7 @@ There is no test suite. `next.config.ts` sets `typescript.ignoreBuildErrors: tru
 
 ### GIFHunter
 
-- `src/app/projects/gif-hunter/search/page.tsx` is a server component that queries Giphy and Klipy in parallel with `Promise.allSettled` (keys `GH_API_KEY_1`, `GH_API_KEY_2`), merges the results, and shows an error message if one API fails.
+- `src/app/projects/gif-hunter/search/page.tsx` is a server component that calls `fetchResults` and `APIErrorMessage` from `src/features/gif-hunter/lib/fetchResults.ts`. `fetchResults` queries Giphy and Klipy in parallel with `Promise.allSettled` (keys `GH_API_KEY_1`, `GH_API_KEY_2`; the query is URL-encoded and non-OK responses count as failures), then merges the results into `{ key, src, id, title }` objects. `key` is prefixed by provider (`giphy-<id>` / `klipy-<id>`) because ids can collide across the two APIs; `Results` uses `key`, not `id`. If one API fails, the page shows an error message.
 
 ### Contact form / AWS SES
 
