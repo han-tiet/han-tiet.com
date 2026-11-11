@@ -10,6 +10,8 @@
     "lint": "npx eslint .",
     "prepare": "husky",
     "test": "vitest run",
+    "test:type-check": "npx tsc --noEmit",
+    "test:lint": "npm run lint",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
