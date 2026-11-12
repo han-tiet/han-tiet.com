@@ -34,6 +34,29 @@ export async function handleContactForm(
   prevState: SESResult | null,
   formData: FormData,
 ): Promise<SESResult> {
+  const noreplyEmail = process.env.NOREPLY_EMAIL_ADDRESS;
+  const hanEmail = process.env.HAN_EMAIL_ADDRESS;
+
+  if (!noreplyEmail)
+    return {
+      success: false,
+      errors: {},
+      errorCode: "CONFIG_ERROR",
+      userMessage: "Error: Invalid or missing sender email address",
+      internalMessage: "550: Invalid or missing sender email address",
+      retryable: false,
+    };
+
+  if (!hanEmail)
+    return {
+      success: false,
+      errors: {},
+      errorCode: "CONFIG_ERROR",
+      userMessage: "Error: Invalid or missing recipient email address",
+      internalMessage: "550: Invalid or missing recipient email address",
+      retryable: false,
+    };
+
   const validatedFields = validateInput(formData);
 
   if (!validatedFields.success) {
@@ -66,8 +89,15 @@ export async function handleContactForm(
   const config = { region: process.env.AWS_REGION };
   const client = new SESClient(config);
 
-  const contactEmail = generateContactEmail(validationResult);
-  const confirmationEmail = generateConfirmationEmail(validationResult);
+  const contactEmail = generateContactEmail(
+    validationResult,
+    noreplyEmail,
+    hanEmail,
+  );
+  const confirmationEmail = generateConfirmationEmail(
+    validationResult,
+    hanEmail,
+  );
 
   return await sendEmail(client, contactEmail, confirmationEmail);
 }
@@ -86,22 +116,15 @@ function validateInput(formData: FormData) {
 
 function generateContactEmail(
   validatedFields: ContactFields,
+  from: string,
+  to: string,
 ): SendEmailCommandInput {
-  const noreplyEmail = process.env.NOREPLY_EMAIL_ADDRESS;
-  const hanEmail = process.env.HAN_EMAIL_ADDRESS;
-
-  if (!noreplyEmail)
-    throw Error("550: Invalid or missing sender email address");
-
-  if (!hanEmail)
-    throw Error("550: Invalid or missing recipient email address ");
-
   const contactEmail = {
-    Source: noreplyEmail,
+    Source: from,
     Destination: {
       BccAddresses: [],
       CcAddresses: [],
-      ToAddresses: [hanEmail],
+      ToAddresses: [to],
     },
     Message: {
       Subject: {
@@ -134,13 +157,10 @@ function generateContactEmail(
 
 function generateConfirmationEmail(
   validatedFields: ContactFields,
+  from: string,
 ): SendEmailCommandInput {
-  const han = process.env.HAN_EMAIL_ADDRESS;
-
-  if (!han) throw Error("550: Invalid sender email address");
-
   const confirmationEmail = {
-    Source: han,
+    Source: from,
     Destination: {
       BccAddresses: [],
       CcAddresses: [],
