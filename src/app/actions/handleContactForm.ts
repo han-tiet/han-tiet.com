@@ -1,8 +1,12 @@
 "use server";
 
 import { z } from "zod";
-import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
-import { classifyError } from "@/lib/ses/classifyError";
+import {
+  SESClient,
+  SendEmailCommand,
+  SendEmailCommandInput,
+} from "@aws-sdk/client-ses";
+import { SESResult } from "@/lib/ses/classifyError";
 
 const schema = z.object({
   forename: z
@@ -24,10 +28,12 @@ const schema = z.object({
     .max(5000, "Message is too long"),
 });
 
+type ContactFields = z.infer<typeof schema>;
+
 export async function handleContactForm(
-  prevState: FormData,
+  prevState: SESResult | null,
   formData: FormData,
-) {
+): Promise<SESResult> {
   const validatedFields = validateInput(formData);
 
   if (!validatedFields.success) {
@@ -78,13 +84,24 @@ function validateInput(formData: FormData) {
   return validatedFields;
 }
 
-function generateContactEmail(validatedFields) {
+function generateContactEmail(
+  validatedFields: ContactFields,
+): SendEmailCommandInput {
+  const noreplyEmail = process.env.NOREPLY_EMAIL_ADDRESS;
+  const hanEmail = process.env.HAN_EMAIL_ADDRESS;
+
+  if (!noreplyEmail)
+    throw Error("550: Invalid or missing sender email address");
+
+  if (!hanEmail)
+    throw Error("550: Invalid or missing recipient email address ");
+
   const contactEmail = {
-    Source: process.env.NOREPLY_EMAIL_ADDRESS,
+    Source: noreplyEmail,
     Destination: {
       BccAddresses: [],
       CcAddresses: [],
-      ToAddresses: [process.env.HAN_EMAIL_ADDRESS],
+      ToAddresses: [hanEmail],
     },
     Message: {
       Subject: {
@@ -115,9 +132,15 @@ function generateContactEmail(validatedFields) {
   return contactEmail;
 }
 
-function generateConfirmationEmail(validatedFields) {
+function generateConfirmationEmail(
+  validatedFields: ContactFields,
+): SendEmailCommandInput {
+  const han = process.env.HAN_EMAIL_ADDRESS;
+
+  if (!han) throw Error("550: Invalid sender email address");
+
   const confirmationEmail = {
-    Source: process.env.HAN_EMAIL_ADDRESS,
+    Source: han,
     Destination: {
       BccAddresses: [],
       CcAddresses: [],
@@ -157,29 +180,26 @@ function generateConfirmationEmail(validatedFields) {
   return confirmationEmail;
 }
 
-async function sendEmail(client: SESClient, contactEmail, confirmationEmail) {
-  try {
-    const command = new SendEmailCommand(contactEmail);
-    const response = await client.send(command);
+async function sendEmail(
+  client: SESClient,
+  contactEmail: SendEmailCommandInput,
+  confirmationEmail: SendEmailCommandInput,
+) {
+  const command = new SendEmailCommand(contactEmail);
+  const response = await client.send(command);
 
-    const result = {
-      success: true,
-      messageId: response.MessageId,
-      errors: {},
-      errorCode: null,
-      userMessage: "Your message has been sent successfully.",
-      internalMessage: `[SES] Email sent. MessageId: ${response.MessageId}`,
-      retryable: false,
-    };
-    console.info(result.internalMessage);
+  const result = {
+    success: true,
+    messageId: response.MessageId,
+    errors: {},
+    userMessage: "Your message has been sent successfully.",
+    internalMessage: `[SES] Email sent. MessageId: ${response.MessageId}`,
+    retryable: false,
+  };
+  console.info(result.internalMessage);
 
-    const confirmationCommand = new SendEmailCommand(confirmationEmail);
-    const confirmationResponse = await client.send(confirmationCommand);
+  const confirmationCommand = new SendEmailCommand(confirmationEmail);
+  const confirmationResponse = await client.send(confirmationCommand);
 
-    return result;
-  } catch (error) {
-    console.log(error.errorCode);
-
-    return classifyError(error);
-  }
+  return result;
 }
