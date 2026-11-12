@@ -6,8 +6,15 @@ import Box from "@mui/material/Box";
 import Masonry from "@mui/lab/Masonry";
 import CircularProgress from "@mui/material/CircularProgress";
 
+interface Gif {
+  key: string;
+  src: string;
+  id: string;
+  title: string;
+}
+
 interface Props {
-  source: React.ReactNode;
+  source: Gif[];
 }
 
 const Results: React.FC<Props> = (props) => {
@@ -36,7 +43,7 @@ const Results: React.FC<Props> = (props) => {
         spacing={{ xs: 1, md: 2 }}
         style={{ visibility: allLoaded ? "visible" : "hidden" }}
       >
-        {props.source.map((gif: React.ReactNode) => (
+        {props.source.map((gif: Gif) => (
           <div key={gif.key}>
             <img
               ref={(el) => {
