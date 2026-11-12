@@ -9,23 +9,23 @@ type KlipyGif = {
   title: string;
 };
 
-type Gif = {
+export type Gif = {
   key: string;
-  src: URL;
+  src: string;
   id: string;
   title: string;
 };
 
 // Keys are prefixed by provider: Giphy and Klipy ids are independent, so the
 // same id can come back from both.
-const fromGiphy = (gif: Gif) => ({
+const fromGiphy = (gif: GiphyGif): Gif => ({
   key: `giphy-${gif.id}`,
   src: `https://i.giphy.com/${gif.id}.webp`,
   id: gif.id,
   title: gif.title,
 });
 
-const fromKlipy = (gif: KlipyGif) => ({
+const fromKlipy = (gif: KlipyGif): Gif => ({
   key: `klipy-${gif.id}`,
   src: gif.file.hd.gif.url,
   id: gif.id,
