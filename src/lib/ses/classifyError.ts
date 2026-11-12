@@ -7,7 +7,7 @@ import {
   AccountSendingPausedException,
 } from "@aws-sdk/client-ses";
 
-type SESErrorCode =
+export type SESErrorCode =
   | "INVALID_CREDENTIALS"
   | "INSUFFICIENT_PERMISSIONS"
   | "MESSAGE_REJECTED"
@@ -21,12 +21,21 @@ type SESErrorCode =
   | "NETWORK_ERROR"
   | "TIMEOUT"
   | "AWS_SERVICE_ERROR"
-  | "UNKNOWN_ERROR";
+  | "UNKNOWN_ERROR"
+  | "FORM_VALIDATION_ERROR"
+  | "CONFIG_ERROR";
+
+export type ContactField =
+  | "forename"
+  | "surname"
+  | "emailAddress"
+  | "subject"
+  | "message";
 
 export interface SESResult {
   success: boolean;
   messageId?: string;
-  errors: object;
+  errors: Partial<Record<ContactField, string[]>>;
   errorCode?: SESErrorCode;
   userMessage: string;
   internalMessage: string;

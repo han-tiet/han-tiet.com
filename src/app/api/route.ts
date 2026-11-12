@@ -95,6 +95,13 @@ async function handleNotification(payload: SNSPayload) {
 }
 
 async function handleConfirmation(payload: SNSPayload) {
+  if (!payload.SubscribeURL) {
+    return NextResponse.json(
+      { response: "400 Missing SubscribeURL" },
+      { status: 400 },
+    );
+  }
+
   const cert = await fetchPEMCert(payload);
 
   verifyConfirmation(payload, cert);
