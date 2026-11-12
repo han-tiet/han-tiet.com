@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { toast } from "sonner";
 import ContactForm from "@/components/ContactForm";
 import { handleContactForm } from "@/app/actions/handleContactForm";
+import { SESResult } from "./ses/classifyError";
 
 // The action's own behaviour is covered by handleContactForm.test.ts. Here it
 // only supplies the state that useActionState hands back to the component.
@@ -18,17 +19,17 @@ vi.mock("sonner", () => ({
 const USER_MESSAGE =
   "Your message could not be delivered. Please try again later.";
 
-const successResult = {
+const successResult: SESResult = {
   success: true,
   messageId: "test-message-id",
   errors: {},
-  errorCode: null,
+  errorCode: undefined,
   userMessage: "Your message has been sent successfully.",
   internalMessage: "[SES] Email sent. MessageId: test-message-id",
   retryable: false,
 };
 
-const errorResult = {
+const errorResult: SESResult = {
   success: false,
   errors: {},
   errorCode: "MESSAGE_REJECTED",
