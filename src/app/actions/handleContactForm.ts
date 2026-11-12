@@ -6,7 +6,7 @@ import {
   SendEmailCommand,
   SendEmailCommandInput,
 } from "@aws-sdk/client-ses";
-import { SESResult } from "@/lib/ses/classifyError";
+import { classifyError, SESResult } from "@/lib/ses/classifyError";
 
 const schema = z.object({
   forename: z
@@ -205,21 +205,25 @@ async function sendEmail(
   contactEmail: SendEmailCommandInput,
   confirmationEmail: SendEmailCommandInput,
 ) {
-  const command = new SendEmailCommand(contactEmail);
-  const response = await client.send(command);
+  try {
+    const command = new SendEmailCommand(contactEmail);
+    const response = await client.send(command);
 
-  const result = {
-    success: true,
-    messageId: response.MessageId,
-    errors: {},
-    userMessage: "Your message has been sent successfully.",
-    internalMessage: `[SES] Email sent. MessageId: ${response.MessageId}`,
-    retryable: false,
-  };
-  console.info(result.internalMessage);
+    const result = {
+      success: true,
+      messageId: response.MessageId,
+      errors: {},
+      userMessage: "Your message has been sent successfully.",
+      internalMessage: `[SES] Email sent. MessageId: ${response.MessageId}`,
+      retryable: false,
+    };
+    console.info(result.internalMessage);
 
-  const confirmationCommand = new SendEmailCommand(confirmationEmail);
-  const confirmationResponse = await client.send(confirmationCommand);
+    const confirmationCommand = new SendEmailCommand(confirmationEmail);
+    const confirmationResponse = await client.send(confirmationCommand);
 
-  return result;
+    return result;
+  } catch (error) {
+    return classifyError(error);
+  }
 }
