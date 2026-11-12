@@ -22,7 +22,8 @@ export type SESErrorCode =
   | "TIMEOUT"
   | "AWS_SERVICE_ERROR"
   | "UNKNOWN_ERROR"
-  | "FORM_VALIDATION_ERROR";
+  | "FORM_VALIDATION_ERROR"
+  | "CONFIG_ERROR";
 
 export type ContactField =
   | "forename"
