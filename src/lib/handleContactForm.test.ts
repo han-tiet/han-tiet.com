@@ -205,7 +205,7 @@ function buildFormData(overrides: Overrides = {}) {
 }
 
 function submit(overrides: Overrides = {}) {
-  return handleContactForm(new FormData(), buildFormData(overrides));
+  return handleContactForm(null, buildFormData(overrides));
 }
 
 // The email passed to the nth client.send call (0 = contact, 1 = confirmation)
