@@ -5,13 +5,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Masonry from "@mui/lab/Masonry";
 import CircularProgress from "@mui/material/CircularProgress";
-
-interface Gif {
-  key: string;
-  src: string;
-  id: string;
-  title: string;
-}
+import { Gif } from "@/features/gif-hunter/lib/fetchResults";
 
 interface Props {
   source: Gif[];
