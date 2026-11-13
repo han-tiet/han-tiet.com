@@ -49,38 +49,40 @@ export default async function GifHunter() {
       >
         <a href={`${ROUTES.PROJECTS}`}>&lt;&lt; Projects</a>
       </Box>
-      <Box
-        sx={{
-          display: "flex-col",
-          alignItems: "center",
-          paddingY: { xs: "12vh", sm: "20vh", md: "30vh" },
-          [SHORT_LANDSCAPE]: {
-            paddingY: 0,
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-          },
-        }}
-      >
-        <Typography
-          variant="h1"
-          component="a"
-          href={ROUTES.GIFHUNTER_INDEX}
+      <main>
+        <Box
           sx={{
-            display: "flex",
-            justifyContent: "center",
-            textDecoration: "none",
-            color: "black",
-            fontSize: { xs: "2.5rem", sm: "3.75rem", md: "6rem" },
+            display: "flex-col",
+            alignItems: "center",
+            paddingY: { xs: "12vh", sm: "20vh", md: "30vh" },
+            [SHORT_LANDSCAPE]: {
+              paddingY: 0,
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+            },
           }}
         >
-          GIFHunter
-        </Typography>
-        <Suspense fallback={<></>}>
-          <IndexSearchBar />
-        </Suspense>
-      </Box>
+          <Typography
+            variant="h1"
+            component="a"
+            href={ROUTES.GIFHUNTER_INDEX}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              textDecoration: "none",
+              color: "black",
+              fontSize: { xs: "2.5rem", sm: "3.75rem", md: "6rem" },
+            }}
+          >
+            GIFHunter
+          </Typography>
+          <Suspense fallback={<></>}>
+            <IndexSearchBar />
+          </Suspense>
+        </Box>
+      </main>
     </Box>
   );
 }

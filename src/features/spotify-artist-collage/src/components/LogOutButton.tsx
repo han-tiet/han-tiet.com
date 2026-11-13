@@ -15,7 +15,7 @@ export default function LogOutButton() {
             the bar is only `md:min-h-[5vh]`, so the feature button's 1.5x
             size of 54px pushed it taller. */}
         <Button
-          variant="destructive"
+          variant="secondary"
           type="submit"
           className="h-8 px-3 text-xs md:h-9 md:px-4 md:text-sm desktop:h-10 desktop:px-5 desktop:py-2 desktop:text-base"
         >

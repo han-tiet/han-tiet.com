@@ -50,31 +50,33 @@ export default async function GifHunter({
       >
         <a href={ROUTES.PROJECTS}>&lt;&lt; Projects</a>
       </Box>
-      <Typography
-        variant="h2"
-        component="a"
-        href={ROUTES.GIFHUNTER_INDEX}
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          textDecoration: "none",
-          color: "black",
-          fontSize: { xs: "2rem", sm: "2.75rem", md: "3.75rem" },
-        }}
-      >
-        GIFHunter
-      </Typography>
-      <Suspense fallback={<></>}>
-        <SearchBar />
-      </Suspense>
-      <Results key={p} source={resp.gifs} />
-      {APIError && (
-        <Box sx={{ display: "flex", justifyContent: "center", p: "2rem" }}>
-          <Typography variant="h6" component="span" sx={{ color: "red" }}>
-            {APIError.message}
-          </Typography>
-        </Box>
-      )}
+      <main>
+        <Typography
+          variant="h2"
+          component="a"
+          href={ROUTES.GIFHUNTER_INDEX}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            textDecoration: "none",
+            color: "black",
+            fontSize: { xs: "2rem", sm: "2.75rem", md: "3.75rem" },
+          }}
+        >
+          GIFHunter
+        </Typography>
+        <Suspense fallback={<></>}>
+          <SearchBar />
+        </Suspense>
+        <Results key={p} source={resp.gifs} />
+        {APIError && (
+          <Box sx={{ display: "flex", justifyContent: "center", p: "2rem" }}>
+            <Typography variant="h6" component="span" sx={{ color: "red" }}>
+              {APIError.message}
+            </Typography>
+          </Box>
+        )}
+      </main>
     </Box>
   );
 }
