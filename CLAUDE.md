@@ -56,3 +56,13 @@ There is no test suite. `next.config.ts` sets `typescript.ignoreBuildErrors: tru
 ## Environment
 
 Env vars live in `.env` / `.env.development.local` (gitignored). Key ones: `DATABASE_URL`, `BETTER_AUTH_SECRET`, `SPOTIFY_ID`, `SPOTIFY_SECRET`, `AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `HAN_EMAIL_ADDRESS`, `NOREPLY_EMAIL_ADDRESS`, `NEXT_PUBLIC_HOST`, `NEXT_PUBLIC_IMAGEHOST` (base URL for the images and videos in `public/han-tiet.com/`), `NEXT_PUBLIC_SENTRY_DSN`, `GH_API_KEY_1`, `GH_API_KEY_2`. Local HTTPS certificates are in `certificates/`.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
