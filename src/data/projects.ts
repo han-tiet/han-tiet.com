@@ -24,7 +24,7 @@ export const PROJECTS: Project[] = [
     stack: ["Next.js", "MaterialUI", "Fetch"],
     href: ROUTES.GIFHUNTER_INDEX,
     src: `${process.env.NEXT_PUBLIC_IMAGEHOST}/images/gifhunter-screen.png`,
-    readmeRef: `${process.env.GITHUB_README}####Areas-of-Interest-1`,
+    readmeRef: `${process.env.GITHUB_README}#areas-of-interest`,
     alt: "Results from searching 'cat' on GIFhunter",
   },
   {
@@ -37,7 +37,7 @@ export const PROJECTS: Project[] = [
     stack: ["Next.js", "Better Auth", "Prisma", "CSS Animations"],
     href: ROUTES.SPOTIFY_ARTIST_COLLAGE__LOGIN,
     src: `${process.env.NEXT_PUBLIC_IMAGEHOST}/images/spotify-artist-collage-screen.png`,
-    readmeRef: `${process.env.GITHUB_README}####Areas-of-Interest-2`,
+    readmeRef: `${process.env.GITHUB_README}#areas-of-interest-1`,
     alt: "A collage of a test account's most listened to artists",
   },
 ];
