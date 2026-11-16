@@ -1,6 +1,6 @@
 # han-tiet.com
 
-The source for [han-tiet.com](https://han-tiet.com), my personal portfolio site. It is built with Next.js 16 (App Router) and React 19 and deployed on Vercel. |
+The source for [han-tiet.com](https://han-tiet.com), my personal portfolio site. It is built with Next.js 16 (App Router) and React 19 and deployed on Vercel.
 
 ## Tech stack
 
@@ -70,7 +70,7 @@ A GIF search engine that queries Giphy and Klipy in parallel and merges the resu
 
 #### Known Issues
 
--
+- None as of v1.2.0
 
 #### Potential Additions
 
@@ -95,7 +95,7 @@ Signs into Spotify with OAuth (via Better Auth) and builds a collage of the user
 - Login page: The user can click on a button to log in to and authenticate their Spotify account.
 - Collage page: After successful authentication, sequentially fades in profile images of the user's top 50 most listened to Spotify artists to create a collage.
 
-#### Areas of Interest
+#### Areas of Interest 1
 
 - `src/app/projects/spotify-artist-collage/page.tsx` (<a href="https://github.com/han-tiet/han-tiet.com/blob/main/src/app/projects/spotify-artist-collage/page.tsx">Link</a>) - fetches the access token from Spotify's API, authenticates the user and fetches the user's name and most listened to artists. Then user's name is displayed in the navigation bar.
 - `src/features/spotify-artist-collage/src/components/Collage.tsx` (<a href="https://github.com/han-tiet/han-tiet.com/blob/main/src/features/spotify-artist-collage/src/components/Collage.tsx">Link</a>) - Sequentially loads in profile images of the user's top 50 most listened to Spotify artists with a fade-up animation to create a collage. When an image is hovered, an overlay fades in showing the artist's rank and name and when an image is clicked, the user is redirected to the artist's Spotify page.
@@ -110,7 +110,7 @@ Signs into Spotify with OAuth (via Better Auth) and builds a collage of the user
 
 #### Known Issues
 
--
+- None as of 1.2.0
 
 #### Potential Additions
 
