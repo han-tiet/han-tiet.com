@@ -2,7 +2,7 @@
 
 The source for [han-tiet.com](https://han-tiet.com), my personal portfolio site. It is built with Next.js 16 (App Router) and React 19 and deployed on Vercel.
 
-## Tech stack
+## Tech Stack
 
 - **Framework:** Next.js 16 (App Router, Turbopack), React 19, TypeScript
 - **Styling:** Tailwind CSS v4, shadcn/ui (Radix)
@@ -11,7 +11,7 @@ The source for [han-tiet.com](https://han-tiet.com), my personal portfolio site.
 - **Forms:** react-hook-form + zod
 - **Observability:** Sentry, Vercel Analytics
 
-## Project structure
+## Project Structure
 
 ```
 prisma/                     Prisma schema and migrations (Better Auth models)
@@ -39,7 +39,7 @@ The path alias `@/*` maps to `src/*`.
 
 ## Portfolio Projects
 
-### GIFHunter - <a href="https://han-tiet.com/project/gif-hunter">Project link</a>
+### GIFHunter - <a href="https://han-tiet.com/projects/gif-hunter">Project link</a>
 
 <img src="public/han-tiet.com/images/gifhunter-screen.png">
 A GIF search engine that queries Giphy and Klipy in parallel and merges the results, and still returns results when one API is down.
@@ -78,7 +78,7 @@ A GIF search engine that queries Giphy and Klipy in parallel and merges the resu
 - Download GIFs at different resolutions
 - List of filters (e.g Source, NSFW, AI generated GIFs)
 
-### Spotify Artist Collage - <a href="https://han-tiet.com/project/spotify-artist-collage">Project Link</a>
+### Spotify Artist Collage - <a href="https://han-tiet.com/projects/spotify-artist-collage">Project Link</a>
 
 <img src="public/han-tiet.com/images/spotify-artist-collage-screen.png" /> 
 Signs into Spotify with OAuth (via Better Auth) and builds a collage of the user's top 50 most listened to artists.
