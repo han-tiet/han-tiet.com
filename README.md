@@ -110,7 +110,7 @@ Signs into Spotify with OAuth (via Better Auth) and builds a collage of the user
 
 #### Known Issues
 
-- None as of 1.2.0
+- None as of v1.2.0
 
 #### Potential Additions
 
