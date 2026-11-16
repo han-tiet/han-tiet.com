@@ -10,6 +10,7 @@ The source for [han-tiet.com](https://han-tiet.com), my personal portfolio site.
 - **Email:** AWS SES (contact form) with an SNS webhook for bounces and complaints
 - **Forms:** react-hook-form + zod
 - **Observability:** Sentry, Vercel Analytics
+- **Testing:** Vitest, Testing Library (jsdom), Playwright
 
 ## Project Structure
 
@@ -48,6 +49,7 @@ A GIF search engine that queries Giphy and Klipy in parallel and merges the resu
 
 - Framework: Next.js 16, React 19, Typescript
 - Styling: Tailwind CSS v4, MUI
+- Testing: Vitest (unit tests for `fetchResults` and `APIErrorMessage`), Playwright (end-to-end search test)
 
 #### Features
 
@@ -89,6 +91,7 @@ Signs into Spotify with OAuth (via Better Auth) and builds a collage of the user
 - Styling: Tailwind CSS v4, shadcn (Radix)
 - Backend: PostgreSQL, Prisma 7
 - Auth: OAuth via Better Auth
+- Testing: Playwright (end-to-end login and logged-out redirect tests)
 
 #### Features
 
