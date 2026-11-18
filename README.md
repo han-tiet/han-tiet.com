@@ -18,10 +18,12 @@ Alongside the portfolio pages, the site hosts two self-contained demo apps:
 - **Email:** AWS SES (contact form) with an SNS webhook for bounces and complaints
 - **Forms:** react-hook-form + zod
 - **Observability:** Sentry, Vercel Analytics
+- **Testing:** Vitest, Testing Library, Playwright
 
 ## Project structure
 
 ```
+e2e/                        Playwright end-to-end tests
 prisma/                     Prisma schema and migrations (Better Auth models)
 public/                     Static assets
 src/
@@ -40,10 +42,30 @@ src/
 │   ├── gif-hunter/
 │   └── spotify-artist-collage/
 ├── generated/prisma/       Generated Prisma client (gitignored)
-└── lib/                    Auth, Prisma client, SES helpers
+└── lib/                    Auth, Prisma client, SES helpers, unit tests (*.test.ts)
 ```
 
 The path alias `@/*` maps to `src/*`.
+
+## Testing
+
+| Command                                   | What it runs                                              |
+| ----------------------------------------- | --------------------------------------------------------- |
+| `npm test`                                | Vitest unit and component tests, once                     |
+| `npm run test:watch`                      | Vitest in watch mode                                      |
+| `npm run test:e2e`                        | Playwright end-to-end tests                               |
+| `npm run test:e2e:ui`                     | Playwright in UI mode                                     |
+| `npm run test:e2e -- --grep-invert @live` | End-to-end tests without the ones that call real GIF APIs |
+
+**Unit and component tests** (Vitest + Testing Library, jsdom) live in `src/lib/*.test.ts(x)`. They cover the SES error classifier, the contact form server action and toasts, and the GIFHunter result merging. AWS SES, `fetch` and environment variables are mocked, so they run without a `.env` file or network access.
+
+**End-to-end tests** (Playwright) live in `e2e/` and run against the local HTTPS dev server (`https://localhost:3000`), which Playwright starts if it isn't already running. Each test runs on desktop Chrome, a Pixel 7 phone and the phone in landscape. They need the local `.env` and `certificates/`, and on first use, the browsers:
+
+```bash
+npx playwright install
+```
+
+Tests tagged `@live` call the real Giphy and Klipy APIs. Skip them with `--grep-invert @live` when offline or without API keys.
 
 ## Contributing workflow
 
