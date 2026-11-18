@@ -47,12 +47,18 @@ export function ProjectCard({
           ))}
         </ul>
 
-        <div className="mt-auto flex gap-4 desktop:gap-4 pt-2 desktop:pt-0 desktop:text-lg [@media(max-height:500px)_and_(orientation:landscape)]:mt-0 [@media(max-height:500px)_and_(orientation:landscape)]:pt-0 [@media(max-height:500px)_and_(orientation:landscape)]:text-sm">
+        <div className="mt-auto flex gap-12 md:gap-20 desktop:gap-32 pt-2 desktop:pt-0 desktop:text-lg [@media(max-height:500px)_and_(orientation:landscape)]:mt-0 [@media(max-height:500px)_and_(orientation:landscape)]:pt-0 [@media(max-height:500px)_and_(orientation:landscape)]:text-sm">
           <Link
             href={project.href}
             className="underline underline-offset-4 desktop:underline-offset-8 hover:text-primary"
           >
             View it live
+          </Link>
+          <Link
+            href={project.readmeRef}
+            className="underline underline-offset-4 desktop:underline-offset-8 hover:text-primary"
+          >
+            Source code
           </Link>
         </div>
       </div>
