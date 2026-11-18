@@ -15,6 +15,7 @@ The source for [han-tiet.com](https://han-tiet.com), my personal portfolio site.
 ## Project Structure
 
 ```
+e2e/                        Playwright end-to-end tests
 prisma/                     Prisma schema and migrations (Better Auth models)
 public/                     Static assets
 src/
@@ -33,7 +34,7 @@ src/
 │   ├── gif-hunter/
 │   └── spotify-artist-collage/
 ├── generated/prisma/       Generated Prisma client (gitignored)
-└── lib/                    Auth, Prisma client, SES helpers
+└── lib/                    Auth, Prisma client, SES helpers, unit tests (*.test.ts)
 ```
 
 The path alias `@/*` maps to `src/*`.

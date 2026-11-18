@@ -1,8 +1,12 @@
 "use server";
 
 import { z } from "zod";
-import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
-import { classifyError } from "@/lib/ses/classifyError";
+import {
+  SESClient,
+  SendEmailCommand,
+  SendEmailCommandInput,
+} from "@aws-sdk/client-ses";
+import { classifyError, SESResult } from "@/lib/ses/classifyError";
 
 const schema = z.object({
   forename: z
@@ -24,10 +28,35 @@ const schema = z.object({
     .max(5000, "Message is too long"),
 });
 
+type ContactFields = z.infer<typeof schema>;
+
 export async function handleContactForm(
-  prevState: FormData,
+  prevState: SESResult | null,
   formData: FormData,
-) {
+): Promise<SESResult> {
+  const noreplyEmail = process.env.NOREPLY_EMAIL_ADDRESS;
+  const hanEmail = process.env.HAN_EMAIL_ADDRESS;
+
+  if (!noreplyEmail)
+    return {
+      success: false,
+      errors: {},
+      errorCode: "CONFIG_ERROR",
+      userMessage: "Error: Invalid or missing sender email address",
+      internalMessage: "550: Invalid or missing sender email address",
+      retryable: false,
+    };
+
+  if (!hanEmail)
+    return {
+      success: false,
+      errors: {},
+      errorCode: "CONFIG_ERROR",
+      userMessage: "Error: Invalid or missing recipient email address",
+      internalMessage: "550: Invalid or missing recipient email address",
+      retryable: false,
+    };
+
   const validatedFields = validateInput(formData);
 
   if (!validatedFields.success) {
@@ -60,8 +89,15 @@ export async function handleContactForm(
   const config = { region: process.env.AWS_REGION };
   const client = new SESClient(config);
 
-  const contactEmail = generateContactEmail(validationResult);
-  const confirmationEmail = generateConfirmationEmail(validationResult);
+  const contactEmail = generateContactEmail(
+    validationResult,
+    noreplyEmail,
+    hanEmail,
+  );
+  const confirmationEmail = generateConfirmationEmail(
+    validationResult,
+    hanEmail,
+  );
 
   return await sendEmail(client, contactEmail, confirmationEmail);
 }
@@ -78,13 +114,17 @@ function validateInput(formData: FormData) {
   return validatedFields;
 }
 
-function generateContactEmail(validatedFields) {
+function generateContactEmail(
+  validatedFields: ContactFields,
+  from: string,
+  to: string,
+): SendEmailCommandInput {
   const contactEmail = {
-    Source: process.env.NOREPLY_EMAIL_ADDRESS,
+    Source: from,
     Destination: {
       BccAddresses: [],
       CcAddresses: [],
-      ToAddresses: [process.env.HAN_EMAIL_ADDRESS],
+      ToAddresses: [to],
     },
     Message: {
       Subject: {
@@ -115,9 +155,12 @@ function generateContactEmail(validatedFields) {
   return contactEmail;
 }
 
-function generateConfirmationEmail(validatedFields) {
+function generateConfirmationEmail(
+  validatedFields: ContactFields,
+  from: string,
+): SendEmailCommandInput {
   const confirmationEmail = {
-    Source: process.env.HAN_EMAIL_ADDRESS,
+    Source: from,
     Destination: {
       BccAddresses: [],
       CcAddresses: [],
@@ -157,7 +200,11 @@ function generateConfirmationEmail(validatedFields) {
   return confirmationEmail;
 }
 
-async function sendEmail(client: SESClient, contactEmail, confirmationEmail) {
+async function sendEmail(
+  client: SESClient,
+  contactEmail: SendEmailCommandInput,
+  confirmationEmail: SendEmailCommandInput,
+) {
   try {
     const command = new SendEmailCommand(contactEmail);
     const response = await client.send(command);
@@ -166,7 +213,6 @@ async function sendEmail(client: SESClient, contactEmail, confirmationEmail) {
       success: true,
       messageId: response.MessageId,
       errors: {},
-      errorCode: null,
       userMessage: "Your message has been sent successfully.",
       internalMessage: `[SES] Email sent. MessageId: ${response.MessageId}`,
       retryable: false,
@@ -178,8 +224,6 @@ async function sendEmail(client: SESClient, contactEmail, confirmationEmail) {
 
     return result;
   } catch (error) {
-    console.log(error.errorCode);
-
     return classifyError(error);
   }
 }
