@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
+import { SESResult } from "@/lib/ses/classifyError";
 import { Field, FieldGroup } from "@/components/ui/Field";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/TextArea";
@@ -8,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 import { handleContactForm } from "@/app/actions/handleContactForm";
 import { toast } from "sonner";
 
-const initialState = {};
+const initialState: SESResult | null = null;
 
 /**
  * Every dimension below is written in `em` so the whole form is driven by a
@@ -30,13 +31,13 @@ export default function ContactForm() {
   );
 
   useEffect(() => {
-    if (state.success == false) {
-      toast.error(state.userMessage, {
+    if (state?.success == false) {
+      toast.error(state?.userMessage, {
         style: { background: "#ff8181" },
       });
     }
 
-    if (state.success == true) {
+    if (state?.success == true) {
       toast.success("Message sent successfully", {
         style: { background: "#7aff8f" },
       });
@@ -58,21 +59,21 @@ export default function ContactForm() {
                 id="forename"
                 name="forename"
                 aria-describedby={
-                  state.errors?.forename ? "forename-error" : undefined
+                  state?.errors?.forename ? "forename-error" : undefined
                 }
                 type="input"
                 placeholder="Forename"
                 className={inputClassName}
                 autoComplete="off"
               />
-              {state.errors?.forename && (
+              {state?.errors?.forename && (
                 <span
                   id="forename-error"
                   className="text-[0.75em]"
                   role="alert"
                   style={{ color: "red" }}
                 >
-                  {state.errors?.forename[0]}
+                  {state?.errors?.forename[0]}
                 </span>
               )}
             </Field>
@@ -81,21 +82,21 @@ export default function ContactForm() {
                 id="surname"
                 name="surname"
                 aria-describedby={
-                  state.errors?.surname ? "surname-error" : undefined
+                  state?.errors?.surname ? "surname-error" : undefined
                 }
                 type="input"
                 placeholder="Surname"
                 className={inputClassName}
                 autoComplete="off"
               />
-              {state.errors?.surname && (
+              {state?.errors?.surname && (
                 <span
                   id="surname-error"
                   className="text-[0.75em]"
                   role="alert"
                   style={{ color: "red" }}
                 >
-                  {state.errors?.surname[0]}
+                  {state?.errors?.surname[0]}
                 </span>
               )}
             </Field>
@@ -105,21 +106,21 @@ export default function ContactForm() {
               id="emailAddress"
               name="emailAddress"
               aria-describedby={
-                state.errors?.emailAddress ? "emailAddress-error" : undefined
+                state?.errors?.emailAddress ? "emailAddress-error" : undefined
               }
               type="input"
               placeholder="Email Address"
               className={inputClassName}
               autoComplete="off"
             />
-            {state.errors?.emailAddress && (
+            {state?.errors?.emailAddress && (
               <span
-                id="email-address-error"
+                id="emailAddress-error"
                 className="text-[0.75em]"
                 role="alert"
                 style={{ color: "red" }}
               >
-                {state.errors?.emailAddress[0]}
+                {state?.errors?.emailAddress[0]}
               </span>
             )}
           </Field>
@@ -128,21 +129,21 @@ export default function ContactForm() {
               id="subject"
               name="subject"
               aria-describedby={
-                state.errors?.subject ? "subject-error" : undefined
+                state?.errors?.subject ? "subject-error" : undefined
               }
               type="input"
               placeholder="Subject"
               className={inputClassName}
               autoComplete="off"
             />
-            {state.errors?.subject && (
+            {state?.errors?.subject && (
               <span
                 id="subject-error"
                 className="text-[0.75em]"
                 role="alert"
                 style={{ color: "red" }}
               >
-                {state.errors?.subject[0]}
+                {state?.errors?.subject[0]}
               </span>
             )}
           </Field>
@@ -151,20 +152,20 @@ export default function ContactForm() {
               id="message"
               name="message"
               aria-describedby={
-                state.errors?.message ? "message-error" : undefined
+                state?.errors?.message ? "message-error" : undefined
               }
               placeholder="Write your message here"
               className="h-[18.75em] min-h-[4em] rounded-[0.5em] border-[0.125em] px-[0.75em] py-[0.5em] text-[1em] md:text-[1em]"
               autoComplete="off"
             />
-            {state.errors?.message && (
+            {state?.errors?.message && (
               <span
                 id="message-error"
                 className="text-[0.75em]"
                 role="alert"
                 style={{ color: "red" }}
               >
-                {state.errors?.message[0]}
+                {state?.errors?.message[0]}
               </span>
             )}
           </Field>

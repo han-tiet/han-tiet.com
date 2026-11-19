@@ -5,9 +5,10 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Masonry from "@mui/lab/Masonry";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Gif } from "@/features/gif-hunter/lib/fetchResults";
 
 interface Props {
-  source: React.ReactNode;
+  source: Gif[];
 }
 
 const Results: React.FC<Props> = (props) => {
@@ -36,16 +37,16 @@ const Results: React.FC<Props> = (props) => {
         spacing={{ xs: 1, md: 2 }}
         style={{ visibility: allLoaded ? "visible" : "hidden" }}
       >
-        {props.source.map((gif: React.ReactNode) => (
-          <div key={gif.id}>
+        {props.source.map((gif: Gif) => (
+          <div key={gif.key}>
             <img
               ref={(el) => {
-                if (el?.complete) markLoaded(gif.id);
+                if (el?.complete) markLoaded(gif.key);
               }}
               src={gif.src}
               alt={gif.title}
-              onLoad={() => markLoaded(gif.id)}
-              onError={() => markLoaded(gif.id)}
+              onLoad={() => markLoaded(gif.key)}
+              onError={() => markLoaded(gif.key)}
               style={{
                 borderBottomLeftRadius: 4,
                 borderBottomRightRadius: 4,
