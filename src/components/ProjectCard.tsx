@@ -23,7 +23,7 @@ export function ProjectCard({
         sizes="(min-width: 1024px) 500px, (min-width: 640px) 400px, 76vw"
         priority={priority}
         loading={priority ? undefined : "lazy"}
-        className="h-auto w-full object-cover transition-transform duration-300 [@media(max-height:500px)_and_(orientation:landscape)]:w-2/5 [@media(max-height:500px)_and_(orientation:landscape)]:shrink-0"
+        className="h-auto w-full object-cover rounded-sm transition-transform duration-300 [@media(max-height:500px)_and_(orientation:landscape)]:w-2/5 [@media(max-height:500px)_and_(orientation:landscape)]:shrink-0"
       />
 
       <div className="flex w-full flex-1 flex-col items-center gap-4 desktop:gap-8 [@media(max-height:500px)_and_(orientation:landscape)]:self-stretch [@media(max-height:500px)_and_(orientation:landscape)]:justify-center [@media(max-height:500px)_and_(orientation:landscape)]:gap-2">

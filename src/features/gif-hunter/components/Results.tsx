@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import React from "react";
+import Image from "next/image";
 import Box from "@mui/material/Box";
 import Masonry from "@mui/lab/Masonry";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -39,7 +40,8 @@ const Results: React.FC<Props> = (props) => {
       >
         {props.source.map((gif: Gif) => (
           <div key={gif.key}>
-            <img
+            <Image
+              unoptimized
               ref={(el) => {
                 if (el?.complete) markLoaded(gif.key);
               }}
@@ -47,6 +49,9 @@ const Results: React.FC<Props> = (props) => {
               alt={gif.title}
               onLoad={() => markLoaded(gif.key)}
               onError={() => markLoaded(gif.key)}
+              width={0}
+              height={0}
+              sizes="100vw"
               style={{
                 borderBottomLeftRadius: 4,
                 borderBottomRightRadius: 4,
