@@ -17,6 +17,7 @@ module.exports = {
   images: {
     remotePatterns: [
       new URL("https://i.giphy.com/**"),
+      new URL("https://static.klipy.com/ii/**"),
       new URL("https://i.scdn.co/image/**"),
     ],
   },
