@@ -220,6 +220,7 @@ async function sendEmail(
     console.info(result.internalMessage);
 
     const confirmationCommand = new SendEmailCommand(confirmationEmail);
+
     await client.send(confirmationCommand);
 
     return result;
